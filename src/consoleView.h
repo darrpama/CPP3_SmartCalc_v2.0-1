@@ -1,7 +1,7 @@
 #ifndef CONSOLEVIEW_H
 #define CONSOLEVIEW_H
 
-#include "exampleController.h"
+#include "Controller.h"
 
 enum Choice
 {
@@ -17,9 +17,9 @@ enum Choice
 class ConsoleView
 {
     private:
-        ExampleController *controller;
+        s21::Controller *controller;
     public:
-        ConsoleView(ExampleController *c):controller(c){};
+        s21::ConsoleView(Controller *c):controller(c){};
         void displayMenu();
         int performChoice();
         double performNumericInput();

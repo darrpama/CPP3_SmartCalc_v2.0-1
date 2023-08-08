@@ -1,19 +1,22 @@
 #ifndef EXAMPLECONTROLLER_H
 #define EXAMPLECONTROLLER_H
 
-#include "exampleModel.h"
+#include "Model.h"
 
-class ExampleController 
+namespace s21 {
+class Controller 
 {
     private:
-        ExampleModel *model;
+        CalculationModel *model;
     public:
-        ExampleController(ExampleModel *m):model(m) {};
+        Controller(CalculationModel *m):model(m) {};
         double add(double a);
         double sub(double a);
         double mult(double a);
         double div(double a);
         void reset();
 };
+
+}  // namespace s21
 
 #endif

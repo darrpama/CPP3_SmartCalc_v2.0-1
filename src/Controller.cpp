@@ -1,29 +1,33 @@
-#include "exampleController.h"
+#include "Controller.h"
 
-double ExampleController::add(double a)
+namespace s21 {
+double Controller::add(double a)
 {
     model->add(a);
     return model->getData();
 }
 
-double ExampleController::sub(double a)
+double Controller::sub(double a)
 {
     model->add(-a);
     return model->getData();
 }
 
-double ExampleController::mult(double a)
+double Controller::mult(double a)
 {
     model->mult(a);
     return model->getData();
 }
 
-double ExampleController::div(double a)
+double Controller::div(double a)
 {
     model->mult(1.0/a);
     return model->getData();
 }
 
-void ExampleController::reset(){
+void Controller::reset(){
     model->reset();
+
+}  // namespace s21
+
 }
