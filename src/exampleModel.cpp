@@ -1,6 +1,6 @@
 #include "exampleModel.h"
 
-void CalculationModel::add(double a) 
+void CalculationModel::add(double a, double b) 
 {
     data += a;
 } 
