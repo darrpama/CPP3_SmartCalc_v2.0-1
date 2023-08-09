@@ -1,70 +1,46 @@
 #include "Model.h"
 
-double s21::CalculationModel::add(double a, double b) 
-{
-    return 1.0;
-} 
+namespace s21 {
 
-double s21::CalculationModel::sub(double a, double b) 
-{
-    return 1.0;
-} 
+CalculationModel::list_type CalculationModel::parser(string_type input_string) {
 
-double s21::CalculationModel::mult(double a, double b) 
-{
-    return 1.0;
 }
 
-double s21::CalculationModel::div(double a, double b) 
-{
-    return 1.0;
+CalculationModel::stack_type CalculationModel::polishParser(list_type input_list) {
+
 }
 
-double s21::CalculationModel::mod(double a, double b) 
-{
-    return 1.0;
+double CalculationModel::calculator(stack_type input_stack) {
+
 }
 
-double s21::CalculationModel::degr(double a, double b) 
-{
-    return 1.0;
+bool CalculationModel::isDigit() {
+
 }
 
-double s21::CalculationModel::sin(double a, double b) 
-{
-    return 1.0;
+bool CalculationModel::isExpression() {
+
 }
 
-double s21::CalculationModel::cos(double a, double b) 
-{
-    return 1.0;
+bool CalculationModel::isFunc() {
+
 }
 
-double s21::CalculationModel::tan(double a, double b) 
-{
-    return 1.0;
+bool CalculationModel::isOpenBracket() {
+
 }
 
-double s21::CalculationModel::asin(double a, double b) 
-{
-    return 1.0;
+bool CalculationModel::isCloseBracket() {
+
 }
 
-double s21::CalculationModel::acos(double a, double b) 
-{
-    return 1.0;
-}
-
-double s21::CalculationModel::atan(double a, double b) 
-{
-    return 1.0;
-}
-
-void s21::CalculationModel::reset()
+void CalculationModel::reset()
 {
 }
 
-double s21::CalculationModel::getData()
+double CalculationModel::getData()
 {
-    return 1.0;
+    return answer;
+}
+
 }
