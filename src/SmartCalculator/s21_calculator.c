@@ -59,104 +59,127 @@ Data Begin(char *string) {
   return danswer;
 }
 
-int Parcer(char *string, Node *normal_str) {
+int Parcer(char* string, Node* normal_str) {
   int err = OK;
-  for (size_t i = 0; i < strlen(string); i++) {
+  size_t len = strlen(string);
+
+  for (size_t i = 0; i < len; i++) {
     char ch = string[i];
-    if ((ch >= '0' && ch <= '9') || ch == '.') {
+
+    if (isDigit(ch) || ch == '.') {
       double number = 0;
       char tmp[255] = {0};
       int k = 0;
       int j = i;
       int flag = 0;
-      while ((string[j] >= '0' && string[j] <= '9') || string[j] == '.') {
+
+      while (isDigit(string[j]) || string[j] == '.') {
         if (string[j] == '.') {
           flag++;
-          if ((string[j - 1] > '9' || string[j - 1] < '0') ||
-              (string[j + 1] > '9' || string[j + 1] < '0')) {
+
+          if (!isDigit(string[j - 1]) || !isDigit(string[j + 1])) {
             err = ERROR;
             break;
           }
         }
+
         tmp[k] = string[j];
         k++;
         j++;
+
         if (flag > 1 || err) {
           err = ERROR;
           break;
         }
       }
+
       if (err) {
         break;
       }
+
       number = atof(tmp);
       Data numberd = {number, number_or_x, "", OK};
       Push(normal_str, numberd);
       i = j - 1;
-    } else if (ch == '+') {
+    } 
+    else if (ch == '+') {
       if (!string[i - 1] || string[i - 1] == '(') {
         Push(normal_str, zero);
         Push(normal_str, add);
       } else {
         Push(normal_str, add);
       }
-    } else if (ch == '-') {
+    } 
+    else if (ch == '-') {
       if (!string[i - 1] || string[i - 1] == '(') {
         Push(normal_str, zero);
         Push(normal_str, sub);
       } else {
         Push(normal_str, sub);
       }
-    } else if (ch == '*') {
+    } 
+    else if (ch == '*') {
       Push(normal_str, mul);
-    } else if (ch == '/') {
+    } 
+    else if (ch == '/') {
       Push(normal_str, divi);
-    } else if (ch == '^') {
+    } 
+    else if (ch == '^') {
       Push(normal_str, degr);
-    } else if (ch == '(') {
+    } 
+    else if (ch == '(') {
       if (string[i + 1] == ')') {
         err = ERROR;
         break;
       }
       Push(normal_str, opbr);
-    } else if (ch == ')') {
+    } 
+    else if (ch == ')') {
       Push(normal_str, clbr);
-    } else if (string[i] == 'm' && string[i + 1] == 'o' &&
-               string[i + 2] == 'd') {
+    } 
+    else if (strncmp(string + i, "mod", 3) == 0) {
       Push(normal_str, mod);
-    } else if (string[i] == 's' && string[i + 1] == 'i' &&
-               string[i + 2] == 'n' && string[i - 1] != 'a') {
+    } 
+    else if (strncmp(string + i, "sin", 3) == 0 && string[i - 1] != 'a') {
       Push(normal_str, sinu);
-    } else if (string[i] == 'c' && string[i + 1] == 'o' &&
-               string[i + 2] == 's' && string[i - 1] != 'a') {
+    } 
+    else if (strncmp(string + i, "cos", 3) == 0 && string[i - 1] != 'a') {
       Push(normal_str, cosi);
-    } else if (string[i] == 't' && string[i + 1] == 'a' &&
-               string[i + 2] == 'n' && string[i - 1] != 'a') {
+    } 
+    else if (strncmp(string + i, "tan", 3) == 0 && string[i - 1] != 'a') {
       Push(normal_str, tang);
-    } else if (string[i] == 'l' && string[i + 1] == 'o' &&
-               string[i + 2] == 'g') {
+    } 
+    else if (strncmp(string + i, "log", 3) == 0) {
       Push(normal_str, loga);
-    } else if (string[i] == 'l' && string[i + 1] == 'n') {
+    } 
+    else if (strncmp(string + i, "ln", 2) == 0) {
       Push(normal_str, lna);
-    } else if (string[i] == 'a' && string[i + 1] == 's' &&
-               string[i + 2] == 'i' && string[i + 3] == 'n') {
+    } 
+    else if (strncmp(string + i, "asin", 4) == 0) {
       Push(normal_str, asinu);
-    } else if (string[i] == 'a' && string[i + 1] == 'c' &&
-               string[i + 2] == 'o' && string[i + 3] == 's') {
+    } 
+    else if (strncmp(string + i, "acos", 4) == 0) {
       Push(normal_str, acosn);
-    } else if (string[i] == 'a' && string[i + 1] == 't' &&
-               string[i + 2] == 'a' && string[i + 3] == 'n') {
+    } 
+    else if (strncmp(string + i, "atan", 4) == 0) {
       Push(normal_str, atang);
-    } else if (string[i] == 's' && string[i + 1] == 'q' &&
-               string[i + 2] == 'r' && string[i + 3] == 't') {
+    } 
+    else if (strncmp(string + i, "sqrt", 4) == 0) {
       Push(normal_str, squarert);
-    } else if (string[i] == 'x' || string[i] == 'X') {
+    } 
+    else if (ch == 'x' || ch == 'X') {
       Push(normal_str, x);
-    } else {
+    } 
+    else {
       continue;
     }
   }
+
   return err;
+}
+
+bool isDigit(char ch) {
+  return (ch >= '0' && ch <= '9');
 }
 
 int PolishParcer(Node *str, Node *outStr) {

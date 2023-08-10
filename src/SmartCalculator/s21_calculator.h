@@ -21,5 +21,6 @@ int IsFunc(Data data);
 int IsOpenBr(Data data);
 int IsCloseBr(Data data);
 int IsError(Data data);
+bool isDigit(char ch);
 
 #endif  // SRC_S21_CALCULATOR_H_
