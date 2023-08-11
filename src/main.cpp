@@ -1,9 +1,14 @@
-#include "consoleView.h"
+// int main() {
+//     ExampleModel model;
+//     ExampleController controller(&model);
+//     ConsoleView view(&controller);
+//     view.startEventLoop();
+//     return 1;
+// }
 
 int main() {
-    ExampleModel model;
-    ExampleController controller(&model);
-    ConsoleView view(&controller);
-    view.startEventLoop();
-    return 1;
+    s21::CalculationModel() model;
+    std::string test_string = "sin(123.321 + asin(0.3))";
+    model.parser(test_string);
+    model.printParsedExpression();
 }

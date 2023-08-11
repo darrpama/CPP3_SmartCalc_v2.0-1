@@ -1,7 +1,8 @@
 OS := $(shell uname -s)
 
 CC = g++
-CPPFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra -lstdc++
+# CPPFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra -lstdc++
+CPPFLAGS = -g -std=c++17 -Wall -Werror -Wextra -lstdc++
 LIBS = -lgtest --coverage
 
 all: test
@@ -19,12 +20,12 @@ clean:
 exampleController.o:
 	$(CC) $(CPPFLAGS) -c exampleController.cpp -o exampleController.o $(LIBS)
 
-exampleModel.o:
-	$(CC) $(CPPFLAGS) -c exampleModel.cpp -o exampleModel.o $(LIBS)
+Model.o:
+	$(CC) $(CPPFLAGS) -c Model.cpp -o Model.o $(LIBS)
 
 consoleView.o:
 	$(CC) $(CPPFLAGS) -c consoleView.cpp -o consoleView.o $(LIBS)
 
-test: consoleView.o exampleModel.o exampleController.o
-	$(CC) $(CPPFLAGS) exampleController.o exampleModel.o consoleView.o main.cpp -o test.out $(LIBS)
+test: Model.o
+	$(CC) $(CPPFLAGS) Model.o main.cpp -o test.out $(LIBS)
 	./test.out

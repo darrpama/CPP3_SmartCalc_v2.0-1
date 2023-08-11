@@ -5,31 +5,32 @@
 
 #include <math.h>
 
+#include <iostream>
 #include <stack>
 #include <string>
 #include <list>
 
 namespace s21 {
 
-const token add_token = {NAN, add_sub, "+"};
-const token sub_token = {NAN, add_sub, "-"};
-const token mul_token = {NAN, mul_div_mod, "*"};
-const token div_token = {NAN, mul_div_mod, "/"};
-const token mod_token = {NAN, mul_div_mod, "mod"};
-const token pow_token = {NAN, degree, "^"};
-const token clbr_token = {NAN, bracket, ")"};
-const token opbr_token = {NAN, bracket, "(",};
-const token sin_token = {NAN, function, "sin"};
-const token cos_token = {NAN, function, "cos"};
-const token tan_token = {NAN, function, "tan"};
-const token log_token = {NAN, function, "log"};
-const token ln_token = {NAN, function, "ln"};
-const token asin_token = {NAN, function, "asin"};
-const token acos_token = {NAN, function, "acos"};
-const token atan_token = {NAN, function, "atan"};
-const token sqrt_token = {NAN, function, "sqrt"};
-const token x_token = {NAN, number_or_x, "x"};
-const token zero_token = {0, number_or_x, ""};
+token add_token = {NAN, add_sub, "+"};
+token sub_token = {NAN, add_sub, "-"};
+token mul_token = {NAN, mul_div_mod, "*"};
+token div_token = {NAN, mul_div_mod, "/"};
+token mod_token = {NAN, mul_div_mod, "mod"};
+token pow_token = {NAN, degree, "^"};
+token clbr_token = {NAN, bracket, ")"};
+token opbr_token = {NAN, bracket, "(",};
+token sin_token = {NAN, function, "sin"};
+token cos_token = {NAN, function, "cos"};
+token tan_token = {NAN, function, "tan"};
+token log_token = {NAN, function, "log"};
+token ln_token = {NAN, function, "ln"};
+token asin_token = {NAN, function, "asin"};
+token acos_token = {NAN, function, "acos"};
+token atan_token = {NAN, function, "atan"};
+token sqrt_token = {NAN, function, "sqrt"};
+token x_token = {NAN, number_or_x, "x"};
+token zero_token = {0, number_or_x, "0.0"};
 
 class CalculationModel {
   using stack_type = std::stack<token>;
@@ -38,11 +39,15 @@ class CalculationModel {
 
   public:
     CalculationModel() : answer(0){};
-    list_type parser(string_type input_string);
+    void parser(const std::string& input_string);
+    void processOperator(char ch);
+    void processOtherOperators(char ch, size_t &i, string_type input_string);
     stack_type polishParser(list_type input_list);
     void calculator(stack_type polish_stack);
 
-    bool isDigit();
+    void printParsedExpression();
+    bool isDigit(char ch);
+    double stringToDouble(const std::string& str);
     bool isExpression();
     bool isFunc();
     bool isOpenBracket();
@@ -51,8 +56,9 @@ class CalculationModel {
     double getData();
 
   private:
+    size_t char_position{};
+    list_type parsed_expression;
     stack_type polish_stack;
-    list_type list;
     double answer{};
 };
 
