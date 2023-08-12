@@ -3,132 +3,132 @@
 namespace s21 {
 
 // Function to check if a character is a digit
-bool CalculationModel::isDigit(char ch) {
+bool CalculationModel::IsDigit(char ch) const {
   return std::isdigit(ch);
 }
 
 // Function to convert a string to a double
-double CalculationModel::stringToDouble(const std::string& str) {
+double CalculationModel::StringToDouble(const string_type& str) const {
   return std::stod(str);
 }
 
 // Function to parse the input string and return the parsed expression
-void CalculationModel::parser(const std::string& input_string) {
-  for (size_t i = 0; i < input_string.length(); i++) {
-    char ch = input_string[i];
+void CalculationModel::Parser(const string_type& inputString) {
+  for (size_t i = 0; i < inputString.length(); i++) {
+    const char ch = inputString[i];
 
-    if (isDigit(ch) || ch == '.') {
-      std::string number_str;
+    if (IsDigit(ch) || ch == '.') {
+      std::string numberStr;
       size_t j = i;
 
-      while (isDigit(input_string[j]) || input_string[j] == '.') {
-        number_str += input_string[j];
+      while (IsDigit(inputString[j]) || inputString[j] == '.') {
+        numberStr += inputString[j];
         j++;
       }
 
-      double number = stringToDouble(number_str);
-      token number_token = {number, number_or_x, number_str};
-      parsed_expression.push_back(number_token);
+      const double number = StringToDouble(numberStr);
+      const token numberToken = {number, numberOrX, numberStr};
+      parsedExpression.push_back(numberToken);
       i = j - 1;
     }
     else {
-      processOperator(ch);
-      processOtherOperators(ch, i, input_string);
+      ProcessOperator(ch);
+      ProcessOtherOperators(ch, i, inputString);
     }
   }
 }
 
 // Function to process operators and push them into the parsed expression
-void CalculationModel::processOperator(char ch) {
+void CalculationModel::ProcessOperator(const char ch) {
   if (ch == '+') {
-    if (parsed_expression.empty() || parsed_expression.back().str_value == "(") {
-      parsed_expression.push_back(zero_token);
+    if (parsedExpression.empty() || parsedExpression.back().strValue == "(") {
+      parsedExpression.push_back(zeroToken);
     }
-    parsed_expression.push_back(add_token);
+    parsedExpression.push_back(addToken);
   }
   else if (ch == '-') {
-    if (parsed_expression.empty() || parsed_expression.back().str_value == "(") {
-      parsed_expression.push_back(zero_token);
+    if (parsedExpression.empty() || parsedExpression.back().strValue == "(") {
+      parsedExpression.push_back(zeroToken);
     }
-    parsed_expression.push_back(add_token);
+    parsedExpression.push_back(subToken);
   }
   else if (ch == '*') {
-    parsed_expression.push_back(mul_token);
+    parsedExpression.push_back(mulToken);
   }
   else if (ch == '/') {
-    parsed_expression.push_back(div_token);
+    parsedExpression.push_back(divToken);
   }
   else if (ch == '^') {
-    parsed_expression.push_back(pow_token);
+    parsedExpression.push_back(powToken);
   }
   else if (ch == '(') {
-    if (!parsed_expression.empty() && parsed_expression.back().str_value == ")") {
-      parsed_expression.push_back(mul_token);
+    if (!parsedExpression.empty() && parsedExpression.back().strValue == ")") {
+      parsedExpression.push_back(mulToken);
     }
-    parsed_expression.push_back(opbr_token);
+    parsedExpression.push_back(opbrToken);
   }
   else if (ch == ')') {
-    parsed_expression.push_back(clbr_token);
+    parsedExpression.push_back(clbrToken);
   }
 }
 
 // Function to process other operators and push them into the parsed expression
-void CalculationModel::processOtherOperators(char ch, size_t& i, string_type input_string) {
-  std::string str = input_string.substr(i);
+void CalculationModel::ProcessOtherOperators(const char ch, size_t& i, const string_type& inputString) {
+  const std::string str = inputString.substr(i);
   if (str.compare(0, 3, "mod") == 0) {
-    parsed_expression.push_back(mod_token);
+    parsedExpression.push_back(modToken);
   }
   else if (str.compare(0, 4, "asin") == 0) {
-    parsed_expression.push_back(asin_token);
+    parsedExpression.push_back(asinToken);
     i += 3;
   }
   else if (str.compare(0, 4, "acos") == 0) {
-    parsed_expression.push_back(acos_token);
+    parsedExpression.push_back(acosToken);
     i += 3;
   }
   else if (str.compare(0, 4, "atan") == 0) {
-    parsed_expression.push_back(atan_token);
+    parsedExpression.push_back(atanToken);
     i += 3;
   }
   else if (str.compare(0, 3, "sin") == 0) {
-    parsed_expression.push_back(sin_token);
+    parsedExpression.push_back(sinToken);
   }
   else if (str.compare(0, 3, "cos") == 0) {
-    parsed_expression.push_back(cos_token);
+    parsedExpression.push_back(cosToken);
   }
   else if (str.compare(0, 3, "tan") == 0) {
-    parsed_expression.push_back(tan_token);
+    parsedExpression.push_back(tanToken);
   }
   else if (str.compare(0, 3, "log") == 0) {
-    parsed_expression.push_back(log_token);
+    parsedExpression.push_back(logToken);
   }
   else if (str.compare(0, 2, "ln") == 0) {
-    parsed_expression.push_back(ln_token);
+    parsedExpression.push_back(lnToken);
   }
   else if (str.compare(0, 4, "sqrt") == 0) {
-    parsed_expression.push_back(sqrt_token);
+    parsedExpression.push_back(sqrtToken);
   }
   else if (ch == 'x' || ch == 'X') {
-    parsed_expression.push_back(x_token);
+    parsedExpression.push_back(xToken);
   }
 }
 
-CalculationModel::stack_type CalculationModel::polishParser(list_type input_list) {
-  stack_type polish_stack;
-  stack_type temp_stack;
-  for (auto it = input_list.begin(); it != input_list.end(); it++) {
-    if (isDigit(*it)) {
-      polish_stack.push(*it);
+CalculationModel::stack_type CalculationModel::PolishParser(const list_type& inputList) const {
+  stack_type polishStack;
+  stack_type tempStack;
+  for (auto it = inputList.begin(); it != inputList.end(); it++) {
+    if (IsDigit(*it)) {
+      polishStack.push(*it);
     }
-    else if (isOpenBracket(*it)) {
-      temp_stack.push(*it);
+    else if (IsOpenBracket(*it)) {
+      tempStack.push(*it);
     }
-    else if (isCloseBracket(*it)) {
-      if (!temp_stack.empty()) {
-        while (!isOpenBracket(temp_stack.top())) {
-          if (!temp_stack.empty()) {
-            polish_stack.push(temp_stack.top());
-            temp_stack.pop();
+    else if (IsCloseBracket(*it)) {
+      if (!tempStack.empty()) {
+        while (!IsOpenBracket(tempStack.top())) {
+          if (!tempStack.empty()) {
+            polishStack.push(tempStack.top());
+            tempStack.pop();
           }
           else {
             throw std::invalid_argument("Received pair of brackets");
@@ -140,110 +140,91 @@ CalculationModel::stack_type CalculationModel::polishParser(list_type input_list
         throw std::invalid_argument("Received pair of brackets");
         break;
       }
-      temp_stack.pop();
+      tempStack.pop();
     }
-    else if (isExpression(*it) || isFunction(*it)) {
-      while (!temp_stack.empty()) {
-        if (it->priority <= temp_stack.top().priority) {
-          polish_stack.push(temp_stack.top());
-          temp_stack.pop();
+    else if (IsExpression(*it) || IsFunction(*it)) {
+      while (!tempStack.empty()) {
+        if (it->priority <= tempStack.top().priority) {
+          polishStack.push(tempStack.top());
+          tempStack.pop();
         } else {
           break;
         }
       }
-      temp_stack.push(*it);
+      tempStack.push(*it);
     }
   }
-  if (!temp_stack.empty()) {
-    if (isOpenBracket(temp_stack.top()) || isCloseBracket(temp_stack.top())) {
+  if (!tempStack.empty()) {
+    if (IsOpenBracket(tempStack.top()) || IsCloseBracket(tempStack.top())) {
       throw std::invalid_argument("There is extra bracket in expression");
     } else {
-      while (!temp_stack.empty()) {
-        polish_stack.push(temp_stack.top());
-        temp_stack.pop();
+      while (!tempStack.empty()) {
+        polishStack.push(tempStack.top());
+        tempStack.pop();
       }
     }
   }
-  return polish_stack;
+  return polishStack;
 }
 
-void CalculationModel::calculator(stack_type polish_stack) {
-  stack_type tmp(polish_stack);
+void CalculationModel::Calculator(const stack_type& polishStack) const {
+  stack_type tmp(polishStack);
 }
 
-bool CalculationModel::isDigit(token& token) {
-  bool result = false;
-  if (!isnan(token.value)) {
-    result = true;
-  }
-  return result;
+bool CalculationModel::IsDigit(const token& token) const {
+  return !std::isnan(token.value);
 }
 
-bool CalculationModel::isExpression(token& token) {
-  bool result = false;
-  string_type str = token.str_value;
-  if (token.str_value.compare(0, 1, "+") == 0 ||
-      token.str_value.compare(0, 1, "-") == 0 ||
-      token.str_value.compare(0, 1, "*") == 0 ||
-      token.str_value.compare(0, 1, "/") == 0 ||
-      token.str_value.compare(0, 1, "^") == 0 ||
-      token.str_value.compare(0, 3, "mod") == 0) {
-    result = true;
-  }
-  return result;
+bool CalculationModel::IsExpression(const token& token) const {
+  const std::string str = token.strValue;
+  return (str.compare(0, 1, "+") == 0 ||
+          str.compare(0, 1, "-") == 0 ||
+          str.compare(0, 1, "*") == 0 ||
+          str.compare(0, 1, "/") == 0 ||
+          str.compare(0, 1, "^") == 0 ||
+          str.compare(0, 3, "mod") == 0);
 }
 
-bool CalculationModel::isFunction(token& token) {
-  bool result = false;
-  string_type str = token.str_value;
-  if (token.str_value.compare(0, 2, "ln") == 0 ||
-      token.str_value.compare(0, 3, "sin") == 0 ||
-      token.str_value.compare(0, 3, "cos") == 0 ||
-      token.str_value.compare(0, 3, "tan") == 0 ||
-      token.str_value.compare(0, 3, "log") == 0 ||
-      token.str_value.compare(0, 4, "asin") == 0 ||
-      token.str_value.compare(0, 4, "acos") == 0 ||
-      token.str_value.compare(0, 4, "atan") == 0 ||
-      token.str_value.compare(0, 4, "sqrt") == 0) {
-    result = true;
-  }
-  return result;
+bool CalculationModel::IsFunction(const token& token) const {
+  const std::string str = token.strValue;
+  return (str.compare(0, 2, "ln") == 0 ||
+          str.compare(0, 3, "sin") == 0 ||
+          str.compare(0, 3, "cos") == 0 ||
+          str.compare(0, 3, "tan") == 0 ||
+          str.compare(0, 3, "log") == 0 ||
+          str.compare(0, 4, "asin") == 0 ||
+          str.compare(0, 4, "acos") == 0 ||
+          str.compare(0, 4, "atan") == 0 ||
+          str.compare(0, 4, "sqrt") == 0);
 }
 
-bool CalculationModel::isOpenBracket(token& token) {
-  bool result = false;
-  string_type str = token.str_value;
-  if (token.str_value.compare(0, 1, "(") == 0) {
-    result = true;
-  }
-  return result;
+bool CalculationModel::IsOpenBracket(const token& token) const {
+  const std::string str = token.strValue;
+  return (str.compare(0, 1, "(") == 0);
 }
 
-bool CalculationModel::isCloseBracket(token& token) {
-  bool result = false;
-  string_type str = token.str_value;
-  if (token.str_value.compare(0, 1, ")") == 0) {
-    result = true;
-  }
-  return result;
+bool CalculationModel::IsCloseBracket(const token& token) const {
+  const std::string str = token.strValue;
+  return (str.compare(0, 1, ")") == 0);
 }
 
-void CalculationModel::reset()
-{
-  parsed_expression.clear();
-  polish_stack = {};
+void CalculationModel::Reset() {
+  parsedExpression.clear();
+  polishStack = {};
   answer = {};
 }
 
-double CalculationModel::getData()
-{
+double CalculationModel::GetData() const {
   return answer;
 }
 
-void CalculationModel::printParsedExpression()
-{
-  for (auto it = parsed_expression.begin(); it != parsed_expression.end(); ++it) {
-    std::cout << it->str_value;
+CalculationModel::list_type CalculationModel::GetParsedExpression() const {
+  return parsedExpression;
+}
+
+void CalculationModel::PrintParsedExpression() const {
+  for (auto it = parsedExpression.begin(); it != parsedExpression.end(); ++it) {
+    std::cout << it->strValue;
   }
   std::cout << std::endl;
 }

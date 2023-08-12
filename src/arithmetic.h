@@ -5,9 +5,9 @@ namespace s21 {
 
 enum priority_type {
   bracket,
-  number_or_x,
-  add_sub,
-  mul_div_mod,
+  numberOrX,
+  addSub,
+  mulDivMod,
   function,
   degree,
   unaric
@@ -16,7 +16,13 @@ enum priority_type {
 struct token {
   double value;
   priority_type priority;
-  std::string str_value;
+  std::string strValue;
+
+  bool operator==(const token& other) const {
+    return (value == other.value &&
+            priority == other.priority &&
+            strValue.compare(other.strValue) == 0);
+  }
 };
 
 

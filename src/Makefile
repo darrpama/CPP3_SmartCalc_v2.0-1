@@ -3,7 +3,6 @@ OS := $(shell uname -s)
 
 CC = g++
 CPPFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra -lstdc++
-# CPPFLAGS = -g -std=c++17 -Wall -Werror -Wextra -lstdc++
 LIBS = -lgtest --coverage
 
 all: test
@@ -28,5 +27,5 @@ consoleView.o:
 	$(CC) $(CPPFLAGS) -c consoleView.cpp -o consoleView.o $(LIBS)
 
 test: Model.o
-	$(CC) $(CPPFLAGS) Model.o main.cpp -o test.out $(LIBS)
+	$(CC) $(CPPFLAGS) Model.o testModel.cpp -o test.out $(LIBS)
 	./test.out
