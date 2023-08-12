@@ -1,8 +1,9 @@
+.PHONY: clean
 OS := $(shell uname -s)
 
 CC = g++
-# CPPFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra -lstdc++
-CPPFLAGS = -g -std=c++17 -Wall -Werror -Wextra -lstdc++
+CPPFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra -lstdc++
+# CPPFLAGS = -g -std=c++17 -Wall -Werror -Wextra -lstdc++
 LIBS = -lgtest --coverage
 
 all: test

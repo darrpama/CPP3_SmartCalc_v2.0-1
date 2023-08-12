@@ -27,10 +27,11 @@ void CalculationModel::parser(const std::string& input_string) {
       }
 
       double number = stringToDouble(number_str);
-      token number_token = {number, number_or_x, ""};
+      token number_token = {number, number_or_x, number_str};
       parsed_expression.push_back(number_token);
       i = j - 1;
-    } else {
+    }
+    else {
       processOperator(ch);
       processOtherOperators(ch, i, input_string);
     }
@@ -153,6 +154,7 @@ void CalculationModel::printParsedExpression()
   for (auto it = parsed_expression.begin(); it != parsed_expression.end(); ++it) {
     std::cout << it->str_value;
   }
+  std::cout << std::endl;
 }
 
 }
