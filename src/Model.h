@@ -19,24 +19,24 @@ class CalculationModel {
 
   public:
     CalculationModel() : answer(0){};
-    void parser(const std::string& input_string);
-    void processOperator(char ch);
-    void processOtherOperators(char ch, size_t &i, string_type input_string);
-    stack_type polishParser(list_type input_list);
-    void calculator(stack_type polish_stack);
+    void parser(const std::string&);
+    void processOperator(char);
+    void processOtherOperators(char, size_t&, string_type);
+    stack_type polishParser(list_type);
+    void calculator(stack_type);
 
     void printParsedExpression();
-    bool isDigit(char ch);
-    double stringToDouble(const std::string& str);
-    bool isExpression();
-    bool isFunc();
-    bool isOpenBracket();
-    bool isCloseBracket();
+    bool isDigit(char);
+    double stringToDouble(const std::string&);
+    bool isDigit(token&);
+    bool isExpression(token&);
+    bool isFunction(token&);
+    bool isOpenBracket(token&);
+    bool isCloseBracket(token&);
     void reset();
     double getData();
 
   private:
-    size_t char_position{};
     list_type parsed_expression;
     stack_type polish_stack;
     double answer{};

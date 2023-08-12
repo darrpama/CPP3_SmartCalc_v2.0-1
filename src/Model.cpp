@@ -115,8 +115,55 @@ void CalculationModel::processOtherOperators(char ch, size_t& i, string_type inp
 
 CalculationModel::stack_type CalculationModel::polishParser(list_type input_list) {
   stack_type polish_stack;
-  list_type tmp(input_list);
-
+  stack_type temp_stack;
+  for (auto it = input_list.begin(); it != input_list.end(); it++) {
+    if (isDigit(*it)) {
+      polish_stack.push(*it);
+    }
+    else if (isOpenBracket(*it)) {
+      temp_stack.push(*it);
+    }
+    else if (isCloseBracket(*it)) {
+      if (!temp_stack.empty()) {
+        while (!isOpenBracket(temp_stack.top())) {
+          if (!temp_stack.empty()) {
+            polish_stack.push(temp_stack.top());
+            temp_stack.pop();
+          }
+          else {
+            throw std::invalid_argument("Received pair of brackets");
+            break;
+          }
+        }
+      }
+      else {
+        throw std::invalid_argument("Received pair of brackets");
+        break;
+      }
+      temp_stack.pop();
+    }
+    else if (isExpression(*it) || isFunction(*it)) {
+      while (!temp_stack.empty()) {
+        if (it->priority <= temp_stack.top().priority) {
+          polish_stack.push(temp_stack.top());
+          temp_stack.pop();
+        } else {
+          break;
+        }
+      }
+      temp_stack.push(*it);
+    }
+  }
+  if (!temp_stack.empty()) {
+    if (isOpenBracket(temp_stack.top()) || isCloseBracket(temp_stack.top())) {
+      throw std::invalid_argument("There is extra bracket in expression");
+    } else {
+      while (!temp_stack.empty()) {
+        polish_stack.push(temp_stack.top());
+        temp_stack.pop();
+      }
+    }
+  }
   return polish_stack;
 }
 
@@ -124,24 +171,68 @@ void CalculationModel::calculator(stack_type polish_stack) {
   stack_type tmp(polish_stack);
 }
 
-bool CalculationModel::isExpression() {
-  return true;
+bool CalculationModel::isDigit(token& token) {
+  bool result = false;
+  if (!isnan(token.value)) {
+    result = true;
+  }
+  return result;
 }
 
-bool CalculationModel::isFunc() {
-  return true;
+bool CalculationModel::isExpression(token& token) {
+  bool result = false;
+  string_type str = token.str_value;
+  if (token.str_value.compare(0, 1, "+") == 0 ||
+      token.str_value.compare(0, 1, "-") == 0 ||
+      token.str_value.compare(0, 1, "*") == 0 ||
+      token.str_value.compare(0, 1, "/") == 0 ||
+      token.str_value.compare(0, 1, "^") == 0 ||
+      token.str_value.compare(0, 3, "mod") == 0) {
+    result = true;
+  }
+  return result;
 }
 
-bool CalculationModel::isOpenBracket() {
-  return true;
+bool CalculationModel::isFunction(token& token) {
+  bool result = false;
+  string_type str = token.str_value;
+  if (token.str_value.compare(0, 2, "ln") == 0 ||
+      token.str_value.compare(0, 3, "sin") == 0 ||
+      token.str_value.compare(0, 3, "cos") == 0 ||
+      token.str_value.compare(0, 3, "tan") == 0 ||
+      token.str_value.compare(0, 3, "log") == 0 ||
+      token.str_value.compare(0, 4, "asin") == 0 ||
+      token.str_value.compare(0, 4, "acos") == 0 ||
+      token.str_value.compare(0, 4, "atan") == 0 ||
+      token.str_value.compare(0, 4, "sqrt") == 0) {
+    result = true;
+  }
+  return result;
 }
 
-bool CalculationModel::isCloseBracket() {
-  return true;
+bool CalculationModel::isOpenBracket(token& token) {
+  bool result = false;
+  string_type str = token.str_value;
+  if (token.str_value.compare(0, 1, "(") == 0) {
+    result = true;
+  }
+  return result;
+}
+
+bool CalculationModel::isCloseBracket(token& token) {
+  bool result = false;
+  string_type str = token.str_value;
+  if (token.str_value.compare(0, 1, ")") == 0) {
+    result = true;
+  }
+  return result;
 }
 
 void CalculationModel::reset()
 {
+  parsed_expression.clear();
+  polish_stack = {};
+  answer = {};
 }
 
 double CalculationModel::getData()
