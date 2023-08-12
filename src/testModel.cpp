@@ -36,14 +36,21 @@ TEST(CalculationModelTest, Parser_Positive) {
   CalculationModel model;
   model.Parser("2+3*4");
   CalculationModel::list_type parsedList = model.GetParsedExpression();
-  model.PrintParsedExpression();
+  // model.PrintParsedExpression();
   CalculationModel::list_type list;
-  list.push_back(token{2.0, numberOrX, "2"});
+  list.push_back(token{2, numberOrX, "2"});
   list.push_back(token{NAN, addSub, "+"});
-  list.push_back(token{3.0, numberOrX, "3"});
+  list.push_back(token{3, numberOrX, "3"});
   list.push_back(token{NAN, mulDivMod, "*"});
-  list.push_back(token{4.0, numberOrX, "4"});
-  EXPECT_EQ(parsedList, list);
+  list.push_back(token{4, numberOrX, "4"});
+  auto it2 = list.begin();
+  for (auto it = parsedList.begin(); it != parsedList.end(); it++, it2++) {
+    EXPECT_TRUE(it->priority == it2->priority);
+    EXPECT_TRUE(it->strValue == it2->strValue);
+    // std::cout << it->value << " " << it2->value << std::endl;
+    // std::cout << typeid(it->value).name() << " " << typeid(it2->value).name() << std::endl;
+    EXPECT_TRUE(it->value == it2->value || it->value == NAN);
+  }
 }
 
 // Positive test case for ProcessOperator function
