@@ -23,10 +23,11 @@ class CalculationModel {
     void Parser(const string_type&);
     void ProcessOperator(const char);
     void ProcessOtherOperators(const char, size_t&, const string_type&);
-    stack_type PolishParser(const list_type&) const;
-    void Calculator(const stack_type&) const;
+    stack_type PolishParser(const list_type&);
+    void Calculator();
 
     void PrintParsedExpression() const;
+    void PrintPolishStack() const;
     bool IsDigit(char) const;
     double StringToDouble(const string_type&) const;
     bool IsDigit(const token&) const;
@@ -42,25 +43,25 @@ class CalculationModel {
     list_type parsedExpression;
     stack_type polishStack;
     double answer{};
-    token addToken = {NAN, addSub, "+"};
-    token subToken = {NAN, addSub, "-"};
-    token mulToken = {NAN, mulDivMod, "*"};
-    token divToken = {NAN, mulDivMod, "/"};
-    token modToken = {NAN, mulDivMod, "mod"};
-    token powToken = {NAN, degree, "^"};
-    token clbrToken = {NAN, bracket, ")"};
-    token opbrToken = {NAN, bracket, "(",};
-    token sinToken = {NAN, function, "sin"};
-    token cosToken = {NAN, function, "cos"};
-    token tanToken = {NAN, function, "tan"};
-    token logToken = {NAN, function, "log"};
-    token lnToken = {NAN, function, "ln"};
-    token asinToken = {NAN, function, "asin"};
-    token acosToken = {NAN, function, "acos"};
-    token atanToken = {NAN, function, "atan"};
-    token sqrtToken = {NAN, function, "sqrt"};
-    token xToken = {NAN, numberOrX, "x"};
-    token zeroToken = {0, numberOrX, "0.0"};
+    token addToken = {NAN, addSub, addition, "+"};
+    token subToken = {NAN, addSub, substraction, "-"};
+    token mulToken = {NAN, mulDivMod, multiplication, "*"};
+    token divToken = {NAN, mulDivMod, division, "/"};
+    token modToken = {NAN, mulDivMod, modulo, "mod"};
+    token powToken = {NAN, degree, power, "^"};
+    token clbrToken = {NAN, bracket, closeBracket, ")"};
+    token opbrToken = {NAN, bracket, openBracket, "(",};
+    token sinToken = {NAN, function, sinus, "sin"};
+    token cosToken = {NAN, function, cosinus, "cos"};
+    token tanToken = {NAN, function, tangens, "tan"};
+    token logToken = {NAN, function, decimalLogarithm, "log"};
+    token lnToken = {NAN, function, naturalLogarithm, "ln"};
+    token asinToken = {NAN, function, arcsin, "asin"};
+    token acosToken = {NAN, function, arccos, "acos"};
+    token atanToken = {NAN, function, arctan, "atan"};
+    token sqrtToken = {NAN, function, squareRoot, "sqrt"};
+    token xToken = {NAN, numberOrX, xValue, "x"};
+    token zeroToken = {0, numberOrX, zero, "0.0"};
 };
 
 }  // namespace s21 

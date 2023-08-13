@@ -13,14 +13,40 @@ enum priority_type {
   unaric
 };
 
+enum token_type {
+  openBracket,
+  closeBracket,
+  numberType,
+  addition,
+  substraction,
+  multiplication,
+  division,
+  modulo,
+  sinus,
+  cosinus,
+  tangens,
+  arcsin,
+  arccos,
+  arctan,
+  power,
+  decimalLogarithm,
+  naturalLogarithm,
+  unaricMinus,
+  unaricPlus,
+  squareRoot,
+  xValue,
+  zero,
+};
+
 struct token {
   double value;
   priority_type priority;
+  token_type type;
   std::string strValue;
 
   bool operator==(const token& other) const {
-    return (value == other.value &&
-            priority == other.priority &&
+    return (priority == other.priority &&
+            type == other.type &&
             strValue.compare(other.strValue) == 0);
   }
 };

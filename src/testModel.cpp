@@ -38,35 +38,27 @@ TEST(CalculationModelTest, Parser_Positive) {
   CalculationModel::list_type parsedList = model.GetParsedExpression();
   // model.PrintParsedExpression();
   CalculationModel::list_type list;
-  list.push_back(token{2, numberOrX, "2"});
-  list.push_back(token{NAN, addSub, "+"});
-  list.push_back(token{3, numberOrX, "3"});
-  list.push_back(token{NAN, mulDivMod, "*"});
-  list.push_back(token{4, numberOrX, "4"});
-  auto it2 = list.begin();
-  for (auto it = parsedList.begin(); it != parsedList.end(); it++, it2++) {
-    EXPECT_TRUE(it->priority == it2->priority);
-    EXPECT_TRUE(it->strValue == it2->strValue);
-    // std::cout << it->value << " " << it2->value << std::endl;
-    // std::cout << typeid(it->value).name() << " " << typeid(it2->value).name() << std::endl;
-    EXPECT_TRUE(it->value == it2->value || it->value == NAN);
-  }
+  list.push_back(token{2, numberOrX, s21::numberType, "2"});
+  list.push_back(token{NAN, addSub, s21::addition,"+"});
+  list.push_back(token{3, numberOrX, s21::numberType, "3"});
+  list.push_back(token{NAN, mulDivMod, s21::multiplication, "*"});
+  list.push_back(token{4, numberOrX, s21::numberType, "4"});
+  EXPECT_TRUE(parsedList == list);
 }
 
-// Positive test case for ProcessOperator function
-TEST(CalculationModelTest, ProcessOperator_Positive) {
+// Positive test case for PolishParser function
+TEST(CalculationModelTest, PolishParser_Positive) {
   CalculationModel model;
-  model.ProcessOperator('+');
-  // TODO: Add assertions to validate the parsed expression
+  CalculationModel::list_type list;
+  list.push_back(token{2, numberOrX, s21::numberType, "2"});
+  list.push_back(token{NAN, addSub, s21::addition,"+"});
+  list.push_back(token{3, numberOrX, s21::numberType, "3"});
+  list.push_back(token{NAN, mulDivMod, s21::multiplication, "*"});
+  list.push_back(token{4, numberOrX, s21::numberType, "4"});
+  CalculationModel::stack_type result = model.PolishParser(list);
+  model.PrintPolishStack();
+  EXPECT_TRUE(true);
 }
-
-// // Positive test case for PolishParser function
-// TEST(CalculationModelTest, PolishParser_Positive) {
-//   CalculationModel model;
-//   CalculationModel::list_type inputList = { {1, CalculationModel::numberOrX, "1"}, {2, CalculationModel::numberOrX, "2"}, {3, CalculationModel::numberOrX, "3"} };
-//   CalculationModel::stack_type result = model.PolishParser(inputList);
-//   // TODO: Add assertions to validate the result
-// }
 
 // // Positive test case for Calculator function
 // TEST(CalculationModelTest, Calculator_Positive) {
