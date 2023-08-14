@@ -114,11 +114,11 @@ void CalculationModel::ProcessOtherOperators(const char ch, size_t& i, const str
   }
 }
 
-CalculationModel::stack_type CalculationModel::PolishParser(const list_type& inputList) {
+void CalculationModel::PolishParser() {
   stack_type tempStack;
-  for (auto it = inputList.begin(); it != inputList.end(); it++) {
+  for (auto it = parsedExpression.begin(); it != parsedExpression.end(); it++) {
     if (IsDigit(*it)) {
-      polishStack.push(*it);
+      polishStack.push_back(*it);
     }
     else if (IsOpenBracket(*it)) {
       tempStack.push(*it);
@@ -127,7 +127,7 @@ CalculationModel::stack_type CalculationModel::PolishParser(const list_type& inp
       if (!tempStack.empty()) {
         while (!IsOpenBracket(tempStack.top())) {
           if (!tempStack.empty()) {
-            polishStack.push(tempStack.top());
+            polishStack.push_back(tempStack.top());
             tempStack.pop();
           }
           else {
@@ -145,7 +145,7 @@ CalculationModel::stack_type CalculationModel::PolishParser(const list_type& inp
     else if (IsExpression(*it) || IsFunction(*it)) {
       while (!tempStack.empty()) {
         if (it->priority <= tempStack.top().priority) {
-          polishStack.push(tempStack.top());
+          polishStack.push_back(tempStack.top());
           tempStack.pop();
         } else {
           break;
@@ -159,32 +159,39 @@ CalculationModel::stack_type CalculationModel::PolishParser(const list_type& inp
       throw std::invalid_argument("There is extra bracket in expression");
     } else {
       while (!tempStack.empty()) {
-        polishStack.push(tempStack.top());
+        polishStack.push_back(tempStack.top());
         tempStack.pop();
       }
     }
   }
-  return polishStack;
 }
 
-// void CalculationModel::Calculator() {
-//   list_type output;
-//   while (!polishStack.empty()) {
-//     token data = polishStack.top();
-//     if (IsDigit(data)) {
-//       output.push_back(data);
-//       polishStack.pop();
-//     }
-//     else if (IsExpression(data)) {
-//       token operand1 = output.back();
-//       output.pop_back();
-//       token operand2 = output.back();
-//       output.pop_back();
-//       token answer = DoOper(op1, op2, expr);
-//     }
-//   }
-
-
+void CalculationModel::Calculator() {
+  token answer;
+  list_type temp;
+  while (!polishStack.empty()) {
+    token data = polishStack.front();
+    if (IsDigit(data)) {
+      temp.push_back(data);
+      polishStack.pop_front();
+    }
+    else if (IsExpression(data)) {
+      token operand1 = temp.back();
+      temp.pop_back();
+      token operand2 = temp.back();
+      temp.pop_back();
+      token answer = DoOper(operand1, operand2, data);
+      temp.push_back(answer);
+    }
+    else if (IsFunction(data)) {
+      token operand = temp.back();
+      temp.pop_back();
+      token answer = DoFunc(operand, data);
+      temp.push_back(answer);
+    }
+  }
+  SetAnswer(answer);
+}
 
 bool CalculationModel::IsDigit(const token& token) const {
   return token.type == numberType;
@@ -234,6 +241,14 @@ CalculationModel::list_type CalculationModel::GetParsedExpression() const {
   return parsedExpression;
 }
 
+CalculationModel::list_type CalculationModel::GetPolishStack() const {
+  return polishStack;
+}
+
+void CalculationModel::SetAnswer(token answer) {
+  this->answer = answer.value;
+}
+
 void CalculationModel::PrintParsedExpression() const {
   for (auto it = parsedExpression.begin(); it != parsedExpression.end(); ++it) {
     std::cout << it->strValue;
@@ -242,72 +257,68 @@ void CalculationModel::PrintParsedExpression() const {
 }
 
 void CalculationModel::PrintPolishStack() const {
-  stack_type tmp(polishStack);
-  while (!tmp.empty()) {
-    std::cout << tmp.top().strValue << std::endl;
-    tmp.pop();
+  for (auto it = polishStack.begin(); it != polishStack.end(); ++it) {
+    std::cout << it->strValue;
+    std::cout << std::endl;
   }
 }
 
+token CalculationModel::DoOper(token op1, token op2, token expr) {
+  double answer = 0;
+  token danswer;
+  if (IsExpression(expr)) {
+    if (expr.type == addition) {
+      answer = op1.value + op2.value;
+    } else if (expr.type == substraction) {
+      answer = op1.value - op2.value;
+    } else if (expr.type == multiplication) {
+      answer = op1.value * op2.value;
+    } else if (expr.type == division) {
+      if (op2.value == 0) {
+        throw std::invalid_argument("Division by zero");
+      } else {
+        answer = op1.value / op2.value;
+      }
+    } else if (expr.type == power) {
+      answer = pow(op1.value, op2.value);
+    } else if (expr.type == modulo) {
+      if (op2.value == 0) {
+        throw std::invalid_argument("Division by zero");
+      } else {
+        answer = fmod(op1.value, op2.value);
+      }
+    }
+  }
+  danswer.value = answer;
+  return danswer;
+}
 
-// token DoOper(token op1, token op2, token expr) {
-//   double answer = 0;
-//   Data danswer = {0};
-//   if (IsExpr(expr)) {
-//     char *oper = expr.oper;
-//     if (!strcmp(oper, "+")) {
-//       answer = op1.value + op2.value;
-//     } else if (!strcmp(oper, "-")) {
-//       answer = op1.value - op2.value;
-//     } else if (!strcmp(oper, "*")) {
-//       answer = op1.value * op2.value;
-//     } else if (!strcmp(oper, "/")) {
-//       if (op2.value == 0) {
-//         danswer.err = ERROR;
-//       } else {
-//         answer = op1.value / op2.value;
-//       }
-//     } else if (!strcmp(oper, "^")) {
-//       answer = pow(op1.value, op2.value);
-//     } else if (!strcmp(oper, "mod")) {
-//       if (op2.value == 0) {
-//         danswer.err = ERROR;
-//       } else {
-//         answer = fmod(op1.value, op2.value);
-//       }
-//     }
-//   }
-//   danswer.value = answer;
-//   return danswer;
-// }
-//
-// token DoFunc(Data op, Data funct) {
-//   double answer = 0;
-//   Data danswer = {0};
-//   if (IsFunc(funct)) {
-//     char *func = funct.oper;
-//     if (!strcmp(func, "sin")) {
-//       answer = sin(op.value);
-//     } else if (!strcmp(func, "cos")) {
-//       answer = cos(op.value);
-//     } else if (!strcmp(func, "tan")) {
-//       answer = tan(op.value);
-//     } else if (!strcmp(func, "log")) {
-//       answer = log(op.value);
-//     } else if (!strcmp(func, "ln")) {
-//       answer = log(op.value);
-//     } else if (!strcmp(func, "asin")) {
-//       answer = asin(op.value);
-//     } else if (!strcmp(func, "acos")) {
-//       answer = acos(op.value);
-//     } else if (!strcmp(func, "atan")) {
-//       answer = atan(op.value);
-//     } else if (!strcmp(func, "sqrt")) {
-//       answer = sqrt(op.value);
-//     }
-//   }
-//   danswer.value = answer;
-//   return danswer;
-// }
-//
+token CalculationModel::DoFunc(token operand, token function) {
+  double answer = 0;
+  token danswer;
+  if (IsFunction(function)) {
+    if (function.type == sinus) {
+      answer = sin(operand.value);
+    } else if (function.type == cosinus) {
+      answer = cos(operand.value);
+    } else if (function.type == tangens) {
+      answer = tan(operand.value);
+    } else if (function.type == decimalLogarithm) {
+      answer = log(operand.value);
+    } else if (function.type == naturalLogarithm) {
+      answer = log(operand.value);
+    } else if (function.type == arcsin) {
+      answer = asin(operand.value);
+    } else if (function.type == arccos) {
+      answer = acos(operand.value);
+    } else if (function.type == arctan) {
+      answer = atan(operand.value);
+    } else if (function.type == squareRoot) {
+      answer = sqrt(operand.value);
+    }
+  }
+  danswer.value = answer;
+  return danswer;
+}
+
 }

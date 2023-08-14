@@ -55,9 +55,10 @@ TEST(CalculationModelTest, PolishParser_Positive) {
   list.push_back(token{3, numberOrX, s21::numberType, "3"});
   list.push_back(token{NAN, mulDivMod, s21::multiplication, "*"});
   list.push_back(token{4, numberOrX, s21::numberType, "4"});
-  CalculationModel::stack_type result = model.PolishParser(list);
+  model.Parser("2+3*4");
+  model.PolishParser();
   model.PrintPolishStack();
-  EXPECT_TRUE(true);
+  CalculationModel::list_type result = model.GetPolishStack();
 }
 
 // // Positive test case for Calculator function

@@ -23,7 +23,7 @@ class CalculationModel {
     void Parser(const string_type&);
     void ProcessOperator(const char);
     void ProcessOtherOperators(const char, size_t&, const string_type&);
-    stack_type PolishParser(const list_type&);
+    void PolishParser();
     void Calculator();
 
     void PrintParsedExpression() const;
@@ -38,10 +38,14 @@ class CalculationModel {
     void Reset();
     double GetData() const;
     list_type GetParsedExpression() const;
+    list_type GetPolishStack() const;
+    void SetAnswer(token);
+    token DoOper(token, token, token);
+    token DoFunc(token, token);
 
   private:
     list_type parsedExpression;
-    stack_type polishStack;
+    list_type polishStack;
     double answer{};
     token addToken = {NAN, addSub, addition, "+"};
     token subToken = {NAN, addSub, substraction, "-"};
