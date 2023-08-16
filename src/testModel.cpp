@@ -24,17 +24,17 @@ TEST(CalculationModelTest, IsDigitToken_Positive) {
   token five{5, numberOrX, s21::numberType, "5"};
   token four{4, numberOrX, s21::numberType, "4"};
   token three{4, numberOrX, s21::numberType, "4"};
-  ASSERT_TRUE(model.IsDigit(five));
-  ASSERT_TRUE(model.IsDigit(four));
-  ASSERT_TRUE(model.IsDigit(three));
+  ASSERT_TRUE(model.IsNumber(five));
+  ASSERT_TRUE(model.IsNumber(four));
+  ASSERT_TRUE(model.IsNumber(three));
 }
 
 // Negative test case for IsDigit function
 TEST(CalculationModelTest, IsDigitToken_Negative) {
   CalculationModel model;
-  ASSERT_FALSE(model.IsDigit(token{0.0, addSub, s21::addition, "+"}));
-  ASSERT_FALSE(model.IsDigit(token{0.0, addSub, s21::substraction, "-"}));
-  ASSERT_FALSE(model.IsDigit(token{0.0, addSub, s21::multiplication, "*"}));
+  ASSERT_FALSE(model.IsNumber(token{0.0, addSub, s21::addition, "+"}));
+  ASSERT_FALSE(model.IsNumber(token{0.0, addSub, s21::substraction, "-"}));
+  ASSERT_FALSE(model.IsNumber(token{0.0, addSub, s21::multiplication, "*"}));
 }
 
 // Positive test case for IsDigit function

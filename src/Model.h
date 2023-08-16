@@ -30,7 +30,7 @@ class CalculationModel {
     void PrintPolishStack() const;
     bool IsDigit(char) const;
     double StringToDouble(const string_type&) const;
-    bool IsDigit(const token&) const;
+    bool IsNumber(const token&) const;
     bool IsExpression(const token&) const;
     bool IsFunction(const token&) const;
     bool IsOpenBracket(const token&) const;
@@ -40,8 +40,8 @@ class CalculationModel {
     list_type GetParsedExpression() const;
     list_type GetPolishStack() const;
     void SetAnswer(token);
-    token DoOper(token, token, token);
-    token DoFunc(token, token);
+    token DoExpression(token, token, token);
+    token DoFunction(token, token);
 
   private:
     list_type parsedExpression;
