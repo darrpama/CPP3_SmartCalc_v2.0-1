@@ -167,56 +167,67 @@ void CalculationModel::PolishParser() {
 }
 
 void CalculationModel::Calculator() {
-  token answer;
+  token answer{};
   list_type temp;
-  while (!polishStack.empty()) {
+  std::cout << "Size value = " << polishStack.size() << std::endl;
+  for (size_t i = 0; i <= polishStack.size(); i++) {
+    PrintPolishStack();
+    // std::cout << "i = " << i << std::endl;
     token data = polishStack.front();
+    std::cout << "Value = " << data.value << "Type = " << data.type << "Str = " << data.strValue << "Priority = " <<  data.priority << std::endl;
     if (IsDigit(data)) {
       temp.push_back(data);
       polishStack.pop_front();
+      // std::cout << data.value << std::endl;
     }
-    else if (IsExpression(data)) {
+    if (IsExpression(data)) {
+      std::cout << "type = " << data.type << std::endl;
       token operand1 = temp.back();
       temp.pop_back();
       token operand2 = temp.back();
       temp.pop_back();
       token answer = DoOper(operand1, operand2, data);
       temp.push_back(answer);
+      std::cout << answer.value << std::endl;
     }
-    else if (IsFunction(data)) {
+    if (IsFunction(data)) {
       token operand = temp.back();
       temp.pop_back();
       token answer = DoFunc(operand, data);
       temp.push_back(answer);
+      std::cout << answer.value << std::endl;
     }
   }
+  // std::cout << answer.value << std::endl;
   SetAnswer(answer);
 }
 
 bool CalculationModel::IsDigit(const token& token) const {
-  return token.type == numberType;
+  std::cout << "IsDigit" << std::endl;
+  return token.type == s21::numberType;
 }
 
 bool CalculationModel::IsExpression(const token& token) const {
-  return (token.type == addition ||
-          token.type == substraction ||
-          token.type == multiplication ||
-          token.type == division ||
-          token.type == power ||
-          token.type == modulo);
+  // std::cout << "IsExpression" << std::endl;
+  return (token.type == s21::addition ||
+          token.type == s21::substraction ||
+          token.type == s21::multiplication ||
+          token.type == s21::division ||
+          token.type == s21::power ||
+          token.type == s21::modulo);
 }
 
 bool CalculationModel::IsFunction(const token& token) const {
-  const std::string str = token.strValue;
-  return (token.type == naturalLogarithm ||
-          token.type == sinus ||
-          token.type == cosinus ||
-          token.type == tangens ||
-          token.type == decimalLogarithm ||
-          token.type == arcsin ||
-          token.type == arccos ||
-          token.type == arctan ||
-          token.type == squareRoot);
+  // std::cout << "IsFunction" << std::endl;
+  return (token.type == s21::naturalLogarithm ||
+          token.type == s21::sinus ||
+          token.type == s21::cosinus ||
+          token.type == s21::tangens ||
+          token.type == s21::decimalLogarithm ||
+          token.type == s21::arcsin ||
+          token.type == s21::arccos ||
+          token.type == s21::arctan ||
+          token.type == s21::squareRoot);
 }
 
 bool CalculationModel::IsOpenBracket(const token& token) const {
@@ -233,7 +244,7 @@ void CalculationModel::Reset() {
   answer = {};
 }
 
-double CalculationModel::GetData() const {
+double CalculationModel::GetAnswer() const {
   return answer;
 }
 
@@ -266,6 +277,7 @@ void CalculationModel::PrintPolishStack() const {
 token CalculationModel::DoOper(token op1, token op2, token expr) {
   double answer = 0;
   token danswer;
+  std::cout << "DoOper 1" << std::endl;
   if (IsExpression(expr)) {
     if (expr.type == addition) {
       answer = op1.value + op2.value;

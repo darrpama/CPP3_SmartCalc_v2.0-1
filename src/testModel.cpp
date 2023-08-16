@@ -18,6 +18,44 @@ TEST(CalculationModelTest, IsDigit_Negative) {
   ASSERT_FALSE(model.IsDigit('-'));
 }
 
+// Positive test case for IsDigit function
+TEST(CalculationModelTest, IsDigitToken_Positive) {
+  CalculationModel model;
+  token five{5, numberOrX, s21::numberType, "5"};
+  token four{4, numberOrX, s21::numberType, "4"};
+  token three{4, numberOrX, s21::numberType, "4"};
+  ASSERT_TRUE(model.IsDigit(five));
+  ASSERT_TRUE(model.IsDigit(four));
+  ASSERT_TRUE(model.IsDigit(three));
+}
+
+// Negative test case for IsDigit function
+TEST(CalculationModelTest, IsDigitToken_Negative) {
+  CalculationModel model;
+  ASSERT_FALSE(model.IsDigit(token{0.0, addSub, s21::addition, "+"}));
+  ASSERT_FALSE(model.IsDigit(token{0.0, addSub, s21::substraction, "-"}));
+  ASSERT_FALSE(model.IsDigit(token{0.0, addSub, s21::multiplication, "*"}));
+}
+
+// Positive test case for IsDigit function
+TEST(CalculationModelTest, IsFunction_Positive) {
+  CalculationModel model;
+  ASSERT_TRUE(model.IsExpression(token{0.0, s21::addSub, s21::addition, "+"}));
+  ASSERT_TRUE(model.IsExpression(token{0.0, s21::addSub, s21::substraction, "-"}));
+  ASSERT_TRUE(model.IsExpression(token{0.0, s21::mulDivMod, s21::multiplication, "*"}));
+}
+
+// Negative test case for IsDigit function
+TEST(CalculationModelTest, IsFunction_Negative) {
+  CalculationModel model;
+  token five{5, s21::numberOrX, s21::numberType, "5"};
+  token four{4, s21::numberOrX, s21::numberType, "4"};
+  token three{4, s21::numberOrX, s21::numberType, "4"};
+  ASSERT_FALSE(model.IsExpression(five));
+  ASSERT_FALSE(model.IsExpression(four));
+  ASSERT_FALSE(model.IsExpression(three));
+}
+
 // Positive test case for StringToDouble function
 TEST(CalculationModelTest, StringToDouble_Positive) {
   CalculationModel model;
@@ -59,15 +97,32 @@ TEST(CalculationModelTest, PolishParser_Positive) {
   model.PolishParser();
   model.PrintPolishStack();
   CalculationModel::list_type result = model.GetPolishStack();
+  CalculationModel::list_type trueResult;
+  trueResult.push_front(token{NAN, addSub, s21::addition,"+"});
+  trueResult.push_front(token{NAN, mulDivMod, s21::multiplication, "*"});
+  trueResult.push_front(token{4, numberOrX, s21::numberType, "4"});
+  trueResult.push_front(token{3, numberOrX, s21::numberType, "3"});
+  trueResult.push_front(token{2, numberOrX, s21::numberType, "2"});
+  EXPECT_TRUE(trueResult == result);
 }
 
-// // Positive test case for Calculator function
-// TEST(CalculationModelTest, Calculator_Positive) {
-//   CalculationModel model;
-//   CalculationModel::stack_type polishStack = { {1, CalculationModel::numberOrX, "1"}, {2, CalculationModel::numberOrX, "2"}, {3, CalculationModel::numberOrX, "3"} };
-//   model.Calculator(polishStack);
-//   // TODO: Add assertions to validate the answer
-// }
+// Positive test case for Calculator function
+TEST(CalculationModelTest, Calculator_Positive) {
+  CalculationModel model;
+  CalculationModel::list_type list;
+  list.push_back(token{2, numberOrX, s21::numberType, "2"});
+  list.push_back(token{NAN, addSub, s21::addition,"+"});
+  list.push_back(token{3, numberOrX, s21::numberType, "3"});
+  list.push_back(token{NAN, mulDivMod, s21::multiplication, "*"});
+  list.push_back(token{4, numberOrX, s21::numberType, "4"});
+  model.Parser("2+3*4");
+  model.PolishParser();
+  model.PrintPolishStack();
+  model.Calculator();
+  double result = model.GetAnswer();
+  std::cout << result << std::endl;
+  // EXPECT_DOUBLE_EQ(result, 14.0);
+}
 
 // // Positive test case for Reset function
 // TEST(CalculationModelTest, Reset_Positive) {
