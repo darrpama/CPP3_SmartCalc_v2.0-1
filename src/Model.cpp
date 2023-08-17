@@ -264,29 +264,29 @@ void CalculationModel::PrintPolishStack() const {
   }
 }
 
-token CalculationModel::DoExpression(token op1, token op2, token expr) {
+token CalculationModel::DoExpression(token operand1, token operand2, token expression) {
   double answer = 0;
   token danswer;
-  if (IsExpression(expr)) {
-    if (expr.type == addition) {
-      answer = op1.value + op2.value;
-    } else if (expr.type == substraction) {
-      answer = op1.value - op2.value;
-    } else if (expr.type == multiplication) {
-      answer = op1.value * op2.value;
-    } else if (expr.type == division) {
-      if (op2.value == 0) {
+  if (IsExpression(expression)) {
+    if (expression.type == addition) {
+      answer = operand1.value + operand2.value;
+    } else if (expression.type == substraction) {
+      answer = operand1.value - operand2.value;
+    } else if (expression.type == multiplication) {
+      answer = operand1.value * operand2.value;
+    } else if (expression.type == division) {
+      if (operand2.value == 0) {
         throw std::invalid_argument("Division by zero");
       } else {
-        answer = op1.value / op2.value;
+        answer = operand1.value / operand2.value;
       }
-    } else if (expr.type == power) {
-      answer = pow(op1.value, op2.value);
-    } else if (expr.type == modulo) {
-      if (op2.value == 0) {
+    } else if (expression.type == power) {
+      answer = pow(operand1.value, operand2.value);
+    } else if (expression.type == modulo) {
+      if (operand2.value == 0) {
         throw std::invalid_argument("Division by zero");
       } else {
-        answer = fmod(op1.value, op2.value);
+        answer = fmod(operand1.value, operand2.value);
       }
     }
   }
