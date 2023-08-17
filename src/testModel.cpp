@@ -95,7 +95,6 @@ TEST(CalculationModelTest, PolishParser_Positive) {
   list.push_back(token{4, numberOrX, s21::numberType, "4"});
   model.Parser("2+3*4");
   model.PolishParser();
-  model.PrintPolishStack();
   CalculationModel::list_type result = model.GetPolishStack();
   CalculationModel::list_type trueResult;
   trueResult.push_front(token{NAN, addSub, s21::addition,"+"});
@@ -117,11 +116,9 @@ TEST(CalculationModelTest, Calculator_Positive) {
   list.push_back(token{4, numberOrX, s21::numberType, "4"});
   model.Parser("2+3*4");
   model.PolishParser();
-  model.PrintPolishStack();
   model.Calculator();
   double result = model.GetAnswer();
-  std::cout << result << std::endl;
-  // EXPECT_DOUBLE_EQ(result, 14.0);
+  EXPECT_DOUBLE_EQ(result, 14.0);
 }
 
 // // Positive test case for Reset function
