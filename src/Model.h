@@ -48,7 +48,7 @@ class CalculationModel {
     list_type polishStack;
     double answer{};
     token addToken = {0.0, addSub, addition, "+"};
-    token subToken = {0.0, addSub, substraction, "-"};
+    token subToken = {0.0, addSub, subtraction, "-"};
     token mulToken = {0.0, mulDivMod, multiplication, "*"};
     token divToken = {0.0, mulDivMod, division, "/"};
     token modToken = {0.0, mulDivMod, modulo, "mod"};

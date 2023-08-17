@@ -18,7 +18,7 @@ enum token_type {
   closeBracket,
   numberType,
   addition,
-  substraction,
+  subtraction,
   multiplication,
   division,
   modulo,

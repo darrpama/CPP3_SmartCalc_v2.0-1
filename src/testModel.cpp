@@ -33,7 +33,7 @@ TEST(CalculationModelTest, IsDigitToken_Positive) {
 TEST(CalculationModelTest, IsDigitToken_Negative) {
   CalculationModel model;
   ASSERT_FALSE(model.IsNumber(token{0.0, addSub, s21::addition, "+"}));
-  ASSERT_FALSE(model.IsNumber(token{0.0, addSub, s21::substraction, "-"}));
+  ASSERT_FALSE(model.IsNumber(token{0.0, addSub, s21::subtraction, "-"}));
   ASSERT_FALSE(model.IsNumber(token{0.0, addSub, s21::multiplication, "*"}));
 }
 
@@ -41,7 +41,7 @@ TEST(CalculationModelTest, IsDigitToken_Negative) {
 TEST(CalculationModelTest, IsFunction_Positive) {
   CalculationModel model;
   ASSERT_TRUE(model.IsExpression(token{0.0, s21::addSub, s21::addition, "+"}));
-  ASSERT_TRUE(model.IsExpression(token{0.0, s21::addSub, s21::substraction, "-"}));
+  ASSERT_TRUE(model.IsExpression(token{0.0, s21::addSub, s21::subtraction, "-"}));
   ASSERT_TRUE(model.IsExpression(token{0.0, s21::mulDivMod, s21::multiplication, "*"}));
 }
 
