@@ -11,21 +11,23 @@ class Validator {
     using string_type = std::string;
     using array_type = std::array<string_type>;
 
-    int is_correct(string_type);
+    int IsCorrect(string_type);
     // void filler(char **unary, char **binary);
-    int null_check(char *str);
-    int empty_check(char *str);
-    int num_check(char *str);
-    int bracket_check(char *str);
-    int binary_op_check(char *str);
-    int twise_op_check(char *str);
-    int foo_check(char *str);
-    int plus_minus_check(char *str);
+    int NullCheck(char *str);
+    int EmptyCheck(char *str);
+    int NumCheck(char *str);
+    int BracketCheck(char *str);
+    int BinaryOpCheck(char *str);
+    int TwiseOpCheck(char *str);
+    int FooCheck(char *str);
+    int PlusMinusCheck(char *str);
 
-    int is_digit_or_pm(char ch);
-    int binary_left(char ch);
+    int IsDigitOrPm(char ch);
+    int BinaryLeft(char ch);
   
   private:
+    std::set<std::string> unary { "sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "sqrt" };
+    std::set<std::string> binary { "*", "/", "mod", "^", "+", "-"};
 
 };
 
