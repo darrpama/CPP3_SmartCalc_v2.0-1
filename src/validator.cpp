@@ -2,10 +2,9 @@
 
 int Validator::IsCorrect(const string_type inputString) {
   std::string temp_string = string;
-  char **unary = (char **)malloc(sizeof(char *) * 9);
-  char **binary = (char **)malloc(sizeof(char *) * 6);
+  // char **unary = (char **)malloc(sizeof(char *) * 9);
+  // char **binary = (char **)malloc(sizeof(char *) * 6);
   int err = OK;
-  filler(unary, binary);
   int v_check = null_check(temp_string);
   int e_check = empty_check(temp_string);
   err += v_check + e_check;
