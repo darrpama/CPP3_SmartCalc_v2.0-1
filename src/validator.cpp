@@ -6,47 +6,31 @@ Validator::Validator() {}
 
 int Validator::IsCorrect(const string_type inputString) {
   string_type tempString = inputString;
-  int err = 0;
-  int v_check = NullCheck(tempString);
-  int e_check = EmptyCheck(tempString);
-  err += v_check + e_check;
+  bool err = false;
+  bool e_check = EmptyCheck(tempString);
 
-  if (!NullCheck(tempString) && !EmptyCheck(tempString)) {
-    // spaces_deleter(&temp_string);
-    int br_check = BracketCheck(tempString);
-    int n_check = NumCheck(tempString);
-    int pl_min = PlusMinusCheck(tempString);
-    int t_check = TwiseOpCheck(tempString);
-    int f_check = FooCheck(tempString);
-    int b_op_check = BinaryOpCheck(tempString);
-    err += br_check + pl_min + n_check + t_check + f_check + b_op_check;
-    //    printf("%d, %d, %d, %d, %d\n", br_check, pl_min, n_check, t_check,
-    //    f_check);
+  if (e_check == false) {
+    bool br_check = BracketCheck(tempString);
+    bool n_check = NumCheck(tempString);
+    bool pl_min = PlusMinusCheck(tempString);
+    bool t_check = TwiseOpCheck(tempString);
+    bool f_check = FooCheck(tempString);
+    bool b_op_check = BinaryOpCheck(tempString);
+    err = br_check || pl_min || n_check || t_check || f_check || b_op_check;
   }
   return err;
 }
 
-int Validator::null_check(char *str) {
-  int err = OK;
-  if (str == NULL) {
-    err = ERROR;
+bool Validator::EmptyCheck(const string_type inputString) {
+  bool err = false;
+  if (inputString.empty()) {
+    err = true;
   }
   return err;
 }
 
-int Validator::empty_check(char *str) {
-  int err = OK;
-  if (!null_check(str)) {
-    if (strlen(str) == 0) {
-      err = ERROR;
-    }
-  } else {
-    err = ERROR;
-  }
-  return err;
-}
 
-int Validator::bracket_check(char *str) {
+int Validator::BracketCheck(const string_type inputString) {
   int err = OK;
   for (size_t i = 0; i < strlen(str); i++) {
     const char ch = str[i];
@@ -60,7 +44,7 @@ int Validator::bracket_check(char *str) {
   return err;
 }
 
-int Validator::plus_minus_check(char *str) {
+int Validator::plus_minus_check(const string_type inputString) {
   int err = OK;
   char *ex_str = "1234567890(x.";
   char *ex_str2 = "1234567890()x";
@@ -81,7 +65,7 @@ int Validator::plus_minus_check(char *str) {
   return err;
 }
 
-int Validator::num_check(char *str) {
+int Validator::num_check(const string_type inputString) {
   unsigned int i;
   int err = OK;
   for (i = 0; str[i] != '\0'; i++) {
@@ -103,7 +87,7 @@ int Validator::num_check(char *str) {
   return err;
 }
 
-int Validator::twise_op_check(char *str) {
+int Validator::twise_op_check(const string_type inputString) {
   int err = OK;
   for (unsigned int i = 0; i < strlen(str); i++) {
     char ch = str[i];
@@ -124,7 +108,7 @@ int Validator::twise_op_check(char *str) {
   return err;
 }
 
-int Validator::binary_op_check(char *str) {
+int Validator::binary_op_check(const string_type inputString) {
   int err = OK;
   for (unsigned int i = 0; i < strlen(str); i++) {
     char ch = str[i];
@@ -158,7 +142,7 @@ int Validator::binary_op_check(char *str) {
   return err;
 }
 
-int Validator::foo_check(char *str) {
+int Validator::foo_check(const string_type inputString) {
   int err = OK;
   for (unsigned int i = 0; i < strlen(str); i++) {
     if (str[i] == 'a' && str[i + 1] == 's' &&

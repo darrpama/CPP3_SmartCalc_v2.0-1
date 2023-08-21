@@ -15,9 +15,7 @@ class Validator {
 
     Validator();
     int IsCorrect(string_type);
-    // void filler(char **unary, char **binary);
-    int NullCheck(string_type);
-    int EmptyCheck(string_type);
+    bool EmptyCheck(string_type);
     int NumCheck(string_type);
     int BracketCheck(string_type);
     int BinaryOpCheck(string_type);
