@@ -426,4 +426,5 @@ token CalculationModel::DoFunction(token operand, token function)
   danswer.value = answer;
   return danswer;
 }
-}
+
+}  // namespace s21

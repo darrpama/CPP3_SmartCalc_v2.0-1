@@ -1,48 +1,29 @@
 #include "validator.h"
 
+namespace s21 {
+
+Validator::Validator() {}
+
 int Validator::IsCorrect(const string_type inputString) {
-  std::string temp_string = string;
-  // char **unary = (char **)malloc(sizeof(char *) * 9);
-  // char **binary = (char **)malloc(sizeof(char *) * 6);
-  int err = OK;
-  int v_check = null_check(temp_string);
-  int e_check = empty_check(temp_string);
+  string_type tempString = inputString;
+  int err = 0;
+  int v_check = NullCheck(tempString);
+  int e_check = EmptyCheck(tempString);
   err += v_check + e_check;
 
-  if (!null_check(temp_string) && !empty_check(temp_string)) {
+  if (!NullCheck(tempString) && !EmptyCheck(tempString)) {
     // spaces_deleter(&temp_string);
-    int br_check = bracket_check(temp_string);
-    int n_check = num_check(temp_string);
-    int pl_min = plus_minus_check(temp_string);
-    int t_check = twise_op_check(temp_string);
-    int f_check = foo_check(temp_string);
-    int b_op_check = binary_op_check(temp_string);
+    int br_check = BracketCheck(tempString);
+    int n_check = NumCheck(tempString);
+    int pl_min = PlusMinusCheck(tempString);
+    int t_check = TwiseOpCheck(tempString);
+    int f_check = FooCheck(tempString);
+    int b_op_check = BinaryOpCheck(tempString);
     err += br_check + pl_min + n_check + t_check + f_check + b_op_check;
     //    printf("%d, %d, %d, %d, %d\n", br_check, pl_min, n_check, t_check,
     //    f_check);
   }
-  free(unary);
-  free(binary);
   return err;
-}
-
-void Validator::filler(char **unary, char **binary) {
-  *(unary) = "sin";
-  *(unary + 1) = "cos";
-  *(unary + 2) = "tan";
-  *(unary + 3) = "asin";
-  *(unary + 4) = "acos";
-  *(unary + 5) = "atan";
-  *(unary + 6) = "log";
-  *(unary + 7) = "ln";
-  *(unary + 8) = "sqrt";
-  *(binary) = "*";
-  *(binary + 1) = "/";
-  *(binary + 2) = "mod";
-  *(binary + 3) = "^";
-  // '+' and '-' can be unary too
-  *(binary + 4) = "+";
-  *(binary + 5) = "-";
 }
 
 int Validator::null_check(char *str) {
@@ -260,3 +241,5 @@ int Validator::binary_left(char ch) {
 //   }
 //   return answer;
 // }
+
+}  // namespace s21
