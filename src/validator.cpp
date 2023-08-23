@@ -4,12 +4,12 @@ namespace s21 {
 
 Validator::Validator() {}
 
-int Validator::IsCorrect(const string_type inputString) {
+bool Validator::IsCorrect(const string_type& inputString) {
   string_type tempString = inputString;
   bool err = false;
   bool e_check = EmptyCheck(tempString);
 
-  if (e_check == false) {
+  if (!e_check) {
     bool br_check = BracketCheck(tempString);
     bool n_check = NumCheck(tempString);
     bool pl_min = PlusMinusCheck(tempString);
@@ -21,19 +21,14 @@ int Validator::IsCorrect(const string_type inputString) {
   return err;
 }
 
-bool Validator::EmptyCheck(const string_type inputString) {
-  bool err = false;
-  if (inputString.empty()) {
-    err = true;
-  }
-  return err;
+bool Validator::EmptyCheck(const string_type& inputString) {
+  return inputString.empty();
 }
 
-
-int Validator::BracketCheck(const string_type inputString) {
-  int err = OK;
-  for (size_t i = 0; i < strlen(str); i++) {
-    const char ch = str[i];
+int Validator::BracketCheck(const string_type& inputString) {
+  int err = 0;
+  for (size_t i = 0; i < inputString.size(); i++) {
+    const char ch = inputString[i];
     if (ch == '(') {
       err++;
     }
@@ -44,186 +39,122 @@ int Validator::BracketCheck(const string_type inputString) {
   return err;
 }
 
-int Validator::plus_minus_check(const string_type inputString) {
-  int err = OK;
-  char *ex_str = "1234567890(x.";
-  char *ex_str2 = "1234567890()x";
-  for (size_t i = 0; i < strlen(str); i++) {
-    if (str[i] == '+' || str[i] == '-') {
-      if (str[i + 1] == '\0') {
-        err = ERROR;
-        break;
-      } else if (!strchr(ex_str, str[i + 1])) {
-        err = ERROR;
-        break;
-      } else if (i != 0 && !strchr(ex_str2, str[i - 1])) {
-        err = ERROR;
-        break;
+bool Validator::PlusMinusCheck(const string_type& inputString) {
+  static const string_type ex_str = "1234567890(x.";
+  static const string_type ex_str2 = "1234567890()x";
+  for (size_t i = 0; i < inputString.size(); i++) {
+    if (inputString[i] == '+' || inputString[i] == '-') {
+      if (inputString[i + 1] == '\0') {
+        return true;
+      } else if (ex_str.find(inputString[i + 1]) == string_type::npos) {
+        return true;
+      } else if (i != 0 && ex_str2.find(inputString[i - 1]) == string_type::npos) {
+        return true;
       }
     }
   }
-  return err;
+  return false;
 }
 
-int Validator::num_check(const string_type inputString) {
-  unsigned int i;
-  int err = OK;
-  for (i = 0; str[i] != '\0'; i++) {
-    if (str[i] == '.' && i != 0) {
-      if ((str[i + 1] >= '0' || str[i + 1] <= '9') &&
-          (str[i - 1] >= '0' || str[i - 1] <= '9')) {
+bool Validator::NumCheck(const string_type& inputString) {
+  int err = false;
+  for (int i = 0; i < inputString.size(); i++) {
+    if (inputString[i] == '.' && i != 0) {
+      if ((inputString[i + 1] >= '0' && inputString[i + 1] <= '9') &&
+          (inputString[i - 1] >= '0' && inputString[i - 1] <= '9')) {
         continue;
       } else {
-        err = ERROR;
-        break;
+        return true;
       }
-    } else if (str[i] == '.' && i == 0) {
-      err = ERROR;
-      break;
-    } else {
-      continue;
+    } else if (inputString[i] == '.' && i == 0) {
+      return true;
     }
   }
-  return err;
+  return false;
 }
 
-int Validator::twise_op_check(const string_type inputString) {
-  int err = OK;
-  for (unsigned int i = 0; i < strlen(str); i++) {
-    char ch = str[i];
-    char nextch = str[i + 1];
+bool Validator::TwiseOpCheck(const string_type& inputString) {
+  for (unsigned int i = 0; i < inputString.size(); i++) {
+    char ch = inputString[i];
+    char nextch = inputString[i + 1];
     if (ch == '*' || ch == '/' || ch == '^') {
       if (nextch == ch || nextch == 'm') {
-        err = ERROR;
-        break;
+        return true;
       }
-    } else if (ch == 'm' && nextch == 'o' && str[i + 2] == 'd') {
-      if (str[i + 3] != '(' && str[i + 4] == '*' && str[i + 4] == '/' &&
-          str[i + 4] == '^') {
-        err = ERROR;
-        break;
+    } else if (ch == 'm' && nextch == 'o' && inputString[i + 2] == 'd') {
+      if (inputString[i + 3] != '(' && (inputString[i + 4] == '*' || inputString[i + 4] == '/' || inputString[i + 4] == '^')) {
+        return true;
       }
     }
   }
-  return err;
+  return false;
 }
 
-int Validator::binary_op_check(const string_type inputString) {
-  int err = OK;
-  for (unsigned int i = 0; i < strlen(str); i++) {
-    char ch = str[i];
-    char nextch = str[i + 1];
+bool Validator::BinaryOpCheck(const string_type& inputString) {
+  for (unsigned int i = 0; i < inputString.size(); i++) {
+    char ch = inputString[i];
+    char nextch = inputString[i + 1];
     if (ch == '*' || ch == '/' || ch == '^') {
       if (i == 0) {
-        err = ERROR;
-        break;
+        return true;
       }
-      char prevch = str[i - 1];
-      if (!is_digit_or_pm(nextch) || !binary_left(prevch)) {
-        err = ERROR;
-        break;
+      char prevch = inputString[i - 1];
+      if (!IsDigitOrPm(nextch) || !BinaryLeft(prevch)) {
+        return true;
       }
       if (ch == '/' && nextch == '0') {
-        err = ERROR;
-        break;
+        return true;
       }
-    } else if (ch == 'm' && nextch == 'o' && str[i + 2] == 'd') {
+    } else if (ch == 'm' && nextch == 'o' && inputString[i + 2] == 'd') {
       if (i == 0) {
-        err = ERROR;
-        break;
+        return true;
       }
-      char prevch = str[i - 1];
-      if (!is_digit_or_pm(str[i + 3]) || !binary_left(prevch)) {
-        err = ERROR;
-        break;
+      char prevch = inputString[i - 1];
+      if (!IsDigitOrPm(inputString[i + 3]) || !BinaryLeft(prevch)) {
+        return true;
       }
     }
   }
-  return err;
+  return false;
 }
 
-int Validator::foo_check(const string_type inputString) {
-  int err = OK;
-  for (unsigned int i = 0; i < strlen(str); i++) {
-    if (str[i] == 'a' && str[i + 1] == 's' &&
-        (str[i + 2] != 'i' || str[i + 3] != 'n' || str[i + 4] != '(' ||
-         !is_digit_or_pm(str[i + 5]))) {
-      err = ERROR;
-      break;
-    } else if (str[i] == 'a' && str[i + 1] == 'c' &&
-               (str[i + 2] != 'o' || str[i + 3] != 's' || str[i + 4] != '(' ||
-                !is_digit_or_pm(str[i + 5]))) {
-      err = ERROR;
-      break;
-    } else if (str[i] == 'a' && str[i + 1] == 't' &&
-               (str[i + 2] != 'a' || str[i + 3] != 'n' || str[i + 4] != '(' ||
-                !is_digit_or_pm(str[i + 5]))) {
-      err = ERROR;
-      break;
-    } else if (str[i] == 's' && str[i + 1] == 'q' &&
-               (str[i + 2] != 'r' || str[i + 3] != 't' || str[i + 4] != '(' ||
-                !is_digit_or_pm(str[i + 5]))) {
-      err = ERROR;
-      break;
-    } else if (str[i] == 's' && str[i + 1] == 'i' &&
-               (str[i + 2] != 'n' || str[i + 3] != '(' ||
-                !is_digit_or_pm(str[i + 4]))) {
-      err = ERROR;
-      break;
-    } else if (str[i] == 'c' &&
-               (str[i + 1] != 'o' || str[i + 2] != 's' || str[i + 3] != '(' ||
-                !is_digit_or_pm(str[i + 4]))) {
-      printf("5");
-      err = ERROR;
-      break;
-    } else if (str[i] == 't' && str[i + 1] == 'a' &&
-               (str[i + 2] != 'n' || str[i + 3] != '(' ||
-                !is_digit_or_pm(str[i + 4]))) {
-      printf("6");
-      err = ERROR;
-      break;
-    } else if (str[i] == 'l' && str[i + 1] == 'o' &&
-               (str[i + 2] != 'g' || str[i + 3] != '(' ||
-                !is_digit_or_pm(str[i + 4]))) {
-      err = ERROR;
-      break;
-    } else if (str[i] == 'l' && str[i + 1] == 'n' && str[i + 2] != '(' &&
-               !is_digit_or_pm(str[i + 3])) {
-      err = ERROR;
-      break;
-    } else {
-      continue;
+bool Validator::FooCheck(const string_type& inputString) {
+  for (unsigned int i = 0; i < inputString.size(); i++) {
+    if (inputString[i] == 'a' && (inputString[i + 1] == 's' || inputString[i + 1] == 'c') &&
+        (inputString[i + 2] != 'i' || inputString[i + 3] != 'n' || inputString[i + 4] != '(' || !IsDigitOrPm(inputString[i + 5]))) {
+      return true;
+    } else if (inputString[i] == 'a' && inputString[i + 1] == 't' &&
+               (inputString[i + 2] != 'a' || inputString[i + 3] != 'n' || inputString[i + 4] != '(' || !IsDigitOrPm(inputString[i + 5]))) {
+      return true;
+    } else if (inputString[i] == 's' && inputString[i + 1] == 'q' &&
+               (inputString[i + 2] != 'r' || inputString[i + 3] != 't' || inputString[i + 4] != '(' || !IsDigitOrPm(inputString[i + 5]))) {
+      return true;
+    } else if (inputString[i] == 's' && inputString[i + 1] == 'i' &&
+               (inputString[i + 2] != 'n' || inputString[i + 3] != '(' || !IsDigitOrPm(inputString[i + 4]))) {
+      return true;
+    } else if (inputString[i] == 'c' &&
+               (inputString[i + 1] != 'o' || inputString[i + 2] != 's' || inputString[i + 3] != '(' || !IsDigitOrPm(inputString[i + 4]))) {
+      return true;
+    } else if (inputString[i] == 't' && inputString[i + 1] == 'a' &&
+               (inputString[i + 2] != 'n' || inputString[i + 3] != '(' || !IsDigitOrPm(inputString[i + 4]))) {
+      return true;
+    } else if (inputString[i] == 'l' && inputString[i + 1] == 'o' &&
+               (inputString[i + 2] != 'g' || inputString[i + 3] != '(' || !IsDigitOrPm(inputString[i + 4]))) {
+      return true;
+    } else if (inputString[i] == 'l' && inputString[i + 1] == 'n' && inputString[i + 2] != '(' && !IsDigitOrPm(inputString[i + 3])) {
+      return true;
     }
   }
-  // printf("%d\n", err);
-  return err;
+  return false;
 }
 
-int Validator::is_digit_or_pm(char ch) {
-  int answer = 0;
-  if ((ch >= '0' && ch <= '9') || ch == '+' || ch == '-' || ch == 's' ||
-      ch == 'c' || ch == 'a' || ch == 't' || ch == 'l' || ch == '(') {
-    answer = 1;
-  }
-  return answer;
+bool Validator::IsDigitOrPm(char ch) {
+  return (ch >= '0' && ch <= '9') || ch == '+' || ch == '-' || ch == 's' ||
+      ch == 'c' || ch == 'a' || ch == 't' || ch == 'l' || ch == '(';
 }
 
-int Validator::binary_left(char ch) {
-  int answer = 0;
-  if ((ch >= '0' && ch <= '9') || ch == ')') {
-    answer = 1;
-  }
-  return answer;
+bool Validator::BinaryLeft(char ch) {
+  return (ch >= '0' && ch <= '9') || ch == ')';
 }
-
-// int binary_right(char ch) {
-//   int answer = 0;
-//   if ((ch >= '0' && ch <= '9') || ch == '(' || ch == 's' || ch == 'c' || ch
-//   == 'a' || ch == 't' || ch == 'l') {
-//       ) {
-//     answer = 1;
-//   }
-//   return answer;
-// }
 
 }  // namespace s21
