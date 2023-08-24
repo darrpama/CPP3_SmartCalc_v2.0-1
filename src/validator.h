@@ -14,17 +14,17 @@ class Validator {
     using string_type = std::string;
 
     Validator();
-    int IsCorrect(string_type);
-    bool EmptyCheck(string_type);
-    int NumCheck(string_type);
-    int BracketCheck(string_type);
-    int BinaryOpCheck(string_type);
-    int TwiseOpCheck(string_type);
-    int FooCheck(string_type);
-    int PlusMinusCheck(string_type);
+    bool IsCorrect(const string_type&);
+    bool EmptyCheck(const string_type&);
+    bool NumCheck(const string_type&);
+    bool BracketCheck(const string_type&);
+    bool BinaryOpCheck(const string_type&);
+    bool TwiseOpCheck(const string_type&);
+    bool FooCheck(const string_type&);
+    bool PlusMinusCheck(const string_type&);
 
-    int IsDigitOrPm(char ch);
-    int BinaryLeft(char ch);
+    bool IsDigitOrPm(char ch);
+    bool BinaryLeft(char ch);
   
   private:
     std::set<std::string> unary { "sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "sqrt" };

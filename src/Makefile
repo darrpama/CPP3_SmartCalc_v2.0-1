@@ -23,9 +23,16 @@ exampleController.o:
 Model.o:
 	$(CC) $(CPPFLAGS) -c Model.cpp -o Model.o $(LIBS)
 
+Validator.o:
+	$(CC) $(CPPFLAGS) -c Validator.cpp -o Validator.o $(LIBS)
+
 consoleView.o:
 	$(CC) $(CPPFLAGS) -c consoleView.cpp -o consoleView.o $(LIBS)
 
-test: Model.o
-	$(CC) $(CPPFLAGS) Model.o testModel.cpp -o test.out $(LIBS)
-	./test.out
+testModel: Model.o
+	$(CC) $(CPPFLAGS) Model.o testModel.cpp -o testModel.out $(LIBS)
+	./testModel.out
+
+testValidator: Validator.o
+	$(CC) $(CPPFLAGS) Validator.o testValidator.cpp -o testValidator.out $(LIBS)
+	./testValidator.out
