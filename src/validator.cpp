@@ -56,20 +56,49 @@ bool Validator::PlusMinusCheck(const string_type& inputString) {
 }
 
 bool Validator::NumCheck(const string_type& inputString) {
+  bool inFloat = false;
+  bool dotFound = false;
   for (size_t i = 0; i < inputString.size(); i++) {
-    if (isdigit(inputString[i]) && i != 0) {
-      if ((i + 1 < inputString.size() && isdigit(inputString[i + 1])) &&
-          (isdigit(inputString[i - 1]))) {
-        continue;
-      } else {
+    if (std::isdigit(inputString[i]) && !inFloat) {
+      inFloat = true;
+      dotFound = false;
+    }
+    if (inputString[i] == '.') {
+      if (dotFound || !inFloat) {
         return true;
       }
-    } else if (inputString[i] == '.' && i == 0) {
-      return true;
+      dotFound = true;
     }
   }
   return false;
 }
+
+bool Validator::DivisionByZero(const string_type& inputString) {
+  bool inFloat = false;
+  bool dotFound = false;
+  for (size_t i = 0; i < inputString.size(); i++) {
+    if (std::isdigit(inputString[i]) && !inFloat) {
+      inFloat = true;
+      dotFound = false;
+    }
+    if (inputString[i] == '.') {
+      if (dotFound || !inFloat) {
+        return true;
+      }
+      dotFound = true;
+    }
+  }
+  return false;
+}
+
+// bool Validator::areDigitsValid(unsigned i) {
+//   if (std::isdigit(expr_[i])) {
+//     if (i > 0 && contains(notAllowedForDigits_, expr_[i - 1])) {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
 
 bool Validator::TwiseOpCheck(const string_type& inputString) {
   for (size_t i = 0; i < inputString.size() - 1; i++) {
@@ -89,21 +118,17 @@ bool Validator::TwiseOpCheck(const string_type& inputString) {
 }
 
 bool Validator::BinaryOpCheck(const string_type& inputString) {
-  for (size_t i = 0; i < inputString.size() - 1; i++) {
+  for (size_t i = 0; i < inputString.size(); i++) {
     char ch = inputString[i];
-    char nextch = inputString[i + 1];
+    char prevch = inputString[i - 1];
     if (ch == '*' || ch == '/' || ch == '^') {
-      if (i == 0) {
+      if (i == 0 || i == inputString.size() - 1) {
         return true;
       }
-      char prevch = inputString[i - 1];
-      if (!IsDigitOrPm(nextch) || !BinaryLeft(prevch)) {
+      if (!BinaryLeft(prevch)) {
         return true;
       }
-      if (ch == '/' && nextch == '0') {
-        return true;
-      }
-    } else if (ch == 'm' && nextch == 'o' && i + 2 < inputString.size() && inputString[i + 2] == 'd') {
+    } else if (ch == 'm' && inputString[i + 2] == 'o' && i + 2 < inputString.size() && inputString[i + 2] == 'd') {
       if (i == 0) {
         return true;
       }

@@ -36,3 +36,5 @@ testModel: Model.o
 testValidator: Validator.o
 	$(CC) $(CPPFLAGS) Validator.o testValidator.cpp -o testValidator.out $(LIBS)
 	./testValidator.out
+
+test: testModel testValidator

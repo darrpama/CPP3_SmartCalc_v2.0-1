@@ -3,6 +3,7 @@
 
 #include <string>
 #include <set>
+#include <regex>
 
 namespace s21 {
 
