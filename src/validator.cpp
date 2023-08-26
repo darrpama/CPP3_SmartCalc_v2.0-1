@@ -73,23 +73,23 @@ bool Validator::NumCheck(const string_type& inputString) {
   return false;
 }
 
-bool Validator::DivisionByZero(const string_type& inputString) {
-  bool inFloat = false;
-  bool dotFound = false;
-  for (size_t i = 0; i < inputString.size(); i++) {
-    if (std::isdigit(inputString[i]) && !inFloat) {
-      inFloat = true;
-      dotFound = false;
-    }
-    if (inputString[i] == '.') {
-      if (dotFound || !inFloat) {
-        return true;
-      }
-      dotFound = true;
-    }
-  }
-  return false;
-}
+// bool Validator::DivisionByZero(const string_type& inputString) {
+//   bool inFloat = false;
+//   bool dotFound = false;
+//   for (size_t i = 0; i < inputString.size(); i++) {
+//     if (std::isdigit(inputString[i]) && !inFloat) {
+//       inFloat = true;
+//       dotFound = false;
+//     }
+//     if (inputString[i] == '.') {
+//       if (dotFound || !inFloat) {
+//         return true;
+//       }
+//       dotFound = true;
+//     }
+//   }
+//   return false;
+// }
 
 // bool Validator::areDigitsValid(unsigned i) {
 //   if (std::isdigit(expr_[i])) {
