@@ -1,7 +1,7 @@
 #ifndef EXAMPLEMODEL_H
 #define EXAMPLEMODEL_H
 
-#include "arithmetic.h"
+#include "Arithmetic.h"
 
 #include <math.h>
 

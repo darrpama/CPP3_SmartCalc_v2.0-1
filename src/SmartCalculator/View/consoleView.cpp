@@ -5,7 +5,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-void ConsoleView::displayMenu()
+void s21::ConsoleView::displayMenu()
 {
     std::cout << "=========" << std::endl;
     std::cout << " M E N U " << std::endl;
@@ -18,7 +18,7 @@ void ConsoleView::displayMenu()
     std::cout << "0. Quit" << std::endl << std::endl;
 }
 
-int ConsoleView::performChoice()
+int s21::ConsoleView::performChoice()
 {
     int choice;
     std::cout << "Input a menu item digit: ";
@@ -26,7 +26,7 @@ int ConsoleView::performChoice()
     return choice;
 } 
 
-double ConsoleView::performNumericInput()
+double s21::ConsoleView::performNumericInput()
 {    
     double number;
     std::cout << "Input a decimal number: ";
@@ -34,7 +34,7 @@ double ConsoleView::performNumericInput()
     return number;
 } 
 
-void ConsoleView::startEventLoop()
+void s21::ConsoleView::startEventLoop()
 {
     while (true) 
     {

@@ -362,7 +362,7 @@ token CalculationModel::DoExpression(token operand1, token operand2, token expre
     }
     else if (expression.type == power)
     {
-      answer = std::pow(operand1.value, operand2.value);
+      answer = pow(operand1.value, operand2.value);
     }
     else if (expression.type == modulo)
     {
@@ -372,7 +372,7 @@ token CalculationModel::DoExpression(token operand1, token operand2, token expre
       }
       else
       {
-        answer = std::fmod(operand1.value, operand2.value);
+        answer = fmod(operand1.value, operand2.value);
       }
     }
   }
@@ -388,39 +388,39 @@ token CalculationModel::DoFunction(token operand, token function)
   {
     if (function.type == sinus)
     {
-      answer = std::sin(operand.value);
+      answer = sin(operand.value);
     }
     else if (function.type == cosinus)
     {
-      answer = std::cos(operand.value);
+      answer = cos(operand.value);
     }
     else if (function.type == tangens)
     {
-      answer = std::tan(operand.value);
+      answer = tan(operand.value);
     }
     else if (function.type == decimalLogarithm)
     {
-      answer = std::log10(operand.value);
+      answer = log10(operand.value);
     }
     else if (function.type == naturalLogarithm)
     {
-      answer = std::log(operand.value);
+      answer = log(operand.value);
     }
     else if (function.type == arcsin)
     {
-      answer = std::asin(operand.value);
+      answer = asin(operand.value);
     }
     else if (function.type == arccos)
     {
-      answer = std::acos(operand.value);
+      answer = acos(operand.value);
     }
     else if (function.type == arctan)
     {
-      answer = std::atan(operand.value);
+      answer = atan(operand.value);
     }
     else if (function.type == squareRoot)
     {
-      answer = std::sqrt(operand.value);
+      answer = sqrt(operand.value);
     }
   }
   danswer.value = answer;

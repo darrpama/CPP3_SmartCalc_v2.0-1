@@ -1,9 +1,10 @@
 #ifndef EXAMPLECONTROLLER_H
 #define EXAMPLECONTROLLER_H
 
-#include "Model.h"
+#include "../Model/Model.h"
 
 namespace s21 {
+
 class Controller 
 {
     private:

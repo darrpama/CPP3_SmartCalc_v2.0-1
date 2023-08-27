@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "s21_is_correct.h"
-#include "s21_stack.h"
 
 Data Begin(char *string);
 int Parcer(char *string, Node *normalStr);

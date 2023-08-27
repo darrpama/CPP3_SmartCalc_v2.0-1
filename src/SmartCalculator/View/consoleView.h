@@ -1,7 +1,9 @@
 #ifndef CONSOLEVIEW_H
 #define CONSOLEVIEW_H
 
-#include "Controller.h"
+#include "../Controller/Controller.h"
+
+namespace s21 {
 
 enum Choice
 {
@@ -17,13 +19,16 @@ enum Choice
 class ConsoleView
 {
     private:
-        s21::Controller *controller;
+        Controller *controller;
     public:
-        s21::ConsoleView(Controller *c):controller(c){};
+        ConsoleView(Controller *c):controller(c){};
         void displayMenu();
         int performChoice();
         double performNumericInput();
         void startEventLoop();
 };
+
+
+}  // namespace s21
 
 #endif
