@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "validator.h"
+#include "Validator.h"
 
 // Positive test case for EmptyCheck()
 TEST(ValidatorTest, EmptyCheck_Positive) {
@@ -29,6 +29,22 @@ TEST(ValidatorTest, BracketCheck_Positive) {
 TEST(ValidatorTest, BracketCheck_Negative) {
   s21::Validator validator;
   std::string inputString = "(1+2*3";
+  bool result = validator.BracketCheck(inputString);
+  EXPECT_TRUE(result);
+}
+
+// Negative test case for BracketCheck()
+TEST(ValidatorTest, BracketCheck_Negative_01) {
+  s21::Validator validator;
+  std::string inputString = ")1+2*3(";
+  bool result = validator.BracketCheck(inputString);
+  EXPECT_TRUE(result);
+}
+//
+// Negative test case for BracketCheck()
+TEST(ValidatorTest, BracketCheck_Negative_02) {
+  s21::Validator validator;
+  std::string inputString = "()1+2*3(";
   bool result = validator.BracketCheck(inputString);
   EXPECT_TRUE(result);
 }
