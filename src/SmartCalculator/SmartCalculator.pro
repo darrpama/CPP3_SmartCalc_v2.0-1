@@ -12,6 +12,7 @@ lessThan(QT_MAJOR_VERSION, 5): QMAKE_CXXFLAGS += -std=c++11
 SOURCES += \
     Controller/Controller.cpp \
     Model/Model.cpp \
+    Model/Validator.cpp \
     View/View.cpp \
     View/consoleView.cpp \
     View/credit.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
     Controller/Controller.h \
     Model/Arithmetic.h \
     Model/Model.h \
+    Model/Validator.h \
     View/View.h \
     View/consoleView.h \
     View/credit.h \
@@ -45,7 +47,3 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    Controller/include.pri \
-    Model/include.pri \
-    View/include.pri
