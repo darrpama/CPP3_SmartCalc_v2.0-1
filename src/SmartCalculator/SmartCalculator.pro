@@ -1,7 +1,3 @@
-#include(Model/include.pri)
-#include(View/include.pri)
-#include(Controller/include.pri)
-
 QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
@@ -16,12 +12,12 @@ lessThan(QT_MAJOR_VERSION, 5): QMAKE_CXXFLAGS += -std=c++11
 SOURCES += \
     Controller/Controller.cpp \
     Model/Model.cpp \
+    View/View.cpp \
     View/consoleView.cpp \
     View/credit.cpp \
     View/deposit.cpp \
-    View/mainwindow.cpp \
+    View/main.cpp \
     View/qcustomplot.cpp \
-    main.cpp \
     s21_credit_calculator.c \
     s21_deposit_calculator.c \
 
@@ -33,7 +29,6 @@ HEADERS += \
     View/consoleView.h \
     View/credit.h \
     View/deposit.h \
-    View/mainwindow.h \
     View/qcustomplot.h \
     s21_credit_calculator.h \
     s21_deposit_calculator.h \
@@ -41,7 +36,6 @@ HEADERS += \
 FORMS += \
     View/credit.ui \
     View/deposit.ui \
-    View/mainwindow.ui \
 #    credit.ui \
 #    deposit.ui \
 #    mainwindow.ui
