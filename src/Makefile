@@ -13,9 +13,8 @@ clean:
 	rm -rf *.out
 	rm -rf build
 	rm -rf report
+	rm -rf *.dSYM
 	rm *.gcda *.gcno
-	rm test.info
-	rm unit_tests
 
 exampleController.o:
 	$(CC) $(CPPFLAGS) -c exampleController.cpp -o exampleController.o $(LIBS)
