@@ -38,6 +38,7 @@ HEADERS += \
 FORMS += \
     View/credit.ui \
     View/deposit.ui \
+    View/View.ui
 #    credit.ui \
 #    deposit.ui \
 #    mainwindow.ui
