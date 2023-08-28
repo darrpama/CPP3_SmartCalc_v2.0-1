@@ -14,6 +14,12 @@ double CalculationModel::StringToDouble(const string_type &str) const
   return std::stod(str);
 }
 
+std::string CalculationModel::CaclulateExpression(const string_type &inputString)
+{
+    Validator.
+    Parser(inputString);
+}
+
 // Function to parse the input string and return the parsed expression
 void CalculationModel::Parser(const string_type &inputString)
 {

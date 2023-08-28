@@ -91,7 +91,7 @@ void MainWindow::Beq_clicked()
   QString input_string = ui->label->text();
   QByteArray b_str = input_string.toLocal8Bit();
   char *input_str = b_str.data();
-  if (is_correct(input_str) || input_string.contains("Wrong expression")) {
+  if (model.IsCorrect(input_str) || input_string.contains("Wrong expression")) {
     error();
   } else {
     if (ui->label->text().contains("x")) {
