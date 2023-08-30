@@ -13,7 +13,7 @@ class Controller
     Controller(CalculationModel *m):model(m) {};
 
     std::string Calculate(std::string);
-    std::pair<std::array<double>, std::array<double>> Controller::DrawGraph()
+    std::pair<std::array<double>, std::array<double>> Controller::GetGraph()
     void Reset();
 };
 

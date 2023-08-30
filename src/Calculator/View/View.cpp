@@ -8,45 +8,45 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this);
 
-  connect(ui->Bzero,  SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bone,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Btwo,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bthree, SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bfour,  SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bfive,  SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bsix,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bseven, SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Beight, SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bnine,  SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bx,     SIGNAL(clicked()), this, SLOT(digit_and_oper()));
+  connect(ui->Bzero,  SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bone,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Btwo,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bthree, SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bfour,  SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bfive,  SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bsix,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bseven, SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Beight, SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bnine,  SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bx,     SIGNAL(clicked()), this, SLOT(DigitAndOper()));
 
-  connect(ui->Badd,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bsub,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bmul,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bdiv,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bpow,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
-  connect(ui->Bmod,   SIGNAL(clicked()), this, SLOT(digit_and_oper()));
+  connect(ui->Badd,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bsub,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bmul,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bdiv,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bpow,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bmod,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
 
-  connect(ui->Bln,    SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Bsin,   SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Bcos,   SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Btan,   SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Blog,   SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Basin,  SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Bacos,  SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Batan,  SIGNAL(clicked()), this, SLOT(func()));
-  connect(ui->Bsqrt,  SIGNAL(clicked()), this, SLOT(func()));
+  connect(ui->Bln,    SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Bsin,   SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Bcos,   SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Btan,   SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Blog,   SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Basin,  SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Bacos,  SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Batan,  SIGNAL(clicked()), this, SLOT(Func()));
+  connect(ui->Bsqrt,  SIGNAL(clicked()), this, SLOT(Func()));
 
-  connect(ui->Beq,    SIGNAL(clicked()), this, SLOT(Beq_clicked()));
-  connect(ui->Bac,    SIGNAL(clicked()), this, SLOT(Bac_clicked()));
-  connect(ui->Bdot,   SIGNAL(clicked()), this, SLOT(Bdot_clicked()));
-  connect(ui->Bdel,   SIGNAL(clicked()), this, SLOT(Bdel_clicked()));
-  connect(ui->Bclbr,  SIGNAL(clicked()), this, SLOT(Bclbr_clicked()));
-  connect(ui->Bopbr,  SIGNAL(clicked()), this, SLOT(Bopbr_clicked()));
+  connect(ui->Beq,    SIGNAL(clicked()), this, SLOT(BEqClicked()));
+  connect(ui->Bac,    SIGNAL(clicked()), this, SLOT(BAcClicked()));
+  connect(ui->Bdot,   SIGNAL(clicked()), this, SLOT(BDotClicked()));
+  connect(ui->Bdel,   SIGNAL(clicked()), this, SLOT(BDelClicked()));
+  connect(ui->Bclbr,  SIGNAL(clicked()), this, SLOT(BClBrClicked()));
+  connect(ui->Bopbr,  SIGNAL(clicked()), this, SLOT(BOpBrClicked()));
 
 
-  connect(ui->Bset_axis,    SIGNAL(clicked()), this, SLOT(set_axis()));
-  connect(ui->Bdraw_graph,  SIGNAL(clicked()), this, SLOT(draw_graph()));
+  connect(ui->Bset_axis,    SIGNAL(clicked()), this, SLOT(SetAxis()));
+  connect(ui->Bdraw_graph,  SIGNAL(clicked()), this, SLOT(DrawGraph()));
 }
 
 MainWindow::~MainWindow()
@@ -54,95 +54,82 @@ MainWindow::~MainWindow()
   delete ui;
 }
 
-void MainWindow::digit_and_oper()
+void MainWindow::DigitAndOper()
 {
   QPushButton *button = (QPushButton *)sender();
-  if (ui->label->text().contains("Wrong") || ui->label->text().contains("Err") || ui->label->text().contains("nan")) {
+  if (controller.GetError()) {
     ui->label->setText("");
   }
   ui->label->setText(ui->label->text() + button->text());
 }
 
 
-void MainWindow::func()
+void MainWindow::Func()
 {
   QPushButton *button = (QPushButton *)sender();
-  if (ui->label->text().contains("Wrong") || ui->label->text().contains("Err") || ui->label->text().contains("nan")) {
+  if (controller.GetError()) {
     ui->label->setText("");
   }
   ui->label->setText(ui->label->text() + button->text() + "(");
 }
 
 
-void MainWindow::Bdot_clicked()
+void MainWindow::BDotClicked()
 {
   ui->label->setText(ui->label->text() + ".");
 }
 
 
-void MainWindow::Bac_clicked()
+void MainWindow::BAcClicked()
 {
   ui->label->setText("");
   on_Bgraphclear_clicked();
 }
 
-void MainWindow::Beq_clicked()
+void MainWindow::BEqClicked()
 {
   QString input_string = ui->label->text();
+  std::string result = "";
 
   try
   {
-    controller->Calculate(input_string.toStdString());
+    result = controller->Calculate(input_string.toStdString());
   }
   catch(const std::exception& e)
   {
     std::cerr << e.what() << '\n';
+    result = std::to_string(e);
   }
-
-  if (ui->label->text().contains("x")) {
-    draw_graph();
-  } else {
-    Data res = Begin(input_str);
-    if (IsError(res)) {
-      ui->label->clear();
-      ui->label->setText(ui->label->text() + "Error");
-    } else {
-      ui->label->setText(QString::number(res.value, 'f', 6));
-    }
-  }
+  ui->label->setText(QString(result));
 }
 
-void MainWindow::error() {
-    ui->label->clear();
-    ui->label->setText("Wrong expression");
-}
-
-void MainWindow::Bclbr_clicked()
+void MainWindow::BClBrClicked()
 {
-  if (ui->label->text().contains("Wrong") || ui->label->text().contains("Err") || ui->label->text().contains("nan")) {
+  if (controller.GetError()) {
     ui->label->setText("");
   }
     ui->label->setText(ui->label->text() + ")");
 }
 
-void MainWindow::Bopbr_clicked()
+void MainWindow::BOpBrClicked()
 {
-  if (ui->label->text().contains("Wrong") || ui->label->text().contains("Err") || ui->label->text().contains("nan")) {
+  if (controller.GetError()) {
     ui->label->setText("");
   }
     ui->label->setText(ui->label->text() + "(");
 }
 
-void MainWindow::Bdel_clicked()
+void MainWindow::BDelClicked()
 {
   QString new_label = ui->label->text();
   new_label.chop(1);
   ui->label->setText(new_label);
 }
 
-void MainWindow::draw_graph() {
+void MainWindow::DrawGraph() {
   QVector<double> x(1000), y(1000);
   QString input_string = ui->label->text();
+  std::pair graph = controller->GetGraph();
   double x_min = ui->xmin_spinbox->value();
   double x_max = ui->xmax_spinbox->value();
   double x_array[1000] = {0};
@@ -178,7 +165,7 @@ void MainWindow::draw_graph() {
   y.clear();
 }
 
-void MainWindow::set_axis()
+void MainWindow::SetAxis()
 {
   double x_min = ui->xmin_spinbox->value();
   double x_max = ui->xmax_spinbox->value();
@@ -193,7 +180,7 @@ void MainWindow::set_axis()
   ui->widget->replot();
 }
 
-void MainWindow::on_Bgraphclear_clicked()
+void MainWindow::OnBGraphClearClicked()
 {
   if (ui->widget->graph(0)) {
     ui->widget->graph(0)->data()->clear();
@@ -201,22 +188,22 @@ void MainWindow::on_Bgraphclear_clicked()
   }
 }
 
-void MainWindow::on_actionCredit_calc_triggered()
+void MainWindow::OnActionCreditCalcTriggered()
 {
   credit.show();
 }
 
-void MainWindow::on_actionDeposit_calc_triggered()
+void MainWindow::OnActionDepositCalcTriggered()
 {
   deposit.show();
 }
 
-void MainWindow::keyClick(QString str)
+void MainWindow::KeyClick(QString str)
 {
     ui->label->setText(ui->label->text() + str);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *e)
+void MainWindow::KeyPressEvent(QKeyEvent *e)
 {
   switch (e->key()) {
   case Qt::Key_Escape:
@@ -291,22 +278,24 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
   }
 }
 
-void MainWindow::on_pBcalculate_eq_clicked()
+void MainWindow::OnPBCalculateEqClicked()
 {
   QString input_string = ui->label->text();
   QString tmpStr = input_string;
   double value = ui->xValue->value();
   tmpStr.replace("x", "(" + QString::number(value, 'g', 6) + ")");
-  QByteArray b_str = tmpStr.toLocal8Bit();
-  char *input_str = b_str.data();
-  if (is_correct(input_str)) {
-    error();
-  } else {
-    Data res = Begin(input_str);
-    if (IsError(res)) {
-      error();
-    } else {
-      ui->label->setText(QString::number(res.value, 'f', 6));
-    }
+
+  std::string result = "";
+
+  try
+  {
+    result = controller->Calculate(input_string.toStdString());
   }
+  catch(const std::exception& e)
+  {
+    std::cerr << e.what() << '\n';
+    result = std::to_string(e);
+  }
+  ui->label->setText(QString(result));
+
 }

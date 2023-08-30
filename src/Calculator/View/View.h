@@ -44,17 +44,17 @@ private:
 //    Deposit deposit;
 
 private slots:
-    void digit_and_oper();
-    void func();
-    void Bdot_clicked();
-    void Bac_clicked();
-    void Bclbr_clicked();
-    void Bopbr_clicked();
-    void Bdel_clicked();
-    void Beq_clicked();
+    void DigitAndOper();
+    void Func();
+    void BDotClicked();
+    void BAcClicked();
+    void BClBrClicked();
+    void BOpBrClicked();
+    void BDelClicked();
+    void BEqClicked();
 
-    void set_axis();
-    void draw_graph();
+    void SetAxis();
+    void DrawGraph();
 
     void on_Bgraphclear_clicked();
     void on_actionCredit_calc_triggered();
