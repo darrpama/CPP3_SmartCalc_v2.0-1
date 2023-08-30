@@ -4,15 +4,17 @@ namespace s21 {
 
 std::string Controller::Calculate(std::string expression)
 {
-    model->Parser(expression);
-    std::string validatorOutput = model.
-    madel->
-    return std::to_string(model->GetAnswer());
+  model->Parser(expression);
+  return model->GetStringAnswer();
+}
+
+std::pair<std::array<double>, std::array<double>> Controller::DrawGraph()
+{
+
 }
 
 void Controller::Reset(){
-    model->reset();
-
+  model->reset();
 }  // namespace s21
 
 }

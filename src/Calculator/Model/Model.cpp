@@ -9,19 +9,29 @@ bool CalculationModel::IsDigit(char ch) const
 }
 
 // Function to convert a string to a double
-double CalculationModel::StringToDouble(const string_type &str) const
+double CalculationModel::StringToDouble(const std::string &str) const
 {
   return std::stod(str);
 }
 
-std::string CalculationModel::CaclulateExpression(const string_type &inputString)
+std::string CalculationModel::CaclulateExpression(const std::string &inputString)
 {
-    Validator.
-    Parser(inputString);
+    s21::CalculationModel::validator.
+    try
+    {
+      Parser(inputString);
+    }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+      this.stringAnswer
+    }
+    
+    GetAnswer();
 }
 
 // Function to parse the input string and return the parsed expression
-void CalculationModel::Parser(const string_type &inputString)
+void CalculationModel::Parser(const std::string &inputString)
 {
   for (size_t i = 0; i < inputString.length(); i++)
   {
@@ -97,7 +107,7 @@ void CalculationModel::ProcessOperator(const char ch)
 }
 
 // Function to process other operators and push them into the parsed expression
-void CalculationModel::ProcessOtherOperators(const char ch, size_t &i, const string_type &inputString)
+void CalculationModel::ProcessOtherOperators(const char ch, size_t &i, const std::string &inputString)
 {
   const std::string str = inputString.substr(i);
   if (str.compare(0, 3, "mod") == 0)
@@ -304,6 +314,11 @@ double CalculationModel::GetAnswer() const
   return answer;
 }
 
+std::string CalculationModel::GetAnswer() const
+{
+  return stringAnswer;
+}
+
 CalculationModel::list_type CalculationModel::GetParsedExpression() const
 {
   return parsedExpression;
@@ -431,6 +446,21 @@ token CalculationModel::DoFunction(token operand, token function)
   }
   danswer.value = answer;
   return danswer;
+}
+
+std::string s21::CalculationModel::GetStringAnswer() const
+{
+  return stringAnswer;
+}
+
+void s21::CalculationModel::SetStrAnswer(const std::string &answer) const
+{
+  stringAnswer = answer;
+}
+
+void s21::CalculationModel::SetStrAnswer(const std::exception &exception) const
+{
+  stringAnswer = std::to_string(exception);
 }
 
 }  // namespace s21

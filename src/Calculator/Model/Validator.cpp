@@ -4,7 +4,7 @@ namespace s21 {
 
 Validator::Validator() {}
 
-bool Validator::IsCorrect(const string_type& inputString) {
+bool Validator::IsCorrect(const std::string& inputString) {
   bool err = false;
   bool e_check = EmptyCheck(inputString);
 
@@ -20,11 +20,11 @@ bool Validator::IsCorrect(const string_type& inputString) {
   return err;
 }
 
-bool Validator::EmptyCheck(const string_type& inputString) {
+bool Validator::EmptyCheck(const std::string& inputString) {
   return inputString.empty();
 }
 
-bool Validator::BracketCheck(const string_type& inputString) {
+bool Validator::BracketCheck(const std::string& inputString) {
   int count = 0;
   int bracketOpened = 0;
   for (size_t i = 0; i < inputString.size(); i++) {
@@ -48,16 +48,16 @@ bool Validator::BracketCheck(const string_type& inputString) {
   return count != 0;
 }
 
-bool Validator::PlusMinusCheck(const string_type& inputString) {
-  static const string_type ex_str = "1234567890(x.+-";
-  static const string_type ex_str2 = "1234567890()x+-";
+bool Validator::PlusMinusCheck(const std::string& inputString) {
+  static const std::string ex_str = "1234567890(x.+-";
+  static const std::string ex_str2 = "1234567890()x+-";
   for (size_t i = 0; i < inputString.size(); i++) {
     if (inputString[i] == '+' || inputString[i] == '-') {
       if (i + 1 >= inputString.size()) {
         return true;
-      } else if (ex_str.find(inputString[i + 1]) == string_type::npos) {
+      } else if (ex_str.find(inputString[i + 1]) == std::string::npos) {
         return true;
-      } else if (i != 0 && ex_str2.find(inputString[i - 1]) == string_type::npos) {
+      } else if (i != 0 && ex_str2.find(inputString[i - 1]) == std::string::npos) {
         return true;
       }
     }
@@ -65,7 +65,7 @@ bool Validator::PlusMinusCheck(const string_type& inputString) {
   return false;
 }
 
-bool Validator::NumCheck(const string_type& inputString) {
+bool Validator::NumCheck(const std::string& inputString) {
   bool inFloat = false;
   bool dotFound = false;
   for (size_t i = 0; i < inputString.size(); i++) {
@@ -83,7 +83,7 @@ bool Validator::NumCheck(const string_type& inputString) {
   return false;
 }
 
-bool Validator::TwiseOpCheck(const string_type& inputString) {
+bool Validator::TwiseOpCheck(const std::string& inputString) {
   size_t size = inputString.size();
   for (size_t i = 0; i < size - 1; i++) {
     char ch = inputString[i];
@@ -108,7 +108,7 @@ bool Validator::TwiseOpCheck(const string_type& inputString) {
   return false;
 }
 
-bool Validator::BinaryOpCheck(const string_type& inputString) {
+bool Validator::BinaryOpCheck(const std::string& inputString) {
   for (size_t i = 0; i < inputString.size(); i++) {
     char ch = inputString[i];
     char prevch = inputString[i - 1];
@@ -132,7 +132,7 @@ bool Validator::BinaryOpCheck(const string_type& inputString) {
   return false;
 }
 
-bool Validator::FooCheck(const string_type& inputString) {
+bool Validator::FooCheck(const std::string& inputString) {
   for (size_t i = 0; i < inputString.size(); i++) {
     if (inputString[i] == 'a' && (inputString[i + 1] == 's' || inputString[i + 1] == 'c') &&
         (inputString[i + 2] != 'i' || inputString[i + 3] != 'n' || inputString[i + 4] != '(' || !IsDigitOrPm(inputString[i + 5]))) {

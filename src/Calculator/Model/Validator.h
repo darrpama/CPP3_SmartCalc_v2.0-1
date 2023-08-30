@@ -12,17 +12,15 @@ namespace s21 {
 class Validator {
 
   public:
-    using string_type = std::string;
-
     Validator();
-    bool IsCorrect(const string_type&);
-    bool EmptyCheck(const string_type&);
-    bool NumCheck(const string_type&);
-    bool BracketCheck(const string_type&);
-    bool BinaryOpCheck(const string_type&);
-    bool TwiseOpCheck(const string_type&);
-    bool FooCheck(const string_type&);
-    bool PlusMinusCheck(const string_type&);
+    bool IsCorrect(const std::string&);
+    bool EmptyCheck(const std::string&);
+    bool NumCheck(const std::string&);
+    bool BracketCheck(const std::string&);
+    bool BinaryOpCheck(const std::string&);
+    bool TwiseOpCheck(const std::string&);
+    bool FooCheck(const std::string&);
+    bool PlusMinusCheck(const std::string&);
 
     bool IsDigitOrPm(char ch);
     bool BinaryLeft(char ch);

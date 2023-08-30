@@ -7,13 +7,14 @@ namespace s21 {
 
 class Controller 
 {
-    private:
-        CalculationModel *model;
-    public:
-        Controller(CalculationModel *m):model(m) {};
+  private:
+    CalculationModel *model;
+  public:
+    Controller(CalculationModel *m):model(m) {};
 
-        std::string Calculate(std::string);
-        void Reset();
+    std::string Calculate(std::string);
+    std::pair<std::array<double>, std::array<double>> Controller::DrawGraph()
+    void Reset();
 };
 
 }  // namespace s21

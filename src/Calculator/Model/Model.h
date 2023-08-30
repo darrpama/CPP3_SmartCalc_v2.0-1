@@ -17,20 +17,19 @@ class CalculationModel {
 
   public:
     using stack_type = std::stack<token>;
-    using string_type = std::string;
     using list_type = std::list<token>;
 
     CalculationModel() : answer(0){};
-    void Parser(const string_type&);
+    void Parser(const std::string&);
     void ProcessOperator(const char);
-    void ProcessOtherOperators(const char, size_t&, const string_type&);
+    void ProcessOtherOperators(const char, size_t&, const std::string&);
     void PolishParser();
     void Calculator();
 
     void PrintParsedExpression() const;
     void PrintPolishStack() const;
     bool IsDigit(char) const;
-    double StringToDouble(const string_type&) const;
+    double StringToDouble(const std::string&) const;
     bool IsNumber(const token&) const;
     bool IsExpression(const token&) const;
     bool IsFunction(const token&) const;
@@ -38,6 +37,9 @@ class CalculationModel {
     bool IsCloseBracket(const token&) const;
     void Reset();
     double GetAnswer() const;
+    std::string GetStringAnswer() const;
+    void SetStrAnswer(const std::string&) const;
+    void SetStrAnswer(const std::exception&) const;
     list_type GetParsedExpression() const;
     list_type GetPolishStack() const;
     void SetAnswer(token);
@@ -49,6 +51,8 @@ class CalculationModel {
     list_type parsedExpression;
     list_type polishStack;
     double answer{};
+    std::string stringAnswer = "Empty";
+
     token addToken = {0.0, addSub, addition, "+"};
     token subToken = {0.0, addSub, subtraction, "-"};
     token mulToken = {0.0, mulDivMod, multiplication, "*"};

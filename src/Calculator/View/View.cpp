@@ -89,21 +89,25 @@ void MainWindow::Bac_clicked()
 void MainWindow::Beq_clicked()
 {
   QString input_string = ui->label->text();
-  QByteArray b_str = input_string.toLocal8Bit();
-  char *input_str = b_str.data();
-  if (model.IsCorrect(input_str) || input_string.contains("Wrong expression")) {
-    error();
+
+  try
+  {
+    controller->Calculate(input_string.toStdString());
+  }
+  catch(const std::exception& e)
+  {
+    std::cerr << e.what() << '\n';
+  }
+
+  if (ui->label->text().contains("x")) {
+    draw_graph();
   } else {
-    if (ui->label->text().contains("x")) {
-      draw_graph();
+    Data res = Begin(input_str);
+    if (IsError(res)) {
+      ui->label->clear();
+      ui->label->setText(ui->label->text() + "Error");
     } else {
-      Data res = Begin(input_str);
-      if (IsError(res)) {
-        ui->label->clear();
-        ui->label->setText(ui->label->text() + "Error");
-      } else {
-        ui->label->setText(QString::number(res.value, 'f', 6));
-      }
+      ui->label->setText(QString::number(res.value, 'f', 6));
     }
   }
 }
