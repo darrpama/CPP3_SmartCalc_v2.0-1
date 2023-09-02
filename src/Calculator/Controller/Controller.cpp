@@ -2,19 +2,26 @@
 
 namespace s21 {
 
-std::string Controller::Calculate(std::string expression)
+std::string Controller::Calculate(const std::string& expression)
 {
-  model->Parser(expression);
-  return model->GetStringAnswer();
+  return model->CaclulateExpression(expression);
 }
 
-std::pair<std::array<double>, std::array<double>> Controller::DrawGraph()
+std::vector<std::pair<double, double>> Controller::GetGraph(std::string expression, double xMin, double xMax)
 {
+  std::vector<std::pair<double, double>> answer = {{0.0, 1.0}, {1.1, 2.2}};
+
+  return answer;
 
 }
 
 void Controller::Reset(){
-  model->reset();
+  model->Reset();
 }  // namespace s21
 
+bool Controller::GetError()
+{
+  return false;
 }
+
+}	// namespace s21

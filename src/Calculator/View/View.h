@@ -23,7 +23,7 @@ extern "C"
 #endif
 
 #include "../Controller/Controller.h"
-#include "qcustomplot.h"
+#include "../qcustomplot/qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -56,12 +56,12 @@ private slots:
     void SetAxis();
     void DrawGraph();
 
-    void on_Bgraphclear_clicked();
-    void on_actionCredit_calc_triggered();
-    void on_actionDeposit_calc_triggered();
-    void keyClick(QString str);
-    void keyPressEvent(QKeyEvent *e);
-    void error();
-    void on_pBcalculate_eq_clicked();
+    void OnBGraphClearClicked();
+    void OnActionCreditCalcTriggered();
+    void OnActionDepositCalcTriggered();
+    void KeyClick(QString str);
+    void KeyPressEvent(QKeyEvent *e);
+//    void Error();
+    void OnPBCalculateEqClicked();
 };
 #endif // MAINWINDOW_H

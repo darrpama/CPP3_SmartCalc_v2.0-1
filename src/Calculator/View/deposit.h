@@ -7,7 +7,7 @@
 extern "C"
 {
 #endif
-#include "s21_deposit_calculator.h"
+//#include "s21_deposit_calculator.h"
 #ifdef __cplusplus
 }
 #endif
@@ -25,7 +25,7 @@ public:
   ~Deposit();
 
 private slots:
-  void on_pBdepositCalculate_clicked();
+  void onPBdepositCalculateClicked();
 
 private:
   Ui::Deposit *ui;

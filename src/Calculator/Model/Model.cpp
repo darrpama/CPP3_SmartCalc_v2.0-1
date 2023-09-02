@@ -16,18 +16,16 @@ double CalculationModel::StringToDouble(const std::string &str) const
 
 std::string CalculationModel::CaclulateExpression(const std::string &inputString)
 {
-    s21::CalculationModel::validator.
-    try
-    {
-      Parser(inputString);
-    }
-    catch(const std::exception& e)
-    {
-      std::cerr << e.what() << '\n';
-      this.stringAnswer
-    }
-    
-    GetAnswer();
+  try
+  {
+    Parser(inputString);
+  }
+  catch(const std::exception& e)
+  {
+    std::cerr << e.what() << '\n';
+    SetStrAnswer(e);
+  }
+  return GetStringAnswer();
 }
 
 // Function to parse the input string and return the parsed expression
@@ -309,12 +307,12 @@ void CalculationModel::Reset()
   answer = {};
 }
 
-double CalculationModel::GetAnswer() const
+double CalculationModel::GetAnswerDouble() const
 {
   return answer;
 }
 
-std::string CalculationModel::GetAnswer() const
+std::string CalculationModel::GetAnswerString() const
 {
   return stringAnswer;
 }
@@ -453,14 +451,14 @@ std::string s21::CalculationModel::GetStringAnswer() const
   return stringAnswer;
 }
 
-void s21::CalculationModel::SetStrAnswer(const std::string &answer) const
+void s21::CalculationModel::SetStrAnswer(const std::string &answer)
 {
-  stringAnswer = answer;
+  this->stringAnswer = answer;
 }
 
-void s21::CalculationModel::SetStrAnswer(const std::exception &exception) const
+void s21::CalculationModel::SetStrAnswer(const std::exception &exception)
 {
-  stringAnswer = std::to_string(exception);
+  this->stringAnswer = exception.what();
 }
 
 }  // namespace s21

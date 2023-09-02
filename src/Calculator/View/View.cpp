@@ -1,4 +1,4 @@
-#include "View.h"
+#include "View/View.h"
 #include "ui_View.h"
 #include <iostream>
 
@@ -57,7 +57,7 @@ MainWindow::~MainWindow()
 void MainWindow::DigitAndOper()
 {
   QPushButton *button = (QPushButton *)sender();
-  if (controller.GetError()) {
+  if (controller->GetError()) {
     ui->label->setText("");
   }
   ui->label->setText(ui->label->text() + button->text());
@@ -67,7 +67,7 @@ void MainWindow::DigitAndOper()
 void MainWindow::Func()
 {
   QPushButton *button = (QPushButton *)sender();
-  if (controller.GetError()) {
+  if (controller->GetError()) {
     ui->label->setText("");
   }
   ui->label->setText(ui->label->text() + button->text() + "(");
@@ -83,7 +83,7 @@ void MainWindow::BDotClicked()
 void MainWindow::BAcClicked()
 {
   ui->label->setText("");
-  on_Bgraphclear_clicked();
+  OnBGraphClearClicked();
 }
 
 void MainWindow::BEqClicked()
@@ -98,14 +98,14 @@ void MainWindow::BEqClicked()
   catch(const std::exception& e)
   {
     std::cerr << e.what() << '\n';
-    result = std::to_string(e);
+    result = e.what();
   }
-  ui->label->setText(QString(result));
+  ui->label->setText(QString::fromStdString(result));
 }
 
 void MainWindow::BClBrClicked()
 {
-  if (controller.GetError()) {
+  if (controller->GetError()) {
     ui->label->setText("");
   }
     ui->label->setText(ui->label->text() + ")");
@@ -113,7 +113,7 @@ void MainWindow::BClBrClicked()
 
 void MainWindow::BOpBrClicked()
 {
-  if (controller.GetError()) {
+  if (controller->GetError()) {
     ui->label->setText("");
   }
     ui->label->setText(ui->label->text() + "(");
@@ -127,42 +127,45 @@ void MainWindow::BDelClicked()
 }
 
 void MainWindow::DrawGraph() {
-  QVector<double> x(1000), y(1000);
-  QString input_string = ui->label->text();
-  std::pair graph = controller->GetGraph();
-  double x_min = ui->xmin_spinbox->value();
-  double x_max = ui->xmax_spinbox->value();
-  double x_array[1000] = {0};
-  double y_array[1000] = {0};
+//  QVector<double> vector();
+  QString inputString = ui->label->text();
 
-  for (int i = 0; i < 1000; i++) {
-    x_array[i] = x_min + i * (x_max - x_min) / 1000;
-    x[i] = x_array[i];
+  double xMin = ui->xmin_spinbox->value();
+  double xMax = ui->xmax_spinbox->value();
+  std::string stdInputString(inputString.toStdString());
+
+  
+  std::vector<std::pair<double, double>> stdGraph = controller->GetGraph(stdInputString, xMin, xMax);
+  QVector<std::pair<double, double>> graph = QVector<std::pair<double, double>>(stdGraph.begin(), stdGraph.end());
+
+  for (size_t i = 0; i < graph.size(); i++)
+  {
+    std::cout << graph[i].first << " | " << graph[i].second << std::endl;
   }
+  
+  // for (int i = 0; i < 1000; i++) {
+  //   QString tmpStr = input_string;
+  //   tmpStr.replace("x", "(" + QString::number(x_array[i], 'g', 6) + ")");
+  //   QByteArray b_str = tmpStr.toLocal8Bit();
+  //   char *input_str = b_str.data();
+  //   if (is_correct(input_str)) {
+  //     error();
+  //     break;
+  //   }
+  //   Data tmp = Begin(input_str);
+  //   y_array[i] = tmp.value;
+  //   y[i] = y_array[i];
+  // }
 
-  for (int i = 0; i < 1000; i++) {
-    QString tmpStr = input_string;
-    tmpStr.replace("x", "(" + QString::number(x_array[i], 'g', 6) + ")");
-    QByteArray b_str = tmpStr.toLocal8Bit();
-    char *input_str = b_str.data();
-    if (is_correct(input_str)) {
-      error();
-      break;
-    }
-    Data tmp = Begin(input_str);
-    y_array[i] = tmp.value;
-    y[i] = y_array[i];
-  }
-
-  set_axis();
-  ui->widget->clearGraphs();
-  ui->widget->addGraph();
-  ui->widget->graph(0)->addData(x, y);
-  ui->widget->replot();
-  ui->widget->setInteraction(QCP::iRangeZoom, true);
-  ui->widget->setInteraction(QCP::iRangeDrag, true);
-  x.clear();
-  y.clear();
+//  SetAxis();
+//  ui->widget->clearGraphs();
+//  ui->widget->addGraph();
+////  ui->widget->graph(0)->addData(x, y);
+//  ui->widget->replot();
+//  ui->widget->setInteraction(QCP::iRangeZoom, true);
+//  ui->widget->setInteraction(QCP::iRangeDrag, true);
+//  x.clear();
+//  y.clear();
 }
 
 void MainWindow::SetAxis()
@@ -190,12 +193,12 @@ void MainWindow::OnBGraphClearClicked()
 
 void MainWindow::OnActionCreditCalcTriggered()
 {
-  credit.show();
+//  credit.show();
 }
 
 void MainWindow::OnActionDepositCalcTriggered()
 {
-  deposit.show();
+//  deposit.show();
 }
 
 void MainWindow::KeyClick(QString str)
@@ -207,73 +210,73 @@ void MainWindow::KeyPressEvent(QKeyEvent *e)
 {
   switch (e->key()) {
   case Qt::Key_Escape:
-    Bac_clicked();
+    BAcClicked();
     break;
   case Qt::Key_Asterisk:
-    keyClick("*");
+    KeyClick("*");
     break;
   case Qt::Key_Slash:
-    keyClick("/");
+    KeyClick("/");
     break;
   case Qt::Key_Plus:
-    keyClick("+");
+    KeyClick("+");
     break;
   case Qt::Key_Minus:
-    keyClick("-");
+    KeyClick("-");
     break;
   case Qt::Key_0:
-    keyClick("0");
+    KeyClick("0");
     break;
   case Qt::Key_1:
-    keyClick("1");
+    KeyClick("1");
     break;
   case Qt::Key_2:
-    keyClick("2");
+    KeyClick("2");
     break;
   case Qt::Key_3:
-    keyClick("3");
+    KeyClick("3");
     break;
   case Qt::Key_4:
-    keyClick("4");
+    KeyClick("4");
     break;
   case Qt::Key_5:
-    keyClick("5");
+    KeyClick("5");
     break;
   case Qt::Key_6:
-    keyClick("6");
+    KeyClick("6");
     break;
   case Qt::Key_7:
-    keyClick("7");
+    KeyClick("7");
     break;
   case Qt::Key_8:
-    keyClick("8");
+    KeyClick("8");
     break;
   case Qt::Key_9:
-    keyClick("9");
+    KeyClick("9");
     break;
   case Qt::Key_X:
-    keyClick("x");
+    KeyClick("x");
     break;
   case Qt::Key_Period:
-    keyClick(".");
+    KeyClick(".");
     break;
   case Qt::Key_AsciiCircum:
-    keyClick("^");
+    KeyClick("^");
     break;
   case Qt::Key_Backspace:
-    Bdel_clicked();
+    BDelClicked();
     break;
   case Qt::Key_Delete:
-    Bac_clicked();
+    BAcClicked();
     break;
   case Qt::Key_Return:
-    Beq_clicked();
+    BEqClicked();
     break;
   case Qt::Key_ParenLeft:
-    keyClick("(");
+    KeyClick("(");
     break;
   case Qt::Key_ParenRight:
-    keyClick(")");
+    KeyClick(")");
     break;
   }
 }
@@ -294,8 +297,8 @@ void MainWindow::OnPBCalculateEqClicked()
   catch(const std::exception& e)
   {
     std::cerr << e.what() << '\n';
-    result = std::to_string(e);
+    result = e.what();
   }
-  ui->label->setText(QString(result));
+  ui->label->setText(QString::fromStdString(result));
 
 }

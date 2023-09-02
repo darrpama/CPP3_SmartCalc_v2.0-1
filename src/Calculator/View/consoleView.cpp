@@ -38,38 +38,8 @@ void s21::ConsoleView::startEventLoop()
 {
     while (true) 
     {
-        double result;
+      double result{};
         displayMenu();
-        switch ((Choice)performChoice())
-        {
-        case SUM:
-            result = controller->add(performNumericInput());
-            break;
-        
-        case SUB:
-            result = controller->sub(performNumericInput());
-            break;
-
-        case MUL:
-            result = controller->mult(performNumericInput());
-            break;
-
-        case DIV:
-            result = controller->div(performNumericInput());
-            break;
-
-        case RES:
-            controller->reset();
-            result = 0.0;
-            break;
-
-        case EXIT:
-            exit(1);
-
-        default:
-            std::cout << "Wrong menu item number!";
-            continue;
-        }
 
         std::cout << "Current result is: " << result << std::endl;
     }

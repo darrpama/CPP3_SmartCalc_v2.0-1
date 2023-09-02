@@ -12,9 +12,10 @@ class Controller
   public:
     Controller(CalculationModel *m):model(m) {};
 
-    std::string Calculate(std::string);
-    std::pair<std::array<double>, std::array<double>> Controller::GetGraph()
+    std::string Calculate(const std::string&);
+    std::vector<std::pair<double, double>> GetGraph(std::string, double, double);
     void Reset();
+    bool GetError();
 };
 
 }  // namespace s21
