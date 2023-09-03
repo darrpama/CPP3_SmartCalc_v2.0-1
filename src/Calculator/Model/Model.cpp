@@ -14,6 +14,7 @@ double CalculationModel::StringToDouble(const std::string &str) const
   return std::stod(str);
 }
 
+// Main function to calculate expression
 std::string CalculationModel::CaclulateExpression(const std::string &inputString)
 {
   try
@@ -24,6 +25,7 @@ std::string CalculationModel::CaclulateExpression(const std::string &inputString
   {
     std::cerr << e.what() << '\n';
     SetStrAnswer(e);
+    SetError(true);
   }
   return GetStringAnswer();
 }
@@ -305,6 +307,7 @@ void CalculationModel::Reset()
   parsedExpression.clear();
   polishStack.clear();
   answer = {};
+  error = false;
 }
 
 double CalculationModel::GetAnswerDouble() const
@@ -459,6 +462,16 @@ void s21::CalculationModel::SetStrAnswer(const std::string &answer)
 void s21::CalculationModel::SetStrAnswer(const std::exception &exception)
 {
   this->stringAnswer = exception.what();
+}
+
+bool s21::CalculationModel::GetError()
+{
+  return error;
+}
+
+void s21::CalculationModel::SetError(bool NewError)
+{
+  error = NewError;
 }
 
 }  // namespace s21

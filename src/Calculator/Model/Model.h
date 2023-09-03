@@ -26,7 +26,6 @@ class CalculationModel {
     void PolishParser();
     void Calculator();
 
-
     std::string CaclulateExpression(const std::string&);
     void PrintParsedExpression() const;
     void PrintPolishStack() const;
@@ -37,7 +36,9 @@ class CalculationModel {
     bool IsFunction(const token&) const;
     bool IsOpenBracket(const token&) const;
     bool IsCloseBracket(const token&) const;
-    void Reset();
+    token DoExpression(token, token, token);
+    token DoFunction(token, token);
+
     double GetAnswerDouble() const;
     std::string GetAnswerString() const;
     std::string GetStringAnswer() const;
@@ -46,8 +47,10 @@ class CalculationModel {
     list_type GetParsedExpression() const;
     list_type GetPolishStack() const;
     void SetAnswer(token);
-    token DoExpression(token, token, token);
-    token DoFunction(token, token);
+
+    bool GetError();
+    void SetError(bool);
+    void Reset();
 
   private:
     Validator validator;
@@ -55,6 +58,7 @@ class CalculationModel {
     list_type polishStack;
     double answer{};
     std::string stringAnswer = "";
+    bool error;
 
     token addToken = {0.0, addSub, addition, "+"};
     token subToken = {0.0, addSub, subtraction, "-"};

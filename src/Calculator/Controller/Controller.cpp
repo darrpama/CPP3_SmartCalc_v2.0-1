@@ -21,7 +21,7 @@ void Controller::Reset(){
 
 bool Controller::GetError()
 {
-  return false;
+  return model->GetError();
 }
 
 }	// namespace s21
