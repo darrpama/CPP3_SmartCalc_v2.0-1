@@ -54,7 +54,7 @@ private slots:
   void OnActionCreditCalcTriggered();
   void OnActionDepositCalcTriggered();
   void KeyClick(QString str);
-  void KeyPressEvent(QKeyEvent *e);
+//  void KeyPressEvent(QKeyEvent *e);
   //    void Error();
   void OnPBCalculateEqClicked();
 };

@@ -1,17 +1,14 @@
-#include "View.h"
+#include "View/View.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-  s21::CalculationModel model;
-  s21::Controller controller(&model);
-  
-
-
   setenv("LC_NUMERIC", "C", 1);
   QApplication a(argc, argv);
-  View w(&controller);
-  w.show();
+  s21::CalculationModel model;
+  s21::Controller controller(&model);
+  View view(&controller);
+  view.show();
   return a.exec();
 }

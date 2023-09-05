@@ -7,12 +7,9 @@ std::string Controller::Calculate(const std::string& expression)
   return model->CaclulateExpression(expression);
 }
 
-std::vector<std::pair<double, double>> Controller::GetGraph(std::string expression, double xMin, double xMax)
+std::pair<std::vector<double>, std::vector<double>> Controller::GetGraph(std::string expression, double xMin, double xMax)
 {
-  std::vector<std::pair<double, double>> answer = {{0.0, 1.0}, {1.1, 2.2}};
-
-  return answer;
-
+  return model->GetGraph(expression, xMin, xMax);
 }
 
 void Controller::Reset()

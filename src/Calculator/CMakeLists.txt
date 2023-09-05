@@ -32,7 +32,7 @@ set(PROJECT_SOURCES
     View/consoleView.cpp
     View/credit.cpp
     View/deposit.cpp
-    View/main.cpp
+    main.cpp
     qcustomplot/qcustomplot.cpp
 
     View/credit.ui

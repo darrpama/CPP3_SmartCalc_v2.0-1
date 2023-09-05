@@ -17,9 +17,13 @@ double CalculationModel::StringToDouble(const std::string &str) const
 // Main function to calculate expression
 std::string CalculationModel::CaclulateExpression(const std::string &inputString)
 {
+  Reset();
   try
   {
     Parser(inputString);
+    PolishParser();
+    Calculator();
+    SetStrAnswer(answer);
   }
   catch(const std::exception& e)
   {
@@ -310,15 +314,6 @@ void CalculationModel::Reset()
   error = false;
 }
 
-double CalculationModel::GetAnswerDouble() const
-{
-  return answer;
-}
-
-std::string CalculationModel::GetAnswerString() const
-{
-  return stringAnswer;
-}
 
 CalculationModel::list_type CalculationModel::GetParsedExpression() const
 {
@@ -449,7 +444,12 @@ token CalculationModel::DoFunction(token operand, token function)
   return danswer;
 }
 
-std::string s21::CalculationModel::GetStringAnswer() const
+double CalculationModel::GetDoubleAnswer() const
+{
+  return answer;
+}
+
+std::string CalculationModel::GetStringAnswer() const
 {
   return stringAnswer;
 }
@@ -459,17 +459,32 @@ void s21::CalculationModel::SetStrAnswer(const std::string &answer)
   this->stringAnswer = answer;
 }
 
-void s21::CalculationModel::SetStrAnswer(const std::exception &exception)
+void CalculationModel::SetStrAnswer(const double answer)
+{
+  this->stringAnswer = std::to_string(answer);
+}
+
+void CalculationModel::SetStrAnswer(const std::exception &exception)
 {
   this->stringAnswer = exception.what();
 }
 
-bool s21::CalculationModel::GetError()
+bool CalculationModel::GetError()
 {
   return error;
 }
 
-void s21::CalculationModel::SetError(bool NewError)
+std::pair<std::vector<double>, std::vector<double>> CalculationModel::GetGraph(std::string stdInputString, double xMin, double xMax)
+{
+  std::pair<std::vector<double>, std::vector<double>> answer;
+  answer.first[0] = 1.0;
+  answer.first[1] = 2.0;
+  answer.second[0] = 1.0;
+  answer.second[1] = 2.0;
+  return answer;
+}
+
+void CalculationModel::SetError(bool NewError)
 {
   error = NewError;
 }

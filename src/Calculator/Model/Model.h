@@ -39,14 +39,16 @@ class CalculationModel {
     token DoExpression(token, token, token);
     token DoFunction(token, token);
 
-    double GetAnswerDouble() const;
+    double GetDoubleAnswer() const;
     std::string GetAnswerString() const;
     std::string GetStringAnswer() const;
+    std::pair<std::vector<double>, std::vector<double>> GetGraph(std::string, double, double);
+    void SetAnswer(token);
+    void SetStrAnswer(const double);
     void SetStrAnswer(const std::string&);
     void SetStrAnswer(const std::exception&);
     list_type GetParsedExpression() const;
     list_type GetPolishStack() const;
-    void SetAnswer(token);
 
     bool GetError();
     void SetError(bool);
