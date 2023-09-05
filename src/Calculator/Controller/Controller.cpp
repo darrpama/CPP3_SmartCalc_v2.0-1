@@ -15,7 +15,8 @@ std::vector<std::pair<double, double>> Controller::GetGraph(std::string expressi
 
 }
 
-void Controller::Reset(){
+void Controller::Reset()
+{
   model->Reset();
 }  // namespace s21
 

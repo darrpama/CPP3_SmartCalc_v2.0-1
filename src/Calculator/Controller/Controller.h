@@ -10,7 +10,7 @@ class Controller
   private:
     CalculationModel *model;
   public:
-    Controller(CalculationModel *m):model(m) {};
+    Controller(CalculationModel *m) : model(m) {};
 
     std::string Calculate(const std::string&);
     std::vector<std::pair<double, double>> GetGraph(std::string, double, double);

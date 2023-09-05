@@ -1,10 +1,9 @@
 #include "View/View.h"
-#include "ui_View.h"
 #include <iostream>
+#include "ui_View.h"
 
-MainWindow::MainWindow(QWidget *parent)
-  : QMainWindow(parent)
-  , ui(new Ui::MainWindow)
+View::View(QWidget *parent, s21::Controller *c)
+  : QMainWindow(parent), controller(c), ui(new Ui::View)
 {
   ui->setupUi(this);
 
@@ -49,12 +48,12 @@ MainWindow::MainWindow(QWidget *parent)
   connect(ui->Bdraw_graph,  SIGNAL(clicked()), this, SLOT(DrawGraph()));
 }
 
-MainWindow::~MainWindow()
+View::~View()
 {
   delete ui;
 }
 
-void MainWindow::DigitAndOper()
+void View::DigitAndOper()
 {
   QPushButton *button = (QPushButton *)sender();
   if (controller->GetError()) {
@@ -64,7 +63,7 @@ void MainWindow::DigitAndOper()
 }
 
 
-void MainWindow::Func()
+void View::Func()
 {
   QPushButton *button = (QPushButton *)sender();
   if (controller->GetError()) {
@@ -74,19 +73,19 @@ void MainWindow::Func()
 }
 
 
-void MainWindow::BDotClicked()
+void View::BDotClicked()
 {
   ui->label->setText(ui->label->text() + ".");
 }
 
 
-void MainWindow::BAcClicked()
+void View::BAcClicked()
 {
   ui->label->setText("");
   OnBGraphClearClicked();
 }
 
-void MainWindow::BEqClicked()
+void View::BEqClicked()
 {
   QString input_string = ui->label->text();
   std::string result = "";
@@ -103,7 +102,7 @@ void MainWindow::BEqClicked()
   ui->label->setText(QString::fromStdString(result));
 }
 
-void MainWindow::BClBrClicked()
+void View::BClBrClicked()
 {
   if (controller->GetError()) {
     ui->label->setText("");
@@ -111,7 +110,7 @@ void MainWindow::BClBrClicked()
     ui->label->setText(ui->label->text() + ")");
 }
 
-void MainWindow::BOpBrClicked()
+void View::BOpBrClicked()
 {
   if (controller->GetError()) {
     ui->label->setText("");
@@ -119,14 +118,14 @@ void MainWindow::BOpBrClicked()
     ui->label->setText(ui->label->text() + "(");
 }
 
-void MainWindow::BDelClicked()
+void View::BDelClicked()
 {
   QString new_label = ui->label->text();
   new_label.chop(1);
   ui->label->setText(new_label);
 }
 
-void MainWindow::DrawGraph() {
+void View::DrawGraph() {
 //  QVector<double> vector();
   QString inputString = ui->label->text();
 
@@ -168,7 +167,7 @@ void MainWindow::DrawGraph() {
 //  y.clear();
 }
 
-void MainWindow::SetAxis()
+void View::SetAxis()
 {
   double x_min = ui->xmin_spinbox->value();
   double x_max = ui->xmax_spinbox->value();
@@ -183,7 +182,7 @@ void MainWindow::SetAxis()
   ui->widget->replot();
 }
 
-void MainWindow::OnBGraphClearClicked()
+void View::OnBGraphClearClicked()
 {
   if (ui->widget->graph(0)) {
     ui->widget->graph(0)->data()->clear();
@@ -191,22 +190,22 @@ void MainWindow::OnBGraphClearClicked()
   }
 }
 
-void MainWindow::OnActionCreditCalcTriggered()
+void View::OnActionCreditCalcTriggered()
 {
 //  credit.show();
 }
 
-void MainWindow::OnActionDepositCalcTriggered()
+void View::OnActionDepositCalcTriggered()
 {
 //  deposit.show();
 }
 
-void MainWindow::KeyClick(QString str)
+void View::KeyClick(QString str)
 {
     ui->label->setText(ui->label->text() + str);
 }
 
-void MainWindow::KeyPressEvent(QKeyEvent *e)
+void View::KeyPressEvent(QKeyEvent *e)
 {
   switch (e->key()) {
   case Qt::Key_Escape:
@@ -281,7 +280,7 @@ void MainWindow::KeyPressEvent(QKeyEvent *e)
   }
 }
 
-void MainWindow::OnPBCalculateEqClicked()
+void View::OnPBCalculateEqClicked()
 {
   QString input_string = ui->label->text();
   QString tmpStr = input_string;

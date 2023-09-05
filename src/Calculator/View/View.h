@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef VIEW_H
+#define VIEW_H
 
 #include <QMainWindow>
 #include <qvector.h>
@@ -26,20 +26,21 @@ extern "C"
 #include "../qcustomplot/qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class View; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class View : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    View(QWidget *parent, s21::Controller *c) :
+    controller(c){};
+    ~View();
 
 private:
     s21::Controller *controller;
-    Ui::MainWindow *ui;
+    Ui::View *ui;
 //    Credit credit;
 //    Deposit deposit;
 
@@ -64,4 +65,4 @@ private slots:
 //    void Error();
     void OnPBCalculateEqClicked();
 };
-#endif // MAINWINDOW_H
+#endif // VIEW_H
