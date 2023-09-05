@@ -1,9 +1,7 @@
-#include "View/View.h"
-#include <iostream>
-#include "ui_View.h"
+#include "View.h"
 
-View::View(QWidget *parent, s21::Controller *c)
-  : QMainWindow(parent), controller(c), ui(new Ui::View)
+View::View(s21::Controller *c, QWidget *parent)
+  : ui(new Ui::View), controller(c)
 {
   ui->setupUi(this);
 

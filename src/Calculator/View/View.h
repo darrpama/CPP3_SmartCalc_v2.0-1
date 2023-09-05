@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <qvector.h>
 
+#include <iostream>
+#include "./ui_View.h"
+
 // <locale.h> is for normal work c++ and pure c func. See main.cpp.
 // The problem is that in Qt double is 0,01 and in C double is 0.01,
 // and in another systems double style can be different
@@ -12,15 +15,6 @@
 // #include "credit.h"  // this is for open new widget with credit calc
 // #include "deposit.h"
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
-
-#ifdef __cplusplus
-}
-#endif
 
 #include "../Controller/Controller.h"
 #include "../qcustomplot/qcustomplot.h"
@@ -31,38 +25,38 @@ QT_END_NAMESPACE
 
 class View : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    View(QWidget *parent, s21::Controller *c) :
-    controller(c){};
-    ~View();
+  View(s21::Controller *c, QWidget *parent = nullptr);
+  ~View();
 
 private:
-    s21::Controller *controller;
-    Ui::View *ui;
+  s21::Controller *controller;
+  Ui::View *ui;
 //    Credit credit;
 //    Deposit deposit;
 
 private slots:
-    void DigitAndOper();
-    void Func();
-    void BDotClicked();
-    void BAcClicked();
-    void BClBrClicked();
-    void BOpBrClicked();
-    void BDelClicked();
-    void BEqClicked();
+  void DigitAndOper();
+  void Func();
+  void BDotClicked();
+  void BAcClicked();
+  void BClBrClicked();
+  void BOpBrClicked();
+  void BDelClicked();
+  void BEqClicked();
 
-    void SetAxis();
-    void DrawGraph();
+  void SetAxis();
+  void DrawGraph();
 
-    void OnBGraphClearClicked();
-    void OnActionCreditCalcTriggered();
-    void OnActionDepositCalcTriggered();
-    void KeyClick(QString str);
-    void KeyPressEvent(QKeyEvent *e);
-//    void Error();
-    void OnPBCalculateEqClicked();
+  void OnBGraphClearClicked();
+  void OnActionCreditCalcTriggered();
+  void OnActionDepositCalcTriggered();
+  void KeyClick(QString str);
+  void KeyPressEvent(QKeyEvent *e);
+  //    void Error();
+  void OnPBCalculateEqClicked();
 };
+
 #endif // VIEW_H

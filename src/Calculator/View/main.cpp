@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
   setenv("LC_NUMERIC", "C", 1);
   QApplication a(argc, argv);
-  View w;
+  View w(&controller);
   w.show();
   return a.exec();
 }
