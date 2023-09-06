@@ -132,10 +132,10 @@ void View::DrawGraph() {
 
   std::pair<std::vector<double>, std::vector<double>> stdGraph = controller->GetGraph(stdInputString, xMin, xMax);
 
-  for (size_t i = 0; i < graph.size(); i++)
-  {
-    std::cout << graph[i].first << " | " << graph[i].second << std::endl;
-  }
+//  for (size_t i = 0; i < graph.size(); i++)
+//  {
+//    std::cout << graph[i].first << " | " << graph[i].second << std::endl;
+//  }
   
   // for (int i = 0; i < 1000; i++) {
   //   QString tmpStr = input_string;
@@ -154,7 +154,7 @@ void View::DrawGraph() {
   SetAxis();
   ui->widget->clearGraphs();
   ui->widget->addGraph();
-  ui->widget->graph(0)->addData();
+//  ui->widget->graph(0)->addData();
 //  ui->widget->replot();
 //  ui->widget->setInteraction(QCP::iRangeZoom, true);
 //  ui->widget->setInteraction(QCP::iRangeDrag, true);
@@ -200,82 +200,7 @@ void View::KeyClick(QString str)
     ui->label->setText(ui->label->text() + str);
 }
 
-//void View::KeyPressEvent(QKeyEvent *e)
-//{
-//  switch (e->key()) {
-//  case Qt::Key_Escape:
-//    BAcClicked();
-//    break;
-//  case Qt::Key_Asterisk:
-//    KeyClick("*");
-//    break;
-//  case Qt::Key_Slash:
-//    KeyClick("/");
-//    break;
-//  case Qt::Key_Plus:
-//    KeyClick("+");
-//    break;
-//  case Qt::Key_Minus:
-//    KeyClick("-");
-//    break;
-//  case Qt::Key_0:
-//    KeyClick("0");
-//    break;
-//  case Qt::Key_1:
-//    KeyClick("1");
-//    break;
-//  case Qt::Key_2:
-//    KeyClick("2");
-//    break;
-//  case Qt::Key_3:
-//    KeyClick("3");
-//    break;
-//  case Qt::Key_4:
-//    KeyClick("4");
-//    break;
-//  case Qt::Key_5:
-//    KeyClick("5");
-//    break;
-//  case Qt::Key_6:
-//    KeyClick("6");
-//    break;
-//  case Qt::Key_7:
-//    KeyClick("7");
-//    break;
-//  case Qt::Key_8:
-//    KeyClick("8");
-//    break;
-//  case Qt::Key_9:
-//    KeyClick("9");
-//    break;
-//  case Qt::Key_X:
-//    KeyClick("x");
-//    break;
-//  case Qt::Key_Period:
-//    KeyClick(".");
-//    break;
-//  case Qt::Key_AsciiCircum:
-//    KeyClick("^");
-//    break;
-//  case Qt::Key_Backspace:
-//    BDelClicked();
-//    break;
-//  case Qt::Key_Delete:
-//    BAcClicked();
-//    break;
-//  case Qt::Key_Return:
-//    BEqClicked();
-//    break;
-//  case Qt::Key_ParenLeft:
-//    KeyClick("(");
-//    break;
-//  case Qt::Key_ParenRight:
-//    KeyClick(")");
-//    break;
-//  }
-//}
-
-void View::OnPBCalculateEqClicked()
+void View::on_pBcalculate_eq_clicked()
 {
   QString input_string = ui->label->text();
   QString tmpStr = input_string;
@@ -286,13 +211,15 @@ void View::OnPBCalculateEqClicked()
 
   try
   {
-    result = controller->Calculate(input_string.toStdString());
+    result = controller->Calculate(tmpStr.toStdString());
   }
   catch(const std::exception& e)
   {
     std::cerr << e.what() << '\n';
     result = e.what();
   }
+
   ui->label->setText(QString::fromStdString(result));
 
 }
+
