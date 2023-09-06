@@ -125,14 +125,12 @@ void View::BDelClicked()
 }
 
 void View::DrawGraph() {
-//  QVector<double> vector();
   QString inputString = ui->label->text();
   double xMin = ui->xmin_spinbox->value();
   double xMax = ui->xmax_spinbox->value();
   std::string stdInputString(inputString.toStdString());
 
   std::pair<std::vector<double>, std::vector<double>> stdGraph = controller->GetGraph(stdInputString, xMin, xMax);
-  QVector<std::pair<double, double>> graph = QVector<std::pair<double, double>>(stdGraph.begin(), stdGraph.end());
 
   for (size_t i = 0; i < graph.size(); i++)
   {
