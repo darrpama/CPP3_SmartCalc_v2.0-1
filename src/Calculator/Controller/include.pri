@@ -1,2 +1,2 @@
-HEADERS += Controller.cpp
+HEADERS += Controller.cc
 SOURCES += Controller.h

@@ -4,11 +4,11 @@ HEADERS += consoleView.h \
 	   mainwindow.h \
 	   qcustomplot.h
 
-SOURCES += consoleView.cpp \
-	   credit.cpp \
-	   deposit.cpp \
-	   mainwindow.cpp \
-	   qcustomplot.cpp
+SOURCES += consoleView.cc \
+	   credit.cc \
+	   deposit.cc \
+	   mainwindow.cc \
+	   qcustomplot.cc
 
 FORMS += credit.ui \
 	 deposit.ui \

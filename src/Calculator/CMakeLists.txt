@@ -25,15 +25,15 @@ set(PROJECT_SOURCES
     View/deposit.h
     qcustomplot/qcustomplot.h
 
-    Controller/Controller.cpp
-    Model/Model.cpp
-    Model/Validator.cpp
-    View/View.cpp
-    View/consoleView.cpp
-    View/credit.cpp
-    View/deposit.cpp
-    main.cpp
-    qcustomplot/qcustomplot.cpp
+    Controller/Controller.cc
+    Model/Model.cc
+    Model/Validator.cc
+    View/View.cc
+    View/consoleView.cc
+    View/credit.cc
+    View/deposit.cc
+    main.cc
+    qcustomplot/qcustomplot.cc
 
     View/credit.ui
     View/deposit.ui

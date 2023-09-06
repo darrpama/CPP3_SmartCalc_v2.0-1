@@ -1,2 +1,2 @@
 HEADERS += Model.h
-SOURCES += Model.cpp
+SOURCES += Model.cc
