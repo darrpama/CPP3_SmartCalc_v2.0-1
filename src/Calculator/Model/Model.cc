@@ -15,7 +15,7 @@ double CalculationModel::StringToDouble(const std::string &str) const
 }
 
 // Main function to calculate expression
-std::string CalculationModel::CaclulateExpression(const std::string &inputString)
+std::string CalculationModel::CalculateExpression(const std::string &inputString)
 {
   Reset();
   try
@@ -474,14 +474,41 @@ bool CalculationModel::GetError()
   return error;
 }
 
-std::pair<std::vector<double>, std::vector<double>> CalculationModel::GetGraph(std::string stdInputString, double xMin, double xMax)
+std::pair<std::vector<double>, std::vector<double>> CalculationModel::GetGraph(std::string inputString, double xMin, double xMax)
 {
-  std::pair<std::vector<double>, std::vector<double>> answer;
-  answer.first[0] = 1.0;
-  answer.first[1] = 2.0;
-  answer.second[0] = 1.0;
-  answer.second[1] = 2.0;
-  return answer;
+  std::vector<double>xVector;
+  std::vector<double>yVector;
+
+  double step = (xMax - xMin) / 1000.0;
+
+  for (int i = 0; i < 1000; i++)
+  {
+    Reset();
+    xVector.push_back(xMin + i * step);
+    std::string numberString = std::to_string(xMin + i * step);
+    size_t found = inputString.find('x');
+    while (found != std::string::npos)
+    {
+      inputString.replace(found, 1, numberString);
+      found = inputString.find('x', found + numberString.length());
+    }
+
+    try
+    {
+      Parser(inputString);
+      PolishParser();
+      Calculator();
+      yVector.push_back(GetDoubleAnswer());
+    }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+      SetStrAnswer(e);
+      SetError(true);
+    }
+  }
+  
+  return std::make_pair(xVector, yVector);
 }
 
 void CalculationModel::SetError(bool NewError)

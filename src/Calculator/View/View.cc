@@ -130,7 +130,8 @@ void View::DrawGraph() {
   double xMax = ui->xmax_spinbox->value();
   std::string stdInputString(inputString.toStdString());
 
-  std::pair<std::vector<double>, std::vector<double>> stdGraph = controller->GetGraph(stdInputString, xMin, xMax);
+  std::pair<std::vector<double>, std::vector<double>> stdGraph
+  = controller->GetGraph(stdInputString, xMin, xMax);
 
 //  for (size_t i = 0; i < graph.size(); i++)
 //  {

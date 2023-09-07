@@ -4,7 +4,7 @@ namespace s21 {
 
 std::string Controller::Calculate(const std::string& expression)
 {
-  return model->CaclulateExpression(expression);
+  return model->CalculateExpression(expression);
 }
 
 std::pair<std::vector<double>, std::vector<double>> Controller::GetGraph(std::string expression, double xMin, double xMax)

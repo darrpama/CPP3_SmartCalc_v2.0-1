@@ -26,7 +26,7 @@ class CalculationModel {
     void PolishParser();
     void Calculator();
 
-    std::string CaclulateExpression(const std::string&);
+    std::string CalculateExpression(const std::string&);
     void PrintParsedExpression() const;
     void PrintPolishStack() const;
     bool IsDigit(char) const;
