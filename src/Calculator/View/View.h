@@ -32,7 +32,6 @@ class View : public QMainWindow
 public:
   View(s21::Controller *c, QWidget *parent = nullptr);
   ~View();
-
 private:
   s21::Controller *controller;
   Ui::View *ui;

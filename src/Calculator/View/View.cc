@@ -44,12 +44,14 @@ View::View(s21::Controller *c, QWidget *parent)
   connect(ui->Bset_axis,    SIGNAL(clicked()), this, SLOT(SetAxis()));
   connect(ui->Bdraw_graph,  SIGNAL(clicked()), this, SLOT(DrawGraph()));
   connect(ui->Bgraphclear,  SIGNAL(clicked()), this, SLOT(OnBGraphClearClicked()));
+  connect(ui->pBcalculate_eq,  SIGNAL(clicked()), this, SLOT(on_pBcalculate_eq_clicked()));
 }
 
 View::~View()
 {
   delete ui;
 }
+
 
 void View::DigitAndOper()
 {
@@ -88,6 +90,12 @@ void View::BEqClicked()
 {
   QString input_string = ui->label->text();
   std::string result = "";
+
+  if (input_string.contains('x'))
+  {
+    on_pBcalculate_eq_clicked();
+    return;
+  }
 
   try
   {
