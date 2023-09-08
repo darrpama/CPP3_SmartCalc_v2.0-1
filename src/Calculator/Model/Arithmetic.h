@@ -35,7 +35,6 @@ enum token_type {
   unaricPlus,
   squareRoot,
   xValue,
-  zero,
 };
 
 struct token {

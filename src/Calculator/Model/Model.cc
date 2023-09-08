@@ -252,7 +252,7 @@ void CalculationModel::Calculator()
       temp.pop_back();
       token operand2 = temp.back();
       temp.pop_back();
-      token answer = DoExpression(operand1, operand2, data);
+      token answer = DoExpression(operand2, operand1, data);
       temp.push_back(answer);
       polishStack.pop_front();
     }
@@ -478,24 +478,24 @@ std::pair<std::vector<double>, std::vector<double>> CalculationModel::GetGraph(s
 {
   std::vector<double>xVector;
   std::vector<double>yVector;
-
-  double step = (xMax - xMin) / 1000.0;
-
-  for (int i = 0; i < 1000; i++)
+  size_t vectorSize = 10000;
+  double step = (xMax - xMin) / vectorSize;
+  for (size_t i = 0; i < vectorSize; i++)
   {
     Reset();
+    std::string tmpString(inputString);
+
     xVector.push_back(xMin + i * step);
     std::string numberString = std::to_string(xMin + i * step);
-    size_t found = inputString.find('x');
+    size_t found = tmpString.find('x');
     while (found != std::string::npos)
     {
-      inputString.replace(found, 1, numberString);
-      found = inputString.find('x', found + numberString.length());
+      tmpString.replace(found, 1, numberString);
+      found = tmpString.find('x', found + numberString.length());
     }
-
     try
     {
-      Parser(inputString);
+      Parser(tmpString);
       PolishParser();
       Calculator();
       yVector.push_back(GetDoubleAnswer());

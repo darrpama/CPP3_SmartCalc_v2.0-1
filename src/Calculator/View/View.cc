@@ -41,9 +41,9 @@ View::View(s21::Controller *c, QWidget *parent)
   connect(ui->Bclbr,  SIGNAL(clicked()), this, SLOT(BClBrClicked()));
   connect(ui->Bopbr,  SIGNAL(clicked()), this, SLOT(BOpBrClicked()));
 
-
   connect(ui->Bset_axis,    SIGNAL(clicked()), this, SLOT(SetAxis()));
   connect(ui->Bdraw_graph,  SIGNAL(clicked()), this, SLOT(DrawGraph()));
+  connect(ui->Bgraphclear,  SIGNAL(clicked()), this, SLOT(OnBGraphClearClicked()));
 }
 
 View::~View()
@@ -130,37 +130,24 @@ void View::DrawGraph() {
   double xMax = ui->xmax_spinbox->value();
   std::string stdInputString(inputString.toStdString());
 
-  std::pair<std::vector<double>, std::vector<double>> stdGraph
-  = controller->GetGraph(stdInputString, xMin, xMax);
+  std::pair<std::vector<double>, std::vector<double>> stdGraph = controller->GetGraph(stdInputString, xMin, xMax);
 
-//  for (size_t i = 0; i < graph.size(); i++)
-//  {
-//    std::cout << graph[i].first << " | " << graph[i].second << std::endl;
-//  }
-  
-  // for (int i = 0; i < 1000; i++) {
-  //   QString tmpStr = input_string;
-  //   tmpStr.replace("x", "(" + QString::number(x_array[i], 'g', 6) + ")");
-  //   QByteArray b_str = tmpStr.toLocal8Bit();
-  //   char *input_str = b_str.data();
-  //   if (is_correct(input_str)) {
-  //     error();
-  //     break;
-  //   }
-  //   Data tmp = Begin(input_str);
-  //   y_array[i] = tmp.value;
-  //   y[i] = y_array[i];
-  // }
+  QVector<double> xArray = QVector<double>(stdGraph.first.begin(), stdGraph.first.end());
+  QVector<double> yArray = QVector<double>(stdGraph.second.begin(), stdGraph.second.end());
 
   SetAxis();
   ui->widget->clearGraphs();
   ui->widget->addGraph();
-//  ui->widget->graph(0)->addData();
-//  ui->widget->replot();
-//  ui->widget->setInteraction(QCP::iRangeZoom, true);
-//  ui->widget->setInteraction(QCP::iRangeDrag, true);
-//  x.clear();
-//  y.clear();
+  ui->widget->graph(0)->addData(xArray, yArray);
+  ui->widget->graph(0)->setPen(QColor(Qt::blue));
+  ui->widget->graph(0)->setLineStyle(QCPGraph::lsNone);
+  ui->widget->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, 1));
+  ui->widget->replot();
+  ui->widget->setInteraction(QCP::iRangeZoom, true);
+  ui->widget->setInteraction(QCP::iRangeDrag, true);
+  ui->widget->setMouseTracking(true);
+  xArray.clear();
+  yArray.clear();
 }
 
 void View::SetAxis()

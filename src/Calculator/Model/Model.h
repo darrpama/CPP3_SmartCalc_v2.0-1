@@ -80,7 +80,7 @@ class CalculationModel {
     token atanToken = {0.0, function, arctan, "atan"};
     token sqrtToken = {0.0, function, squareRoot, "sqrt"};
     token xToken = {0.0, numberOrX, xValue, "x"};
-    token zeroToken = {0.0, numberOrX, zero, "0.0"};
+    token zeroToken = {0.0, numberOrX, numberType, "0.0"};
 };
 
 }  // namespace s21 
