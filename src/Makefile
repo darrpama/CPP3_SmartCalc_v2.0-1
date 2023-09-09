@@ -12,7 +12,9 @@ HEADERS = \
 SOURCES = \
     $(PROJECTDIR)/Model/Model.cc \
     $(PROJECTDIR)/Model/Validator.cc \
-    $(PROJECTDIR)/Tests/testModel.cc
+    $(PROJECTDIR)/Tests/TestModel.cc \
+    $(PROJECTDIR)/Tests/TestValidator.cc \
+    $(PROJECTDIR)/Tests/RunAllTests.cc
 
 OBJECTS = $(SOURCES:.cc=.o)
 

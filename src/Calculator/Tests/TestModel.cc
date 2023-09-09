@@ -139,8 +139,3 @@ TEST(CalculationModelTest, Calculator_Positive) {
 //   CalculationModel model;
 //   // TODO: Add assertions to validate the printed parsed expression
 // }
-
-int main(int argc, char** argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
