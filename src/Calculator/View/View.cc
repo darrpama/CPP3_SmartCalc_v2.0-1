@@ -41,10 +41,10 @@ View::View(s21::Controller *c, QWidget *parent)
   connect(ui->Bclbr,  SIGNAL(clicked()), this, SLOT(BClBrClicked()));
   connect(ui->Bopbr,  SIGNAL(clicked()), this, SLOT(BOpBrClicked()));
 
-  connect(ui->Bset_axis,    SIGNAL(clicked()), this, SLOT(SetAxis()));
-  connect(ui->Bdraw_graph,  SIGNAL(clicked()), this, SLOT(DrawGraph()));
-  connect(ui->Bgraphclear,  SIGNAL(clicked()), this, SLOT(OnBGraphClearClicked()));
-  connect(ui->pBcalculate_eq,  SIGNAL(clicked()), this, SLOT(on_pBcalculate_eq_clicked()));
+  connect(ui->Bset_axis,      SIGNAL(clicked()), this, SLOT(SetAxis()));
+  connect(ui->Bdraw_graph,    SIGNAL(clicked()), this, SLOT(DrawGraph()));
+  connect(ui->Bgraphclear,    SIGNAL(clicked()), this, SLOT(OnBGraphClearClicked()));
+  connect(ui->pBcalculate_eq, SIGNAL(clicked()), this, SLOT(OnBCalculateEqClicked()));
 }
 
 View::~View()
@@ -93,7 +93,7 @@ void View::BEqClicked()
 
   if (input_string.contains('x'))
   {
-    on_pBcalculate_eq_clicked();
+    OnBCalculateEqClicked();
     return;
   }
 
@@ -196,7 +196,7 @@ void View::KeyClick(QString str)
     ui->label->setText(ui->label->text() + str);
 }
 
-void View::on_pBcalculate_eq_clicked()
+void View::OnPBCalculateEqClicked()
 {
   QString input_string = ui->label->text();
   QString tmpStr = input_string;

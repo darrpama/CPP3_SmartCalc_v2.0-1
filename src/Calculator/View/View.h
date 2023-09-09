@@ -57,7 +57,7 @@ private slots:
   void KeyClick(QString str);
   // void KeyPressEvent(QKeyEvent *e);
   // void Error();
-  void on_pBcalculate_eq_clicked();
+  void OnBCalculateEqClicked();
 };
 
 #endif // VIEW_H
