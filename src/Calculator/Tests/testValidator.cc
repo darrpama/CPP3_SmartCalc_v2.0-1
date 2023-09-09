@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Validator.h"
+#include "../Model/Validator.h"
 
 // Positive test case for EmptyCheck()
 TEST(ValidatorTest, EmptyCheck_Positive) {

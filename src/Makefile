@@ -1,13 +1,34 @@
-.PHONY: clean
-OS := $(shell uname -s)
-
 CC = g++
-CPPFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra -lstdc++
-LIBS = -lgtest --coverage
+CCFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra
+LDFLAGS = -lstdc++ -lgtest --coverage
+PROJECTDIR = ./Calculator
+EXECUTABLE = test
 
-all: test
+HEADERS = \
+    $(PROJECTDIR)/Model/Arithmetic.h \
+    $(PROJECTDIR)/Model/Model.h \
+    $(PROJECTDIR)/Model/Validator.h
 
+SOURCES = \
+    $(PROJECTDIR)/Model/Model.cc \
+    $(PROJECTDIR)/Model/Validator.cc \
+    $(PROJECTDIR)/Tests/testModel.cc
+
+OBJECTS = $(SOURCES:.cc=.o)
+
+
+all: $(SOURCES) $(EXECUTABLE)
+
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(OBJECTS) $(HEADERS) -o $@ $(LDFLAGS) 
+
+%.o: %.cc
+	$(CC) $(CPPFLAGS) -o $@ -c $<
+
+.PHONY: clean
 clean:
+	rm -f $(OBJECTS)
 	rm -rf s21_calculator.a
 	rm -rf *.o
 	rm -rf *.out
@@ -15,25 +36,3 @@ clean:
 	rm -rf report
 	rm -rf *.dSYM
 	rm *.gcda *.gcno
-
-exampleController.o:
-	$(CC) $(CPPFLAGS) -c exampleController.cpp -o exampleController.o $(LIBS)
-
-Model.o:
-	$(CC) $(CPPFLAGS) -c Model.cpp -o Model.o $(LIBS)
-
-Validator.o:
-	$(CC) $(CPPFLAGS) -c Validator.cpp -o Validator.o $(LIBS)
-
-consoleView.o:
-	$(CC) $(CPPFLAGS) -c consoleView.cpp -o consoleView.o $(LIBS)
-
-testModel: Model.o
-	$(CC) $(CPPFLAGS) Model.o testModel.cpp -o testModel.out $(LIBS)
-	./testModel.out
-
-testValidator: Validator.o
-	$(CC) $(CPPFLAGS) Validator.o testValidator.cpp -o testValidator.out $(LIBS)
-	./testValidator.out
-
-test: testModel testValidator

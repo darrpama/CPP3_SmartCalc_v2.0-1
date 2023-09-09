@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Model.h"
+#include "../Model/Model.h"
 
 using namespace s21;
 // Positive test case for IsDigit function
@@ -117,7 +117,7 @@ TEST(CalculationModelTest, Calculator_Positive) {
   model.Parser("2+3*4");
   model.PolishParser();
   model.Calculator();
-  double result = model.GetAnswer();
+  double result = model.GetDoubleAnswer();
   EXPECT_DOUBLE_EQ(result, 14.0);
 }
 
