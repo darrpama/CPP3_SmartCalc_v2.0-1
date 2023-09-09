@@ -2,7 +2,7 @@ CC = g++
 CCFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra
 LDFLAGS = -lstdc++ -lgtest --coverage
 PROJECTDIR = ./Calculator
-EXECUTABLE = test
+EXECUTABLE = test.out
 
 HEADERS = \
     $(PROJECTDIR)/Model/Arithmetic.h \
@@ -24,15 +24,10 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(HEADERS) -o $@ $(LDFLAGS) 
 
 %.o: %.cc
-	$(CC) $(CPPFLAGS) -o $@ -c $<
+	$(CC) $(CCFLAGS) -o $@ -c $<
 
 .PHONY: clean
 clean:
 	rm -f $(OBJECTS)
-	rm -rf s21_calculator.a
-	rm -rf *.o
-	rm -rf *.out
-	rm -rf build
-	rm -rf report
-	rm -rf *.dSYM
-	rm *.gcda *.gcno
+	rm *.gcno
+	rm $(EXECUTABLE)
