@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "../Controller/Controller.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -12,17 +14,18 @@ extern "C"
 }
 #endif
 
-namespace Ui {
-class Credit;
-}
+QT_BEGIN_NAMESPACE
+namespace Ui { class Credit; }
+QT_END_NAMESPACE
 
 class Credit : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Credit(QWidget *parent = nullptr);
+    explicit Credit(s21::Controller *c, QWidget *parent = nullptr);
     ~Credit();
+
 
 private slots:
   void on_pBcreditcalculate_clicked();

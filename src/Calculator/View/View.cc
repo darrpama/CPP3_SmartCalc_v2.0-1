@@ -183,12 +183,12 @@ void View::OnBGraphClearClicked()
 
 void View::OnActionCreditCalcTriggered()
 {
-//  credit.show();
+  creditView.show();
 }
 
 void View::OnActionDepositCalcTriggered()
 {
-//  deposit.show();
+  depositView.show();
 }
 
 void View::KeyClick(QString str)
@@ -196,7 +196,7 @@ void View::KeyClick(QString str)
     ui->label->setText(ui->label->text() + str);
 }
 
-void View::OnPBCalculateEqClicked()
+void View::OnBCalculateEqClicked()
 {
   QString input_string = ui->label->text();
   QString tmpStr = input_string;

@@ -1,5 +1,5 @@
-#include "deposit.h"
-#include "ui_deposit.h"
+#include "Deposit.h"
+#include "ui_Deposit.h"
 
 Deposit::Deposit(QWidget *parent) :
   QWidget(parent),

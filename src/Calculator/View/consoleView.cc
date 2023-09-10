@@ -1,4 +1,4 @@
-#include "consoleView.h"
+#include "ConsoleView.h"
 #include <iostream>
 
 using std::cin;

@@ -19,24 +19,28 @@ set(PROJECT_SOURCES
     Model/Arithmetic.h
     Model/Model.h
     Model/Validator.h
+    Model/CreditModel.h
+    Model/DepositModel.h
     View/View.h
-    View/consoleView.h
-    View/credit.h
-    View/deposit.h
+    View/ConsoleView.h
+    View/Credit.h
+    View/Deposit.h
     qcustomplot/qcustomplot.h
 
     Controller/Controller.cc
     Model/Model.cc
     Model/Validator.cc
+    Model/CreditModel.cc
+    Model/DepositModel.cc
     View/View.cc
-    View/consoleView.cc
-    View/credit.cc
-    View/deposit.cc
+    View/ConsoleView.cc
+    View/Credit.cc
+    View/Deposit.cc
     main.cc
     qcustomplot/qcustomplot.cc
 
-    View/credit.ui
-    View/deposit.ui
+    View/Credit.ui
+    View/Deposit.ui
     View/View.ui
 )
 

@@ -4,19 +4,12 @@
 #include <QMainWindow>
 #include <qvector.h>
 
-#include <iostream>
-#include "./ui_View.h"
-
-/*
-<locale.h> is for normal work c++ and pure c func. See main.cpp.
-The problem is that in Qt double is 0,01 and in C double is 0.01,
-and in another systems double style can be different
-*/
 #include <locale.h>
+#include <iostream>
 
-// #include "credit.h"  // this is for open new widget with credit calc
-// #include "deposit.h"
-
+#include "Credit.h"
+#include "Deposit.h"
+#include "./ui_View.h"
 
 #include "../Controller/Controller.h"
 #include "../qcustomplot/qcustomplot.h"
@@ -35,8 +28,8 @@ public:
 private:
   s21::Controller *controller;
   Ui::View *ui;
-  // Credit credit;
-  // Deposit deposit;
+  Credit creditView;
+  Deposit depositView;
 
 private slots:
   void DigitAndOper();
@@ -55,8 +48,6 @@ private slots:
   void OnActionCreditCalcTriggered();
   void OnActionDepositCalcTriggered();
   void KeyClick(QString str);
-  // void KeyPressEvent(QKeyEvent *e);
-  // void Error();
   void OnBCalculateEqClicked();
 };
 
