@@ -77,28 +77,109 @@ TEST(CalculationModelTest, Parser_Positive) {
   // model.PrintParsedExpression();
   CalculationModel::list_type list;
   list.push_back(token{2, numberOrX, s21::numberType, "2"});
-  list.push_back(token{NAN, addSub, s21::addition,"+"});
+  list.push_back(model.addToken);
   list.push_back(token{3, numberOrX, s21::numberType, "3"});
-  list.push_back(token{NAN, mulDivMod, s21::multiplication, "*"});
+  list.push_back(model.mulToken);
   list.push_back(token{4, numberOrX, s21::numberType, "4"});
+
+  EXPECT_TRUE(parsedList == list);
+}
+
+TEST(CalculationModelTest, Parser_Positive_Unary_Plus)
+{
+  CalculationModel model;
+  std::string inputString = "+1+2*3";
+  
+  // Call the Parser function
+  model.Parser(inputString);
+  
+  CalculationModel::list_type parsedList = model.GetParsedExpression();
+  // Assert the expected parsed expression
+  CalculationModel::list_type list;
+  list.push_back(model.zeroToken);
+  list.push_back(model.addToken);
+  list.push_back(token{1, numberOrX, s21::numberType, "1"});
+  list.push_back(model.addToken);
+  list.push_back(token{2, numberOrX, s21::numberType, "2"});
+  list.push_back(model.mulToken);
+  list.push_back(token{3, numberOrX, s21::numberType, "3"});
+
+  EXPECT_TRUE(parsedList == list);
+}
+
+TEST(CalculationModelTest, Parser_Positive_Unary_Minus)
+{
+  CalculationModel model;
+  std::string inputString = "-1+2*3";
+  
+  // Call the Parser function
+  model.Parser(inputString);
+  
+  CalculationModel::list_type parsedList = model.GetParsedExpression();
+  // Assert the expected parsed expression
+  CalculationModel::list_type list;
+  list.push_back(model.zeroToken);
+  list.push_back(model.subToken);
+  list.push_back(token{1, numberOrX, s21::numberType, "1"});
+  list.push_back(model.addToken);
+  list.push_back(token{2, numberOrX, s21::numberType, "2"});
+  list.push_back(model.mulToken);
+  list.push_back(token{3, numberOrX, s21::numberType, "3"});
+
+  EXPECT_TRUE(parsedList == list);
+}
+
+TEST(CalculationModelTest, Parser_Positive_Other_Operators)
+{
+  CalculationModel model;
+  std::string inputString = "(1/2^3)(3mod4)";
+  
+  // Call the Parser function
+  model.Parser(inputString);
+  
+  CalculationModel::list_type parsedList = model.GetParsedExpression();
+  // Assert the expected parsed expression
+  CalculationModel::list_type list;
+  list.push_back(model.opbrToken);
+  list.push_back(token{1, numberOrX, s21::numberType, "1"});
+  list.push_back(model.divToken);
+  list.push_back(token{2, numberOrX, s21::numberType, "2"});
+  list.push_back(model.powToken);
+  list.push_back(token{3, numberOrX, s21::numberType, "3"});
+  list.push_back(model.clbrToken);
+  list.push_back(model.mulToken);
+  list.push_back(model.opbrToken);
+  list.push_back(token{3, numberOrX, s21::numberType, "3"});
+  list.push_back(model.modToken);
+  list.push_back(token{4, numberOrX, s21::numberType, "4"});
+  list.push_back(model.clbrToken);
+
+  std::cout << "list" << std::endl;
+  for (const auto& element : list)
+  {
+    std::cout << element.strValue << " ";
+  }
+  std::cout << std::endl;
+
+  std::cout << "parsed list" << std::endl;
+  for (const auto& element : parsedList)
+  {
+    std::cout << element.strValue << " ";
+  }
+  std::cout << std::endl;
+
   EXPECT_TRUE(parsedList == list);
 }
 
 // Positive test case for PolishParser function
 TEST(CalculationModelTest, PolishParser_Positive) {
   CalculationModel model;
-  CalculationModel::list_type list;
-  list.push_back(token{2, numberOrX, s21::numberType, "2"});
-  list.push_back(token{NAN, addSub, s21::addition,"+"});
-  list.push_back(token{3, numberOrX, s21::numberType, "3"});
-  list.push_back(token{NAN, mulDivMod, s21::multiplication, "*"});
-  list.push_back(token{4, numberOrX, s21::numberType, "4"});
   model.Parser("2+3*4");
   model.PolishParser();
   CalculationModel::list_type result = model.GetPolishStack();
   CalculationModel::list_type trueResult;
-  trueResult.push_front(token{NAN, addSub, s21::addition,"+"});
-  trueResult.push_front(token{NAN, mulDivMod, s21::multiplication, "*"});
+  trueResult.push_front(model.addToken);
+  trueResult.push_front(model.mulToken);
   trueResult.push_front(token{4, numberOrX, s21::numberType, "4"});
   trueResult.push_front(token{3, numberOrX, s21::numberType, "3"});
   trueResult.push_front(token{2, numberOrX, s21::numberType, "2"});
@@ -121,21 +202,28 @@ TEST(CalculationModelTest, Calculator_Positive) {
   EXPECT_DOUBLE_EQ(result, 14.0);
 }
 
-// // Positive test case for Reset function
-// TEST(CalculationModelTest, Reset_Positive) {
-//   CalculationModel model;
-//   // TODO: Add assertions to validate the reset functionality
-// }
+// Positive test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_PositiveTest)
+{
+  CalculationModel model;
+  std::string inputString = "2+3*4";
+  std::string expectedOutput = "14.000000";
 
-// // Positive test case for GetData function
-// TEST(CalculationModelTest, GetData_Positive) {
-//   CalculationModel model;
-//   double result = model.GetData();
-//   // TODO: Add assertions to validate the result
-// }
+  std::string actualOutput = model.CalculateExpression(inputString);
 
-// // Positive test case for PrintParsedExpression function
-// TEST(CalculationModelTest, PrintParsedExpression_Positive) {
-//   CalculationModel model;
-//   // TODO: Add assertions to validate the printed parsed expression
-// }
+  EXPECT_EQ(actualOutput, expectedOutput);
+  EXPECT_FALSE(model.GetError());
+}
+
+// Negative test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_NegativeTest)
+{
+  CalculationModel model;
+  std::string inputString = "2+3*";  // Invalid expression
+  std::string expectedOutput = "Invalid expression";
+
+  std::string actualOutput = model.CalculateExpression(inputString);
+
+  EXPECT_EQ(actualOutput, expectedOutput);
+  EXPECT_TRUE(model.GetError());
+}

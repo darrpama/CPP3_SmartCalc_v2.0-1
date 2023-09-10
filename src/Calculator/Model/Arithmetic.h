@@ -46,7 +46,7 @@ struct token {
   bool operator==(const token& other) const {
     return (priority == other.priority &&
             type == other.type &&
-            strValue.compare(other.strValue) == 0);
+            value == other.value);
   }
 };
 

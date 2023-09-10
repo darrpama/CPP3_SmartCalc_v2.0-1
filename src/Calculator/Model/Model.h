@@ -40,7 +40,6 @@ class CalculationModel {
     token DoFunction(token, token);
 
     double GetDoubleAnswer() const;
-    std::string GetAnswerString() const;
     std::string GetStringAnswer() const;
     std::pair<std::vector<double>, std::vector<double>> GetGraph(std::string, double, double);
     void SetAnswer(token);
@@ -53,14 +52,6 @@ class CalculationModel {
     bool GetError();
     void SetError(bool);
     void Reset();
-
-  private:
-    Validator validator;
-    list_type parsedExpression;
-    list_type polishStack;
-    double answer{};
-    std::string stringAnswer = "";
-    bool error;
 
     token addToken = {0.0, addSub, addition, "+"};
     token subToken = {0.0, addSub, subtraction, "-"};
@@ -81,6 +72,14 @@ class CalculationModel {
     token sqrtToken = {0.0, function, squareRoot, "sqrt"};
     token xToken = {0.0, numberOrX, xValue, "x"};
     token zeroToken = {0.0, numberOrX, numberType, "0.0"};
+
+  private:
+    Validator validator;
+    list_type parsedExpression;
+    list_type polishStack;
+    double answer{};
+    std::string stringAnswer = "";
+    bool error;
 };
 
 }  // namespace s21 

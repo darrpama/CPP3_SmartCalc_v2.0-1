@@ -117,6 +117,7 @@ void CalculationModel::ProcessOtherOperators(const char ch, size_t &i, const std
   if (str.compare(0, 3, "mod") == 0)
   {
     parsedExpression.push_back(modToken);
+    i += 2;
   }
   else if (str.compare(0, 4, "asin") == 0)
   {
@@ -238,34 +239,42 @@ void CalculationModel::PolishParser()
 void CalculationModel::Calculator()
 {
   list_type temp;
-  while (!polishStack.empty())
+  try
   {
-    token data = polishStack.front();
-    if (IsNumber(data))
+    while (!polishStack.empty())
     {
-      temp.push_back(data);
-      polishStack.pop_front();
+      token data = polishStack.front();
+      if (IsNumber(data))
+      {
+        temp.push_back(data);
+        polishStack.pop_front();
+      }
+      else if (IsExpression(data))
+      {
+        token operand1 = temp.back();
+        temp.pop_back();
+        token operand2 = temp.back();
+        temp.pop_back();
+        token answer = DoExpression(operand2, operand1, data);
+        temp.push_back(answer);
+        polishStack.pop_front();
+      }
+      else if (IsFunction(data))
+      {
+        token operand = temp.back();
+        temp.pop_back();
+        token answer = DoFunction(operand, data);
+        temp.push_back(answer);
+        polishStack.pop_front();
+      }
     }
-    else if (IsExpression(data))
-    {
-      token operand1 = temp.back();
-      temp.pop_back();
-      token operand2 = temp.back();
-      temp.pop_back();
-      token answer = DoExpression(operand2, operand1, data);
-      temp.push_back(answer);
-      polishStack.pop_front();
-    }
-    else if (IsFunction(data))
-    {
-      token operand = temp.back();
-      temp.pop_back();
-      token answer = DoFunction(operand, data);
-      temp.push_back(answer);
-      polishStack.pop_front();
-    }
+    SetAnswer(temp.front());
   }
-  SetAnswer(temp.front());
+  catch(const std::exception& e)
+  {
+    throw std::invalid_argument("Invalid expression");
+  }
+  
 }
 
 bool CalculationModel::IsNumber(const token &token) const
@@ -313,7 +322,6 @@ void CalculationModel::Reset()
   answer = {};
   error = false;
 }
-
 
 CalculationModel::list_type CalculationModel::GetParsedExpression() const
 {

@@ -2,7 +2,9 @@
 
 CreditModel::CreditModel()
 {
-  credit_data credit_calculator_differ(double sum, double time, double percent, int time_type) {
+}
+
+CreditModel::credit_data CreditModel::credit_calculator_differ(double sum, double time, double percent, int time_type) {
     credit_data data = {0, NULL, 0};
     if (time_type == 1) {
       time *= 12;
@@ -16,7 +18,7 @@ CreditModel::CreditModel()
       tmp_sum -= body;
       data.total_sum += data.monthly_pay[i];
     }
-    data.overpay = data.total_sum - sum;
+    data.overpay = data.toal_sum - sum;
     return data;
   }
 
@@ -37,4 +39,3 @@ CreditModel::CreditModel()
     data.overpay = data.total_sum - sum;
     return data;
   }
-}

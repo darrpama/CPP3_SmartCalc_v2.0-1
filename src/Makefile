@@ -34,6 +34,7 @@ gcov_report: $(EXECUTABLE)
 	./$(EXECUTABLE)
 	lcov -t "./test.out" -o test.info --no-external -c -d .
 	genhtml -o report test.info
+	open report/index.html
 
 .PHONY: clean
 clean:
