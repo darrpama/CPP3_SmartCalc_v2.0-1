@@ -3,7 +3,10 @@
 View::View(s21::Controller *c, QWidget *parent)
   : ui(new Ui::View), controller(c)
 {
+  creditView = new Credit(c, this);
+  depositView = new Deposit(c, this);
   ui->setupUi(this);
+  this->setWindowTitle("Калькулятор by darrpama");
 
   connect(ui->Bzero,  SIGNAL(clicked()), this, SLOT(DigitAndOper()));
   connect(ui->Bone,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
@@ -45,6 +48,9 @@ View::View(s21::Controller *c, QWidget *parent)
   connect(ui->Bdraw_graph,    SIGNAL(clicked()), this, SLOT(DrawGraph()));
   connect(ui->Bgraphclear,    SIGNAL(clicked()), this, SLOT(OnBGraphClearClicked()));
   connect(ui->pBcalculate_eq, SIGNAL(clicked()), this, SLOT(OnBCalculateEqClicked()));
+
+  connect(ui->actionDeposit_calc, SIGNAL(triggered()), this, SLOT(OnActionDepositCalcTriggered()));
+  connect(ui->actionCredit_calc, SIGNAL(triggered()), this, SLOT(OnActionCreditCalcTriggered()));
 }
 
 View::~View()
@@ -183,12 +189,13 @@ void View::OnBGraphClearClicked()
 
 void View::OnActionCreditCalcTriggered()
 {
-  creditView.show();
+  qDebug() << "CREDIT";
+  creditView->show();
 }
 
 void View::OnActionDepositCalcTriggered()
 {
-  depositView.show();
+  depositView->show();
 }
 
 void View::KeyClick(QString str)
@@ -218,4 +225,3 @@ void View::OnBCalculateEqClicked()
   ui->label->setText(QString::fromStdString(result));
 
 }
-

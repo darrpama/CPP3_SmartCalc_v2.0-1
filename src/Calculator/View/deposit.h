@@ -1,31 +1,24 @@
 #ifndef DEPOSIT_H
 #define DEPOSIT_H
 
-#include <QWidget>
+#include <QDialog>
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-//#include "s21_deposit_calculator.h"
-#ifdef __cplusplus
-}
-#endif
+#include "../Controller/Controller.h"
 
 namespace Ui {
 class Deposit;
 }
 
-class Deposit : public QWidget
+class Deposit : public QDialog
 {
   Q_OBJECT
 
 public:
-  explicit Deposit(QWidget *parent = nullptr);
+  explicit Deposit(s21::Controller *c, QWidget *parent = nullptr);
   ~Deposit();
 
 private slots:
-  void onPBdepositCalculateClicked();
+//  void onPBdepositCalculateClicked();
 
 private:
   Ui::Deposit *ui;

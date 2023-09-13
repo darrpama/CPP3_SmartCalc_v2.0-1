@@ -30,25 +30,6 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Депозитный калькулятор</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -223,6 +204,24 @@
        </item>
        <item row="8" column="1">
         <widget class="QPushButton" name="pBdepositCalculate">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+ background-color: qlineargradient(
+      x1:0, y1:0, x2:1, y2:1, 
+  stop:0 rgba(42, 48, 62, 255),
+      stop:1 rgba(57, 62, 81, 255)
+ );
+ border-radius: 3px;
+ color: rgba(200, 205, 210, 255);
+ border:1px solid rgba(49, 57, 73, 255 * 0.5);
+}
+QPushButton:pressed {
+  background-color: rgba(42, 48, 62, 255);
+ border:1px solid rgba(42, 48, 62, 255);
+ color: rgba(200, 200, 200, 255 * 0.1);
+}
+</string>
+         </property>
          <property name="text">
           <string>Рассчитать</string>
          </property>

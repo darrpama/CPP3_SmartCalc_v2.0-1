@@ -28,8 +28,8 @@ public:
 private:
   s21::Controller *controller;
   Ui::View *ui;
-  Credit creditView;
-  Deposit depositView;
+  Credit* creditView;
+  Deposit* depositView;
 
 private slots:
   void DigitAndOper();

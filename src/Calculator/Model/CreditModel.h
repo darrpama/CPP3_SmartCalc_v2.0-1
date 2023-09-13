@@ -12,10 +12,6 @@ public:
       double overpay;
     } credit_data;
 
-    credit_data credit_calculator_differ(double sum, double time, double percent,
-                                         int time_type);
-    credit_data credit_calculator_anuitet(double sum, double time, double percent,
-                                          int time_type);
 
 };
 

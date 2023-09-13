@@ -1,7 +1,7 @@
 #ifndef CREDIT_H
 #define CREDIT_H
 
-#include <QWidget>
+#include <QDialog>
 
 #include "../Controller/Controller.h"
 
@@ -18,7 +18,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Credit; }
 QT_END_NAMESPACE
 
-class Credit : public QWidget
+class Credit : public QDialog
 {
     Q_OBJECT
 
@@ -28,7 +28,7 @@ public:
 
 
 private slots:
-  void on_pBcreditcalculate_clicked();
+//  void on_pBcreditcalculate_clicked();
 
 private:
     Ui::Credit *ui;
