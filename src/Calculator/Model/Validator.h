@@ -13,7 +13,7 @@ class Validator {
 
   public:
     Validator();
-    bool IsCorrect(const std::string&);
+    void IsNotCorrect(const std::string&);
     bool EmptyCheck(const std::string&);
     bool NumCheck(const std::string&);
     bool BracketCheck(const std::string&);

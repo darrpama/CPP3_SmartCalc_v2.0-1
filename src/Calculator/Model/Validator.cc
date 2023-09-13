@@ -1,10 +1,11 @@
 #include "Validator.h"
+#include <iostream>
 
 namespace s21 {
 
 Validator::Validator() {}
 
-bool Validator::IsCorrect(const std::string& inputString) {
+void Validator::IsNotCorrect(const std::string& inputString) {
   bool err = false;
   bool e_check = EmptyCheck(inputString);
 
@@ -17,7 +18,10 @@ bool Validator::IsCorrect(const std::string& inputString) {
     bool b_op_check = BinaryOpCheck(inputString);
     err = br_check || pl_min || n_check || t_check || f_check || b_op_check;
   }
-  return err;
+  if (err)
+  {
+    throw std::invalid_argument("Validation error");
+  }
 }
 
 bool Validator::EmptyCheck(const std::string& inputString) {
@@ -31,12 +35,22 @@ bool Validator::BracketCheck(const std::string& inputString) {
     const char ch = inputString[i];
     if (ch == '(')
     {
+      if (i > 0 && (inputString[i-1] == ')' || inputString[i+1] == ')'))
+      {
+        return true;
+      }
+
       count++;
       bracketOpened++;
     }
 
     if (ch == ')')
     {
+      if (i > 0 && (inputString[i-1] == '('))
+      {
+        return true;
+      }
+
       count--;
       bracketOpened--;
       if (bracketOpened < 0)

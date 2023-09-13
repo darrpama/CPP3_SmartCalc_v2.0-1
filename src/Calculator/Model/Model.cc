@@ -20,6 +20,7 @@ std::string CalculationModel::CalculateExpression(const std::string &inputString
   Reset();
   try
   {
+    validator.IsNotCorrect(inputString);
     Parser(inputString);
     PolishParser();
     Calculator();
