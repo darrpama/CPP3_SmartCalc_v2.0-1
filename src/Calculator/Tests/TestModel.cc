@@ -220,7 +220,7 @@ TEST(CalculationModelTest, CalculateExpression_NegativeTest)
 {
   CalculationModel model;
   std::string inputString = "2+3*";  // Invalid expression
-  std::string expectedOutput = "Invalid expression";
+  std::string expectedOutput = "Validation error";
 
   std::string actualOutput = model.CalculateExpression(inputString);
 
