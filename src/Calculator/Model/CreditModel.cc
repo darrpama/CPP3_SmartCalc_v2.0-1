@@ -40,8 +40,4 @@ credit_data CreditModel::CalculateCredit(double sum, double time, double percent
   return answer_;
 }
 
-void CreditModel::testPrint() {
-  std::cout << "Wake up NEO!" << std::endl;
-}
-
 }  // namespace s21

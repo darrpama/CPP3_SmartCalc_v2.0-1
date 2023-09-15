@@ -6,7 +6,7 @@ using namespace s21;
 TEST(ValidatorTest, EmptyCheck_Positive) {
   Validator validator;
   std::string inputString = "";
-  bool result = validator.EmptyCheck(inputString);
+  bool result = validator.IsEmpty(inputString);
   EXPECT_TRUE(result);
 }
 
@@ -14,127 +14,127 @@ TEST(ValidatorTest, EmptyCheck_Positive) {
 TEST(ValidatorTest, EmptyCheck_Negative) {
   Validator validator;
   std::string inputString = "123";
-  bool result = validator.EmptyCheck(inputString);
+  bool result = validator.IsEmpty(inputString);
   EXPECT_FALSE(result);
 }
 
-// Positive test case for BracketCheck()
+// Positive test case for IsBracketNotCorrect()
 TEST(ValidatorTest, BracketCheck_Positive) {
   Validator validator;
   std::string inputString = "(1+2)*3";
-  bool result = validator.BracketCheck(inputString);
+  bool result = validator.IsBracketNotCorrect(inputString);
   EXPECT_FALSE(result);
 }
 
-// Negative test case for BracketCheck()
+// Negative test case for IsBracketNotCorrect()
 TEST(ValidatorTest, BracketCheck_Negative) {
   Validator validator;
   std::string inputString = "(1+2*3";
-  bool result = validator.BracketCheck(inputString);
+  bool result = validator.IsBracketNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
-// Negative test case for BracketCheck()
+// Negative test case for IsBracketNotCorrect()
 TEST(ValidatorTest, BracketCheck_Negative_01) {
   Validator validator;
   std::string inputString = ")1+2*3(";
-  bool result = validator.BracketCheck(inputString);
+  bool result = validator.IsBracketNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 //
-// Negative test case for BracketCheck()
+// Negative test case for IsBracketNotCorrect()
 TEST(ValidatorTest, BracketCheck_Negative_02) {
   Validator validator;
   std::string inputString = "()1+2*3(";
-  bool result = validator.BracketCheck(inputString);
+  bool result = validator.IsBracketNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
-// Positive test case for PlusMinusCheck()
+// Positive test case for IsPlusMinusNotCorrect()
 TEST(ValidatorTest, PlusMinusCheck_Positive) {
   Validator validator;
   std::string inputString = "1+-2";
-  bool result = validator.PlusMinusCheck(inputString);
+  bool result = validator.IsPlusMinusNotCorrect(inputString);
   EXPECT_FALSE(result);
 }
 
-// Negative test case for PlusMinusCheck()
+// Negative test case for IsPlusMinusNotCorrect()
 TEST(ValidatorTest, PlusMinusCheck_Negative) {
   Validator validator;
   std::string inputString = "1+2-";
-  bool result = validator.PlusMinusCheck(inputString);
+  bool result = validator.IsPlusMinusNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
-// Positive test case for NumCheck()
+// Positive test case for IsNumNotCorrect()
 TEST(ValidatorTest, NumCheck_Positive) {
   Validator validator;
   std::string inputString = "1.23";
-  bool result = validator.NumCheck(inputString);
+  bool result = validator.IsNumNotCorrect(inputString);
   EXPECT_FALSE(result);
 }
 
-// Negative test case for NumCheck()
+// Negative test case for IsNumNotCorrect()
 TEST(ValidatorTest, NumCheck_Negative) {
   Validator validator;
   std::string inputString = "1.2.3";
-  bool result = validator.NumCheck(inputString);
+  bool result = validator.IsNumNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
-// Positive test case for TwiseOpCheck()
+// Positive test case for IsTwiseOpNotCorrect()
 TEST(ValidatorTest, TwiseOpCheck_Positive) {
   Validator validator;
   std::string inputString = "1*2^3";
-  bool result = validator.TwiseOpCheck(inputString);
+  bool result = validator.IsTwiseOpNotCorrect(inputString);
   EXPECT_FALSE(result);
 }
 
-// Negative test case for TwiseOpCheck()
+// Negative test case for IsTwiseOpNotCorrect()
 TEST(ValidatorTest, TwiseOpCheck_Negative) {
   Validator validator;
   std::string inputString = "1**2";
-  bool result = validator.TwiseOpCheck(inputString);
+  bool result = validator.IsTwiseOpNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
-// Positive test case for BinaryOpCheck()
+// Positive test case for IsBinaryOpNotCorrect()
 TEST(ValidatorTest, BinaryOpCheck_Positive) {
   Validator validator;
   std::string inputString = "1+2*3";
-  bool result = validator.BinaryOpCheck(inputString);
+  bool result = validator.IsBinaryOpNotCorrect(inputString);
   EXPECT_FALSE(result);
 }
 
-// Negative test case for BinaryOpCheck()
+// Negative test case for IsBinaryOpNotCorrect()
 TEST(ValidatorTest, BinaryOpCheck_Negative) {
   Validator validator;
   std::string inputString = "*1+2";
-  bool result = validator.BinaryOpCheck(inputString);
+  bool result = validator.IsBinaryOpNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
-// Negative test case for BinaryOpCheck()
+// Negative test case for IsBinaryOpNotCorrect()
 TEST(ValidatorTest, BinaryOpCheck_Negative_Second) {
   Validator validator;
   std::string inputString = "1+2*";
-  bool result = validator.BinaryOpCheck(inputString);
+  bool result = validator.IsBinaryOpNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
-// Positive test case for FooCheck()
+// Positive test case for IsFooNotCorrect()
 TEST(ValidatorTest, FooCheck_Positive) {
   Validator validator;
   std::string inputString = "asin(0.5)";
-  bool result = validator.FooCheck(inputString);
+  bool result = validator.IsFooNotCorrect(inputString);
   EXPECT_FALSE(result);
 }
 
-// Negative test case for FooCheck()
+// Negative test case for IsFooNotCorrect()
 TEST(ValidatorTest, FooCheck_Negative) {
   Validator validator;
   std::string inputString = "asin0.5";
-  bool result = validator.FooCheck(inputString);
+  bool result = validator.IsFooNotCorrect(inputString);
   EXPECT_TRUE(result);
 }
 
@@ -170,16 +170,31 @@ TEST(ValidatorTest, BinaryLeft_Negative) {
   EXPECT_FALSE(result);
 }
 
-// Positive test case for IsCorrect()
+// Positive test case for IsNotCorrect()
 TEST(ValidatorTest, IsCorrect_Positive) {
   Validator validator;
   std::string inputString = "1+2*3";
   EXPECT_NO_THROW(validator.IsNotCorrect(inputString));
 }
 
-// Negative test case for IsCorrect()
+// Negative test case for IsNotCorrect()
 TEST(ValidatorTest, IsCorrect_Negative) {
   Validator validator;
   std::string inputString = "1+2*";
   EXPECT_ANY_THROW(validator.IsNotCorrect(inputString));
+}
+
+// Positive test case for IsExponentNotCorrect()
+TEST(ValidatorTest, ExponentCheck_positive) {
+  Validator v = Validator();
+  EXPECT_FALSE(v.IsExponentNotCorrect("3.14e3"));
+  EXPECT_FALSE(v.IsExponentNotCorrect("(3.14+3)e3"));
+  EXPECT_FALSE(v.IsExponentNotCorrect("(3.14+3)e-3"));
+  EXPECT_FALSE(v.IsExponentNotCorrect("3.14e3"));
+}
+
+// Negative test case for IsCorrect()
+TEST(ValidatorTest, ExponentCheck_negative) {
+  Validator v = Validator();
+  EXPECT_TRUE(v.IsExponentNotCorrect("1.23-e3"));
 }
