@@ -1,17 +1,18 @@
 #ifndef CREDITMODEL_H
 #define CREDITMODEL_H
 
-#include <list>
+#include <vector>
 #include <math.h>
+#include <iostream>
 
 namespace s21 {
 
-typedef struct credit_data
+struct credit_data
 {
   double total_sum;
-  std::list<double> monthly_pay;
+  std::vector<double> monthly_pay;
   double overpay;
-} credit_data;
+};
 
 enum time_type {
   month,
@@ -26,14 +27,9 @@ enum credit_type {
 
 class CreditModel
 {
-public:
-    CreditModel();
-    credit_data GetAnswer();
-    void CalculateCredit(double, double, double, time_type, credit_type);
-    void ResetModel();
-
-private:
-    credit_data answer;
+ public:
+  credit_data CalculateCredit(double, double, double, time_type, credit_type);
+  void testPrint();
 };
 
 }  // namespace s21

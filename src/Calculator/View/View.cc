@@ -3,9 +3,9 @@
 View::View(s21::Controller *c, QWidget *parent)
   : ui(new Ui::View), controller(c)
 {
-  creditView = new Credit(c, this);
-  depositView = new Deposit(c, this);
   ui->setupUi(this);
+  creditView = new Credit(controller, this);
+  depositView = new Deposit(c, this);
   this->setWindowTitle("Калькулятор by darrpama");
 
   connect(ui->Bzero,  SIGNAL(clicked()), this, SLOT(DigitAndOper()));
@@ -87,7 +87,7 @@ void View::BDotClicked()
 
 void View::BAcClicked()
 {
-  controller->Reset();
+  controller->ResetCalculatorModel();
   ui->label->setText("");
   OnBGraphClearClicked();
 }
@@ -189,7 +189,6 @@ void View::OnBGraphClearClicked()
 
 void View::OnActionCreditCalcTriggered()
 {
-  qDebug() << "CREDIT";
   creditView->show();
 }
 

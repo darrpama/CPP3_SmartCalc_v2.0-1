@@ -23,11 +23,11 @@ class View : public QMainWindow
   Q_OBJECT
 
 public:
-  View(s21::Controller *c, QWidget *parent = nullptr);
+  View(s21::Controller* c, QWidget* parent = nullptr);
   ~View();
 private:
-  s21::Controller *controller;
-  Ui::View *ui;
+  s21::Controller* controller;
+  Ui::View* ui;
   Credit* creditView;
   Deposit* depositView;
 

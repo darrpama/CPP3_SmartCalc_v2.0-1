@@ -3,7 +3,8 @@
 
 Deposit::Deposit(s21::Controller *c, QWidget *parent) :
   QDialog(parent),
-  ui(new Ui::Deposit)
+  ui(new Ui::Deposit),
+  controller(c)
 {
   ui->setupUi(this);
   this->setWindowTitle("Депозитный калькулятор");

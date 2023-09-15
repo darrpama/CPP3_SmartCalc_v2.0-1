@@ -22,6 +22,7 @@ private slots:
 
 private:
   Ui::Deposit *ui;
+  s21::Controller *controller;
 };
 
 #endif // DEPOSIT_H

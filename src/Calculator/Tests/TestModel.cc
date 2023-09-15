@@ -74,7 +74,6 @@ TEST(CalculationModelTest, Parser_Positive) {
   CalculationModel model;
   model.Parser("2+3*4");
   CalculationModel::list_type parsedList = model.GetParsedExpression();
-  // model.PrintParsedExpression();
   CalculationModel::list_type list;
   list.push_back(token{2, numberOrX, s21::numberType, "2"});
   list.push_back(model.addToken);

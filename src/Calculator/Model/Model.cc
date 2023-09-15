@@ -487,7 +487,7 @@ std::pair<std::vector<double>, std::vector<double>> CalculationModel::GetGraph(s
 {
   std::vector<double>xVector;
   std::vector<double>yVector;
-  size_t vectorSize = 10000;
+  size_t vectorSize = 1000;
   double step = (xMax - xMin) / vectorSize;
   for (size_t i = 0; i < vectorSize; i++)
   {

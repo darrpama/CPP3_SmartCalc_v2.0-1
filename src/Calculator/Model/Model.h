@@ -12,7 +12,7 @@
 #include <list>
 
 namespace s21 {
-
+// TODO изменить название класса на Model
 class CalculationModel {
 
   public:

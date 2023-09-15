@@ -3,12 +3,10 @@
 namespace s21
 {
 
-CreditModel::CreditModel()
+credit_data CreditModel::CalculateCredit(double sum, double time, double percent, time_type timeType, credit_type creditType)
 {
-}
+  credit_data answer_;
 
-void CreditModel::CalculateCredit(double sum, double time, double percent, time_type timeType, credit_type creditType)
-{
   if (timeType == year)
   {
     time *= 12;
@@ -19,10 +17,10 @@ void CreditModel::CalculateCredit(double sum, double time, double percent, time_
     double K = monthlyPercent + (monthlyPercent / (pow((1 + monthlyPercent), time) - 1));
 
     for (int i = 0; i < (int)time; i++) {
-      answer.monthly_pay.push_back(floor(K * sum * 100) / 100);
-      answer.total_sum += answer.monthly_pay.back();
+      answer_.monthly_pay.push_back(floor(K * sum * 100) / 100);
+      answer_.total_sum += answer_.monthly_pay.back();
     }
-    answer.overpay = answer.total_sum - sum;
+    answer_.overpay = answer_.total_sum - sum;
   }
   else if (creditType == differential)
   {
@@ -32,24 +30,18 @@ void CreditModel::CalculateCredit(double sum, double time, double percent, time_
     for (int i = 0; i < (int)time; i++) {
       double p = (tmpSum * monthlyPercent);
       tmpSum -= body;
-      answer.overpay += p;
-      answer.monthly_pay.push_back(body + p);
+      answer_.overpay += p;
+      answer_.monthly_pay.push_back(body + p);
     }
-    answer.overpay = floor(answer.overpay * 100) / 100;
-    answer.total_sum = floor((sum + answer.overpay) * 100) / 100;
+    answer_.overpay = floor(answer_.overpay * 100) / 100;
+    answer_.total_sum = floor((sum + answer_.overpay) * 100) / 100;
   }
+
+  return answer_;
 }
 
-credit_data CreditModel::GetAnswer()
-{
-  return answer;
+void CreditModel::testPrint() {
+  std::cout << "Wake up NEO!" << std::endl;
 }
 
-void CreditModel::ResetModel()
-{
-  answer.overpay = 0.0;
-  answer.total_sum = 0.0;
-  answer.monthly_pay.clear();
-}
-
-}
+}  // namespace s21
