@@ -1,21 +1,19 @@
 #include "Model.h"
 
-namespace s21 {
+namespace s21
+{
 
-// Function to check if a character is a digit
-bool CalculationModel::IsDigit(char ch) const
+bool Model::IsDigit(char ch) const
 {
   return std::isdigit(ch);
 }
 
-// Function to convert a string to a double
-double CalculationModel::StringToDouble(const std::string &str) const
+double Model::StringToDouble(const std::string &str) const
 {
   return std::stod(str);
 }
 
-// Main function to calculate expression
-std::string CalculationModel::CalculateExpression(const std::string &inputString)
+std::string Model::CalculateExpression(const std::string &inputString)
 {
   Reset();
   try
@@ -26,7 +24,7 @@ std::string CalculationModel::CalculateExpression(const std::string &inputString
     Calculator();
     SetStrAnswer(answer);
   }
-  catch(const std::exception& e)
+  catch (const std::exception &e)
   {
     std::cerr << e.what() << '\n';
     SetStrAnswer(e);
@@ -35,24 +33,35 @@ std::string CalculationModel::CalculateExpression(const std::string &inputString
   return GetStringAnswer();
 }
 
-// Function to parse the input string and return the parsed expression
-void CalculationModel::Parser(const std::string &inputString)
+void Model::Parser(const std::string &inputString)
 {
   for (size_t i = 0; i < inputString.length(); i++)
   {
     const char ch = inputString[i];
-
     if (IsDigit(ch) || ch == '.')
     {
       std::string numberStr;
       size_t j = i;
-
       while (IsDigit(inputString[j]) || inputString[j] == '.')
       {
         numberStr += inputString[j];
+        if (inputString[j + 1] == 'e')
+        {
+          numberStr += 'e';
+          j++;
+        }
+        if (inputString[j] == 'e' && inputString[j + 1] == '+')
+        {
+          numberStr += '+';
+          j++;
+        }
+        if (inputString[j] == 'e' && inputString[j + 1] == '-')
+        {
+          numberStr += '-';
+          j++;
+        }
         j++;
       }
-
       const double numberValue = StringToDouble(numberStr);
       const token numberToken = {numberValue, numberOrX, numberType, numberStr};
       parsedExpression.push_back(numberToken);
@@ -66,8 +75,7 @@ void CalculationModel::Parser(const std::string &inputString)
   }
 }
 
-// Function to process operators and push them into the parsed expression
-void CalculationModel::ProcessOperator(const char ch)
+void Model::ProcessOperator(const char ch)
 {
   if (ch == '+')
   {
@@ -111,8 +119,7 @@ void CalculationModel::ProcessOperator(const char ch)
   }
 }
 
-// Function to process other operators and push them into the parsed expression
-void CalculationModel::ProcessOtherOperators(const char ch, size_t &i, const std::string &inputString)
+void Model::ProcessOtherOperators(const char ch, size_t &i, const std::string &inputString)
 {
   const std::string str = inputString.substr(i);
   if (str.compare(0, 3, "mod") == 0)
@@ -165,7 +172,7 @@ void CalculationModel::ProcessOtherOperators(const char ch, size_t &i, const std
   }
 }
 
-void CalculationModel::PolishParser()
+void Model::PolishParser()
 {
   stack_type tempStack;
   for (auto it = parsedExpression.begin(); it != parsedExpression.end(); it++)
@@ -237,7 +244,7 @@ void CalculationModel::PolishParser()
   }
 }
 
-void CalculationModel::Calculator()
+void Model::Calculator()
 {
   list_type temp;
   try
@@ -271,19 +278,18 @@ void CalculationModel::Calculator()
     }
     SetAnswer(temp.front());
   }
-  catch(const std::exception& e)
+  catch (const std::exception &e)
   {
     throw std::invalid_argument("Invalid expression");
   }
-  
 }
 
-bool CalculationModel::IsNumber(const token &token) const
+bool Model::IsNumber(const token &token) const
 {
   return token.type == numberType;
 }
 
-bool CalculationModel::IsExpression(const token &token) const
+bool Model::IsExpression(const token &token) const
 {
   return (token.type == addition ||
           token.type == subtraction ||
@@ -293,7 +299,7 @@ bool CalculationModel::IsExpression(const token &token) const
           token.type == modulo);
 }
 
-bool CalculationModel::IsFunction(const token &token) const
+bool Model::IsFunction(const token &token) const
 {
   return (token.type == naturalLogarithm ||
           token.type == sinus ||
@@ -306,17 +312,17 @@ bool CalculationModel::IsFunction(const token &token) const
           token.type == squareRoot);
 }
 
-bool CalculationModel::IsOpenBracket(const token &token) const
+bool Model::IsOpenBracket(const token &token) const
 {
   return (token.type == openBracket);
 }
 
-bool CalculationModel::IsCloseBracket(const token &token) const
+bool Model::IsCloseBracket(const token &token) const
 {
   return (token.type == closeBracket);
 }
 
-void CalculationModel::Reset()
+void Model::Reset()
 {
   parsedExpression.clear();
   polishStack.clear();
@@ -324,40 +330,22 @@ void CalculationModel::Reset()
   error = false;
 }
 
-CalculationModel::list_type CalculationModel::GetParsedExpression() const
+Model::list_type Model::GetParsedExpression() const
 {
   return parsedExpression;
 }
 
-CalculationModel::list_type CalculationModel::GetPolishStack() const
+Model::list_type Model::GetPolishStack() const
 {
   return polishStack;
 }
 
-void CalculationModel::SetAnswer(token answer)
+void Model::SetAnswer(token answer)
 {
   this->answer = answer.value;
 }
 
-void CalculationModel::PrintParsedExpression() const
-{
-  for (auto it = parsedExpression.begin(); it != parsedExpression.end(); ++it)
-  {
-    std::cout << it->strValue;
-  }
-  std::cout << std::endl;
-}
-
-void CalculationModel::PrintPolishStack() const
-{
-  for (auto it = polishStack.begin(); it != polishStack.end(); ++it)
-  {
-    std::cout << it->strValue;
-    std::cout << std::endl;
-  }
-}
-
-token CalculationModel::DoExpression(token operand1, token operand2, token expression)
+token Model::DoExpression(token operand1, token operand2, token expression)
 {
   double answer = 0;
   token danswer;
@@ -406,7 +394,7 @@ token CalculationModel::DoExpression(token operand1, token operand2, token expre
   return danswer;
 }
 
-token CalculationModel::DoFunction(token operand, token function)
+token Model::DoFunction(token operand, token function)
 {
   double answer = 0;
   token danswer;
@@ -453,55 +441,61 @@ token CalculationModel::DoFunction(token operand, token function)
   return danswer;
 }
 
-double CalculationModel::GetDoubleAnswer() const
+double Model::GetDoubleAnswer() const
 {
   return answer;
 }
 
-std::string CalculationModel::GetStringAnswer() const
+std::string Model::GetStringAnswer() const
 {
   return stringAnswer;
 }
 
-void s21::CalculationModel::SetStrAnswer(const std::string &answer)
-{
-  this->stringAnswer = answer;
-}
-
-void CalculationModel::SetStrAnswer(const double answer)
+void Model::SetStrAnswer(const double answer)
 {
   this->stringAnswer = std::to_string(answer);
 }
 
-void CalculationModel::SetStrAnswer(const std::exception &exception)
+void Model::SetStrAnswer(const std::exception &exception)
 {
   this->stringAnswer = exception.what();
 }
 
-bool CalculationModel::GetError()
+bool Model::GetError() const
 {
   return error;
 }
 
-std::pair<std::vector<double>, std::vector<double>> CalculationModel::GetGraph(std::string inputString, double xMin, double xMax)
+std::pair<std::vector<double>, std::vector<double>> Model::GetGraph(
+    const std::string& inputString,
+    double xMin,
+    double xMax)
 {
-  std::vector<double>xVector;
-  std::vector<double>yVector;
-  size_t vectorSize = 1000;
-  double step = (xMax - xMin) / vectorSize;
-  for (size_t i = 0; i < vectorSize; i++)
+  std::vector<double> xVector;
+  std::vector<double> yVector;
+  const size_t numSamples = 1000;
+  double step = (xMax - xMin) / numSamples;
+
+  if (step <= 0)
+  {
+    throw std::invalid_argument("X values is wrong");
+  }
+
+  for (size_t i = 0; i < numSamples; i++)
   {
     Reset();
     std::string tmpString(inputString);
+    double xValue = xMin + i * step;
+    xVector.push_back(xValue);
+    std::string numberString = std::to_string(xValue);
 
-    xVector.push_back(xMin + i * step);
-    std::string numberString = std::to_string(xMin + i * step);
     size_t found = tmpString.find('x');
     while (found != std::string::npos)
     {
       tmpString.replace(found, 1, numberString);
       found = tmpString.find('x', found + numberString.length());
     }
+
     try
     {
       Parser(tmpString);
@@ -509,20 +503,20 @@ std::pair<std::vector<double>, std::vector<double>> CalculationModel::GetGraph(s
       Calculator();
       yVector.push_back(GetDoubleAnswer());
     }
-    catch(const std::exception& e)
+    catch (const std::exception& e)
     {
       std::cerr << e.what() << '\n';
       SetStrAnswer(e);
       SetError(true);
     }
   }
-  
+
   return std::make_pair(xVector, yVector);
 }
 
-void CalculationModel::SetError(bool NewError)
+void Model::SetError(bool NewError)
 {
   error = NewError;
 }
 
-}  // namespace s21
+} // namespace s21

@@ -53,7 +53,7 @@ TEST(ValidatorTest, BracketCheck_Negative_02) {
 // Positive test case for IsPlusMinusNotCorrect()
 TEST(ValidatorTest, PlusMinusCheck_Positive) {
   Validator validator;
-  std::string inputString = "1+-2";
+  std::string inputString = "1+(-2)";
   bool result = validator.IsPlusMinusNotCorrect(inputString);
   EXPECT_FALSE(result);
 }

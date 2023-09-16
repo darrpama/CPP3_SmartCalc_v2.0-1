@@ -26,8 +26,8 @@ class Validator {
     bool BinaryLeft(char);
   
   private:
-    bool NotContains(const std::string, const char);
-    bool Contains(const std::string, const char);
+    bool NotContains(const std::string&, const char);
+    bool Contains(const std::string&, const char);
     std::set<std::string> unary { "sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "sqrt" };
     std::set<std::string> binary { "*", "/", "mod", "^", "+", "-"};
 
@@ -45,6 +45,7 @@ class Validator {
     const std::string not_allowed_for_open_parenthesis_ = "e.0123456789x)";
     const std::string not_allowed_for_close_parenthesis_ = "e.(dnst^+-/*";
     const std::string allowed_for_exponent_ = "x0123456789)";
+    const std::string allowed_before_plus_minus_ = "0123456789()xe";
 
 };
 

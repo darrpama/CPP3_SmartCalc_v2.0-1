@@ -29,7 +29,6 @@ class CreditModel
 {
  public:
   credit_data CalculateCredit(double, double, double, time_type, credit_type);
-  void testPrint();
 };
 
 }  // namespace s21

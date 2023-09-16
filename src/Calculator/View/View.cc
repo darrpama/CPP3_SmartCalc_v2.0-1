@@ -19,6 +19,7 @@ View::View(s21::Controller *c, QWidget *parent)
   connect(ui->Beight, SIGNAL(clicked()), this, SLOT(DigitAndOper()));
   connect(ui->Bnine,  SIGNAL(clicked()), this, SLOT(DigitAndOper()));
   connect(ui->Bx,     SIGNAL(clicked()), this, SLOT(DigitAndOper()));
+  connect(ui->Bexp,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
 
   connect(ui->Badd,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
   connect(ui->Bsub,   SIGNAL(clicked()), this, SLOT(DigitAndOper()));
