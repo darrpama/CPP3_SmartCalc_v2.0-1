@@ -17,8 +17,8 @@ void Validator::IsNotCorrect(const std::string& inputString)
     bool tCheck = IsTwiseOpNotCorrect(inputString);
     bool fCheck = IsFooNotCorrect(inputString);
     bool bOpCheck = IsBinaryOpNotCorrect(inputString);
-    bool expCheck = IsExponentNotCorrect(inputString);
-    err = brCheck || plMin || nCheck || tCheck || fCheck || bOpCheck || expCheck;
+    err = brCheck || plMin || nCheck || tCheck || fCheck || bOpCheck;
+    // std::cout << brCheck << plMin << nCheck << tCheck << fCheck << bOpCheck << expCheck;
   }
   if (err)
   {
@@ -80,7 +80,7 @@ bool Validator::IsBracketNotCorrect(const std::string& inputString)
 bool Validator::IsPlusMinusNotCorrect(const std::string& inputString)
 {
   static const std::string ex_str = "1234567890(x.+-";
-  static const std::string ex_str2 = "1234567890()x+-";
+  static const std::string ex_str2 = "1234567890()x+-e";
   for (size_t i = 0; i < inputString.size(); i++)
   {
     if (inputString[i] == '+' || inputString[i] == '-')
@@ -89,10 +89,12 @@ bool Validator::IsPlusMinusNotCorrect(const std::string& inputString)
       {
         return true;
       }
-      else if (ex_str.find(inputString[i + 1]) == std::string::npos) {
+      else if (NotContains(ex_str, inputString[i + 1]))
+      {
         return true;
       }
-      else if (i != 0 && ex_str2.find(inputString[i - 1]) == std::string::npos) {
+      else if (i != 0 && NotContains(ex_str2, inputString[i - 1]))
+      {
         return true;
       }
     }
@@ -104,9 +106,10 @@ bool Validator::IsNumNotCorrect(const std::string& inputString)
 {
   bool inFloat = false;
   bool dotFound = false;
+  bool expFound = false;
   for (size_t i = 0; i < inputString.size(); i++)
   {
-    if (std::isdigit(inputString[i]) && !inFloat)
+    if ((std::isdigit(inputString[i]) || inputString[i] == 'e') && !inFloat)
     {
       inFloat = true;
       dotFound = false;
@@ -117,7 +120,25 @@ bool Validator::IsNumNotCorrect(const std::string& inputString)
       {
         return true;
       }
+      if (i > 0 && inputString[i-1] == 'e')
+      {
+        return true;
+      }
       dotFound = true;
+    }
+
+    if (inputString[i] == 'e')
+    {
+      if (expFound || !inFloat)
+      {
+        return true;
+      }
+
+      if (inputString[i] == 'e' && i > 0 && NotContains(allowed_for_exponent_, inputString[i - 1]))
+      {
+        return true;
+      }
+      expFound = true;
     }
   }
   return false;
@@ -169,7 +190,6 @@ bool Validator::IsBinaryOpNotCorrect(const std::string& inputString)
       if (i == 0) {
         return true;
       }
-      char prevch = inputString[i - 1];
       if (!IsDigitOrPm(inputString[i + 3]) || !BinaryLeft(prevch)) {
         return true;
       }
@@ -208,17 +228,6 @@ bool Validator::IsFooNotCorrect(const std::string& inputString) {
   return false;
 }
 
-bool Validator::IsExponentNotCorrect(const std::string& inputString)
-{
-  for (size_t i = 0; i < inputString.size(); i++)
-  {
-    if (inputString[i] == 'e' && i > 0 && NotContains(allowed_for_exponent_,inputString[i - 1]))
-    {
-      return true;
-    }
-  }
-  return false;
-}
 
 bool Validator::IsDigitOrPm(char ch)
 {
@@ -229,7 +238,7 @@ bool Validator::IsDigitOrPm(char ch)
 
 bool Validator::BinaryLeft(char ch)
 {
-  return (ch >= '0' && ch <= '9') || ch == ')' || ch == 'x';
+  return (ch >= '0' && ch <= '9') || ch == ')' || ch == 'x' || ch == 'e';
 }
 
 

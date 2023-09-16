@@ -171,30 +171,55 @@ TEST(ValidatorTest, BinaryLeft_Negative) {
 }
 
 // Positive test case for IsNotCorrect()
-TEST(ValidatorTest, IsCorrect_Positive) {
+TEST(ValidatorTest, IsNotCorrect_Positive) {
   Validator validator;
   std::string inputString = "1+2*3";
   EXPECT_NO_THROW(validator.IsNotCorrect(inputString));
 }
 
 // Negative test case for IsNotCorrect()
-TEST(ValidatorTest, IsCorrect_Negative) {
+TEST(ValidatorTest, IsNotCorrect_Negative) {
   Validator validator;
   std::string inputString = "1+2*";
   EXPECT_ANY_THROW(validator.IsNotCorrect(inputString));
 }
 
+// Positive test case for IsNotCorrect()
+TEST(ValidatorTest, IsNotCorrect_Positive_2) {
+  Validator validator;
+  std::string inputString = "1+2e-3*3";
+  EXPECT_NO_THROW(validator.IsNotCorrect(inputString));
+}
+
+// Positive test case for IsNotCorrect()
+TEST(ValidatorTest, IsNotCorrect_Negative_2) {
+  Validator validator;
+  std::string inputString = "1+2*1e3";
+  EXPECT_NO_THROW(validator.IsNotCorrect(inputString));
+}
+
+// Positive test case for IsNotCorrect()
+TEST(ValidatorTest, IsNotCorrect_Negative_3) {
+  Validator validator;
+  std::string inputString = "1+2*1e+3";
+  EXPECT_NO_THROW(validator.IsNotCorrect(inputString));
+}
+
 // Positive test case for IsExponentNotCorrect()
 TEST(ValidatorTest, ExponentCheck_positive) {
   Validator v = Validator();
-  EXPECT_FALSE(v.IsExponentNotCorrect("3.14e3"));
-  EXPECT_FALSE(v.IsExponentNotCorrect("(3.14+3)e3"));
-  EXPECT_FALSE(v.IsExponentNotCorrect("(3.14+3)e-3"));
-  EXPECT_FALSE(v.IsExponentNotCorrect("3.14e3"));
+  EXPECT_NO_THROW(v.IsNotCorrect("3.14e3"));
+  EXPECT_NO_THROW(v.IsNotCorrect("(3.14+3)e3"));
+  EXPECT_NO_THROW(v.IsNotCorrect("(3.14+3)e-3"));
+  EXPECT_NO_THROW(v.IsNotCorrect("3.14e3"));
 }
 
 // Negative test case for IsCorrect()
 TEST(ValidatorTest, ExponentCheck_negative) {
   Validator v = Validator();
-  EXPECT_TRUE(v.IsExponentNotCorrect("1.23-e3"));
+  EXPECT_ANY_THROW(v.IsNotCorrect("1.23-e3"));
+  EXPECT_ANY_THROW(v.IsNotCorrect("1.23.e3"));
+  EXPECT_ANY_THROW(v.IsNotCorrect("1.23e."));
+  EXPECT_ANY_THROW(v.IsNotCorrect("1.23e.3"));
+  EXPECT_ANY_THROW(v.IsNotCorrect("1.23ee3"));
 }

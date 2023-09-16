@@ -21,7 +21,6 @@ class Validator {
     bool IsTwiseOpNotCorrect(const std::string&);
     bool IsFooNotCorrect(const std::string&);
     bool IsPlusMinusNotCorrect(const std::string&);
-    bool IsExponentNotCorrect(const std::string&);
 
     bool IsDigitOrPm(char);
     bool BinaryLeft(char);
