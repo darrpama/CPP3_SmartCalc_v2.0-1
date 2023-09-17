@@ -1,7 +1,9 @@
 #include "Credit.h"
 #include "ui_Credit.h"
 
-Credit::Credit(s21::Controller *c, QWidget *parent) :
+using namespace s21;
+
+Credit::Credit(Controller *c, QWidget *parent) :
   QDialog(parent),
   ui(new Ui::Credit),
   controller(c)
@@ -23,12 +25,12 @@ void Credit::OnBCreditCalculateClicked()
   double time = ui->tEtime->toPlainText().toUInt();
   double percent = ui->tEpercent->toPlainText().toDouble();
   double sum = ui->tEsum->toPlainText().toDouble();
-  s21::credit_type creditType = ui->rBannuitent->isChecked() ? s21::annuitet : s21::differential;
-  s21::time_type timeType = ui->cBtime_type->currentIndex() ? s21::month : s21::year;
+  credit_type creditType = ui->rBannuitent->isChecked() ? annuitet : differential;
+  credit_time_type timeType = ui->cBtime_type->currentIndex() ? credit_time_type::credit_month : credit_time_type::credit_year;
   int ceil_time = ceil(time);
 
   ui->tEmonth->setText("");
-  if (timeType == s21::year)
+  if (timeType == credit_time_type::credit_year)
   {
     ceil_time *= 12;
   }

@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
   s21::Model model;
   s21::CreditModel creditModel;
-  s21::Controller controller(&model, &creditModel);
+  s21::DepositModel depositModel;
+  s21::Controller controller(&model, &creditModel, &depositModel);
   View view(&controller);
   view.show();
   return a.exec();

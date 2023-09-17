@@ -14,15 +14,15 @@ class Deposit : public QDialog
   Q_OBJECT
 
 public:
-  explicit Deposit(s21::Controller *c, QWidget *parent = nullptr);
+  Deposit(s21::Controller *c, QWidget *parent = nullptr);
   ~Deposit();
 
 private slots:
-//  void onPBdepositCalculateClicked();
+  void OnBDepositCalculateClicked();
 
 private:
-  Ui::Deposit *ui;
   s21::Controller *controller;
+  Ui::Deposit *ui;
 };
 
 #endif // DEPOSIT_H

@@ -3,11 +3,11 @@
 namespace s21
 {
 
-credit_data CreditModel::CalculateCredit(double sum, double time, double percent, time_type timeType, credit_type creditType)
+credit_data CreditModel::CalculateCredit(double sum, double time, double percent, credit_time_type timeType, credit_type creditType)
 {
   credit_data answer_;
 
-  if (timeType == year)
+  if (timeType == credit_time_type::credit_year)
   {
     time *= 12;
   }

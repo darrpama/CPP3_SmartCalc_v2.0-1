@@ -358,6 +358,120 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_11)
 }
 
 // Positive test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_12)
+{
+  Model model;
+  std::string inputString = "ata(0)+sqr(4)-si()+co(0)+ta(3)";
+  std::string expectedOutput = "Validation error";
+
+  std::string actualOutput = model.CalculateExpression(inputString);
+
+  EXPECT_EQ(actualOutput, expectedOutput);
+  EXPECT_TRUE(model.GetError());
+}
+
+// Positive test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_13)
+{
+  Model model;
+  std::string inputString = "sqr(4)-si()+co(0)+ta(3)";
+  std::string expectedOutput = "Validation error";
+
+  std::string actualOutput = model.CalculateExpression(inputString);
+
+  EXPECT_EQ(actualOutput, expectedOutput);
+  EXPECT_TRUE(model.GetError());
+}
+
+// Positive test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_14)
+{
+  Model model;
+  std::string inputString = "si()+co(0)+ta(3)";
+  std::string expectedOutput = "Validation error";
+
+  std::string actualOutput = model.CalculateExpression(inputString);
+
+  EXPECT_EQ(actualOutput, expectedOutput);
+  EXPECT_TRUE(model.GetError());
+}
+
+// Positive test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_15)
+{
+  Model model;
+  std::string inputString = "co(0)+ta(3)";
+  std::string expectedOutput = "Validation error";
+
+  std::string actualOutput = model.CalculateExpression(inputString);
+
+  EXPECT_EQ(actualOutput, expectedOutput);
+  EXPECT_TRUE(model.GetError());
+}
+
+// Positive test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_16)
+{
+  Model model;
+  std::string inputString = "ta(3)";
+  std::string expectedOutput = "Validation error";
+
+  std::string actualOutput = model.CalculateExpression(inputString);
+
+  EXPECT_EQ(actualOutput, expectedOutput);
+  EXPECT_TRUE(model.GetError());
+}
+
+// Positive test case for CalculateExpression
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_17)
+{
+  Model model1;
+  Model model2;
+  Model model3;
+  Model model4;
+  Model model5;
+  Model model6;
+  Model model7;
+  Model model8;
+  std::string inputString1= "e(";
+  std::string inputString2= ".)";
+  std::string inputString3= "1.+";
+  std::string inputString4= "mod";
+  std::string inputString5= "1mod0";
+  std::string inputString6= "1modx";
+  std::string inputString7= "log)";
+  std::string inputString8= "ln)";
+  std::string expectedOutput = "Validation error";
+  std::string expectedOutput2 = "Invalid expression";
+
+  std::string actualOutput1= model1.CalculateExpression(inputString1);
+  std::string actualOutput2= model2.CalculateExpression(inputString2);
+  std::string actualOutput3= model3.CalculateExpression(inputString3);
+  std::string actualOutput4= model4.CalculateExpression(inputString4);
+  std::string actualOutput5= model5.CalculateExpression(inputString5);
+  std::string actualOutput6= model6.CalculateExpression(inputString6);
+  std::string actualOutput7= model7.CalculateExpression(inputString7);
+  std::string actualOutput8= model8.CalculateExpression(inputString8);
+
+  EXPECT_EQ(actualOutput1, expectedOutput);
+  EXPECT_EQ(actualOutput2, expectedOutput);
+  EXPECT_EQ(actualOutput3, expectedOutput);
+  EXPECT_EQ(actualOutput4, expectedOutput);
+  EXPECT_EQ(actualOutput5, expectedOutput2);
+  EXPECT_EQ(actualOutput6, expectedOutput2);
+  EXPECT_EQ(actualOutput7, expectedOutput);
+  EXPECT_EQ(actualOutput8, expectedOutput);
+  EXPECT_TRUE(model1.GetError());
+  EXPECT_TRUE(model2.GetError());
+  EXPECT_TRUE(model3.GetError());
+  EXPECT_TRUE(model4.GetError());
+  EXPECT_TRUE(model5.GetError());
+  EXPECT_TRUE(model6.GetError());
+  EXPECT_TRUE(model7.GetError());
+  EXPECT_TRUE(model8.GetError());
+}
+
+// Positive test case for CalculateExpression
 TEST(CalculationModelTest, CalculateExpression_NegativeTest_11)
 {
   Model model;

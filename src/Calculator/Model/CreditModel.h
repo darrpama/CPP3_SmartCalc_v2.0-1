@@ -14,9 +14,10 @@ struct credit_data
   double overpay;
 };
 
-enum time_type {
-  month,
-  year
+enum class credit_time_type {
+  credit_month,
+  credit_quartal,
+  credit_year
 };
 
 enum credit_type {
@@ -28,7 +29,7 @@ enum credit_type {
 class CreditModel
 {
  public:
-  credit_data CalculateCredit(double, double, double, time_type, credit_type);
+  credit_data CalculateCredit(double, double, double, credit_time_type, credit_type);
 };
 
 }  // namespace s21
