@@ -59,6 +59,9 @@ check:
 	clang-format -n --style="Google" $(SOURCES) $(HEADERS)
 	cppcheck --std=c++17 --language=c++ --enable=all --suppress=unusedStructMember --suppress=missingInclude $(SOURCES) $(HEADERS)
 
+leaks: $(EXECUTABLE)
+	leaks -atExit -- ./$(EXECUTABLE)
+
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(HEADERS) -o $@ $(LDFLAGS)
 	./$(EXECUTABLE) 
