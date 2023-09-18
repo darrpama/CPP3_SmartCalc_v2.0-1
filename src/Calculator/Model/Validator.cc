@@ -91,16 +91,15 @@ bool Validator::IsPlusMinusNotCorrect(const std::string &inputString) {
 }
 
 bool Validator::IsNumNotCorrect(const std::string &inputString) {
-  bool inFloat = false;
+  bool inFloat{};
   bool dotFound = false;
   bool expFound = false;
 
   for (size_t i = 0; i < inputString.size(); i++) {
-    if ((std::isdigit(inputString[i]) || inputString[i] == 'e' || inputString[i] == '.')) {
+    if ((std::isdigit(inputString[i]) || inputString[i] == 'e' ||
+         inputString[i] == '.')) {
       inFloat = true;
-    }
-    else
-    {
+    } else {
       inFloat = false;
       dotFound = false;
     }
