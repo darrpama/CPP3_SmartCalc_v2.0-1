@@ -1,37 +1,29 @@
 #ifndef CREDITMODEL_H
 #define CREDITMODEL_H
 
-#include <vector>
 #include <math.h>
+
 #include <iostream>
+#include <vector>
 
 namespace s21 {
 
-struct credit_data
-{
+struct credit_data {
   double total_sum;
   std::vector<double> monthly_pay;
   double overpay;
 };
 
-enum class credit_time_type {
-  credit_month,
-  credit_quartal,
-  credit_year
-};
+enum class credit_time_type { credit_month, credit_quartal, credit_year };
 
-enum credit_type {
-  differential,
-  annuitet
-};
+enum credit_type { differential, annuitet };
 
-
-class CreditModel
-{
+class CreditModel {
  public:
-  credit_data CalculateCredit(double, double, double, credit_time_type, credit_type);
+  credit_data CalculateCredit(double, double, double, credit_time_type,
+                              credit_type);
 };
 
 }  // namespace s21
 
-#endif // CREDITMODEL_H
+#endif  // CREDITMODEL_H

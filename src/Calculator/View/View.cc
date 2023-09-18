@@ -64,6 +64,7 @@ void View::DigitAndOper()
 {
   QPushButton *button = (QPushButton *)sender();
   if (controller->GetError()) {
+    controller->ResetCalculatorModel();
     ui->label->setText("");
   }
   ui->label->setText(ui->label->text() + button->text());
@@ -74,6 +75,7 @@ void View::Func()
 {
   QPushButton *button = (QPushButton *)sender();
   if (controller->GetError()) {
+    controller->ResetCalculatorModel();
     ui->label->setText("");
   }
   ui->label->setText(ui->label->text() + button->text() + "(");
@@ -119,6 +121,7 @@ void View::BEqClicked()
 void View::BClBrClicked()
 {
   if (controller->GetError()) {
+    controller->ResetCalculatorModel();
     ui->label->setText("");
   }
     ui->label->setText(ui->label->text() + ")");
@@ -127,6 +130,7 @@ void View::BClBrClicked()
 void View::BOpBrClicked()
 {
   if (controller->GetError()) {
+    controller->ResetCalculatorModel();
     ui->label->setText("");
   }
     ui->label->setText(ui->label->text() + "(");
@@ -144,8 +148,17 @@ void View::DrawGraph() {
   double xMin = ui->xmin_spinbox->value();
   double xMax = ui->xmax_spinbox->value();
   std::string stdInputString(inputString.toStdString());
-
-  std::pair<std::vector<double>, std::vector<double>> stdGraph = controller->GetGraph(stdInputString, xMin, xMax);
+  std::pair<std::vector<double>, std::vector<double>> stdGraph {};
+  try
+  {
+    stdGraph = controller->GetGraph(stdInputString, xMin, xMax);
+  }
+  catch (const std::exception& e)
+  {
+    std::cerr << e.what() << '\n';
+    std::string result = e.what();
+    ui->label->setText(QString::fromStdString(result));
+  }
 
   QVector<double> xArray = QVector<double>(stdGraph.first.begin(), stdGraph.first.end());
   QVector<double> yArray = QVector<double>(stdGraph.second.begin(), stdGraph.second.end());
@@ -208,7 +221,7 @@ void View::OnBCalculateEqClicked()
   QString input_string = ui->label->text();
   QString tmpStr = input_string;
   double value = ui->xValue->value();
-  tmpStr.replace("x", "(" + QString::number(value, 'g', 6) + ")");
+  tmpStr.replace("x", QString::number(value, 'g', 6) );
 
   std::string result = "";
 

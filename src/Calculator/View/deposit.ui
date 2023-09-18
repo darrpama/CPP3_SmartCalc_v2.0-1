@@ -21,8 +21,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>16777215</width>
-    <height>1000</height>
+    <width>800</width>
+    <height>600</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -177,6 +177,9 @@ QPushButton:pressed {
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="4" column="1">
@@ -203,7 +206,7 @@ QPushButton:pressed {
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QCheckBox" name="cBkap">
+        <widget class="QCheckBox" name="cBcap">
          <property name="text">
           <string>С капитализацией</string>
          </property>

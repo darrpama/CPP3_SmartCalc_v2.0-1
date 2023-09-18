@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "../Model/Model.h"
 
 using namespace s21;
@@ -41,8 +42,10 @@ TEST(CalculationModelTest, IsDigitToken_Negative) {
 TEST(CalculationModelTest, IsFunction_Positive) {
   Model model;
   ASSERT_TRUE(model.IsExpression(token{0.0, s21::addSub, s21::addition, "+"}));
-  ASSERT_TRUE(model.IsExpression(token{0.0, s21::addSub, s21::subtraction, "-"}));
-  ASSERT_TRUE(model.IsExpression(token{0.0, s21::mulDivMod, s21::multiplication, "*"}));
+  ASSERT_TRUE(
+      model.IsExpression(token{0.0, s21::addSub, s21::subtraction, "-"}));
+  ASSERT_TRUE(
+      model.IsExpression(token{0.0, s21::mulDivMod, s21::multiplication, "*"}));
 }
 
 // Negative test case for IsDigit function
@@ -84,14 +87,13 @@ TEST(CalculationModelTest, Parser_Positive) {
   EXPECT_TRUE(parsedList == list);
 }
 
-TEST(CalculationModelTest, Parser_Positive_Unary_Plus)
-{
+TEST(CalculationModelTest, Parser_Positive_Unary_Plus) {
   Model model;
   std::string inputString = "+1+2*3";
-  
+
   // Call the Parser function
   model.Parser(inputString);
-  
+
   Model::list_type parsedList = model.GetParsedExpression();
   // Assert the expected parsed expression
   Model::list_type list;
@@ -106,14 +108,13 @@ TEST(CalculationModelTest, Parser_Positive_Unary_Plus)
   EXPECT_TRUE(parsedList == list);
 }
 
-TEST(CalculationModelTest, Parser_Positive_Unary_Minus)
-{
+TEST(CalculationModelTest, Parser_Positive_Unary_Minus) {
   Model model;
   std::string inputString = "-1+2*3";
-  
+
   // Call the Parser function
   model.Parser(inputString);
-  
+
   Model::list_type parsedList = model.GetParsedExpression();
   // Assert the expected parsed expression
   Model::list_type list;
@@ -128,14 +129,13 @@ TEST(CalculationModelTest, Parser_Positive_Unary_Minus)
   EXPECT_TRUE(parsedList == list);
 }
 
-TEST(CalculationModelTest, Parser_Positive_Other_Operators)
-{
+TEST(CalculationModelTest, Parser_Positive_Other_Operators) {
   Model model;
   std::string inputString = "(1/2^3)(3mod4)";
-  
+
   // Call the Parser function
   model.Parser(inputString);
-  
+
   Model::list_type parsedList = model.GetParsedExpression();
   // Assert the expected parsed expression
   Model::list_type list;
@@ -154,15 +154,13 @@ TEST(CalculationModelTest, Parser_Positive_Other_Operators)
   list.push_back(clbrToken);
 
   std::cout << "list" << std::endl;
-  for (const auto& element : list)
-  {
+  for (const auto& element : list) {
     std::cout << element.strValue << " ";
   }
   std::cout << std::endl;
 
   std::cout << "parsed list" << std::endl;
-  for (const auto& element : parsedList)
-  {
+  for (const auto& element : parsedList) {
     std::cout << element.strValue << " ";
   }
   std::cout << std::endl;
@@ -190,7 +188,7 @@ TEST(CalculationModelTest, Calculator_Positive) {
   Model model;
   Model::list_type list;
   list.push_back(token{2, numberOrX, s21::numberType, "2"});
-  list.push_back(token{NAN, addSub, s21::addition,"+"});
+  list.push_back(token{NAN, addSub, s21::addition, "+"});
   list.push_back(token{3, numberOrX, s21::numberType, "3"});
   list.push_back(token{NAN, mulDivMod, s21::multiplication, "*"});
   list.push_back(token{4, numberOrX, s21::numberType, "4"});
@@ -202,8 +200,7 @@ TEST(CalculationModelTest, Calculator_Positive) {
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest) {
   Model model;
   std::string inputString = "2+3*4";
   std::string expectedOutput = "14.000000";
@@ -215,8 +212,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_2)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_2) {
   Model model;
   std::string inputString = "2+3*4e1";
   std::string expectedOutput = "122.000000";
@@ -228,8 +224,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_2)
 }
 
 // Negative test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_NegativeTest_2)
-{
+TEST(CalculationModelTest, CalculateExpression_NegativeTest_2) {
   Model model;
   std::string inputString = "2+3*4e.1";  // Invalid expression
   std::string expectedOutput = "Validation error";
@@ -241,8 +236,7 @@ TEST(CalculationModelTest, CalculateExpression_NegativeTest_2)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_3)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_3) {
   Model model;
   std::string inputString = "2+3*40e-1";
   std::string expectedOutput = "14.000000";
@@ -254,8 +248,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_3)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_4)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_4) {
   Model model;
   std::string inputString = "2+3*40e+1";
   std::string expectedOutput = "1202.000000";
@@ -267,8 +260,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_4)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_5)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_5) {
   Model model;
   std::string inputString = "2+asin(0)";
   std::string expectedOutput = "2.000000";
@@ -280,8 +272,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_5)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_6)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_6) {
   Model model;
   std::string inputString = "asin(0)+acos(1)";
   std::string expectedOutput = "0.000000";
@@ -293,8 +284,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_6)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_7)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_7) {
   Model model;
   std::string inputString = "atan(0)+log(1)";
   std::string expectedOutput = "0.000000";
@@ -306,8 +296,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_7)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_8)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_8) {
   Model model;
   std::string inputString = "sin(0)+cos(0)";
   std::string expectedOutput = "1.000000";
@@ -319,8 +308,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_8)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_9)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_9) {
   Model model;
   std::string inputString = "tan(0)+ln(1)+sqrt(4)";
   std::string expectedOutput = "2.000000";
@@ -332,8 +320,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_9)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_10)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_10) {
   Model model;
   std::string inputString = "((4/2))^4";
   std::string expectedOutput = "16.000000";
@@ -345,8 +332,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_10)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_11)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_11) {
   Model model;
   std::string inputString = "((4/2))mod4";
   std::string expectedOutput = "2.000000";
@@ -358,8 +344,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_11)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_12)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_12) {
   Model model;
   std::string inputString = "ata(0)+sqr(4)-si()+co(0)+ta(3)";
   std::string expectedOutput = "Validation error";
@@ -371,8 +356,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_12)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_13)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_13) {
   Model model;
   std::string inputString = "sqr(4)-si()+co(0)+ta(3)";
   std::string expectedOutput = "Validation error";
@@ -384,8 +368,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_13)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_14)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_14) {
   Model model;
   std::string inputString = "si()+co(0)+ta(3)";
   std::string expectedOutput = "Validation error";
@@ -397,8 +380,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_14)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_15)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_15) {
   Model model;
   std::string inputString = "co(0)+ta(3)";
   std::string expectedOutput = "Validation error";
@@ -410,8 +392,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_15)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_16)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_16) {
   Model model;
   std::string inputString = "ta(3)";
   std::string expectedOutput = "Validation error";
@@ -423,8 +404,7 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_16)
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_PositiveTest_17)
-{
+TEST(CalculationModelTest, CalculateExpression_PositiveTest_17) {
   Model model1;
   Model model2;
   Model model3;
@@ -433,34 +413,38 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_17)
   Model model6;
   Model model7;
   Model model8;
-  std::string inputString1= "e(";
-  std::string inputString2= ".)";
-  std::string inputString3= "1.+";
-  std::string inputString4= "mod";
-  std::string inputString5= "1mod0";
-  std::string inputString6= "1modx";
-  std::string inputString7= "log)";
-  std::string inputString8= "ln)";
+  Model model9;
+  std::string inputString1 = "e(";
+  std::string inputString2 = ".)";
+  std::string inputString3 = "1.+";
+  std::string inputString4 = "mod";
+  std::string inputString5 = "1mod0";
+  std::string inputString6 = "1modx";
+  std::string inputString7 = "log)";
+  std::string inputString8 = "ln)";
+  std::string inputString9 = "1.+";
   std::string expectedOutput = "Validation error";
   std::string expectedOutput2 = "Invalid expression";
 
-  std::string actualOutput1= model1.CalculateExpression(inputString1);
-  std::string actualOutput2= model2.CalculateExpression(inputString2);
-  std::string actualOutput3= model3.CalculateExpression(inputString3);
-  std::string actualOutput4= model4.CalculateExpression(inputString4);
-  std::string actualOutput5= model5.CalculateExpression(inputString5);
-  std::string actualOutput6= model6.CalculateExpression(inputString6);
-  std::string actualOutput7= model7.CalculateExpression(inputString7);
-  std::string actualOutput8= model8.CalculateExpression(inputString8);
+  std::string actualOutput1 = model1.CalculateExpression(inputString1);
+  std::string actualOutput2 = model2.CalculateExpression(inputString2);
+  std::string actualOutput3 = model3.CalculateExpression(inputString3);
+  std::string actualOutput4 = model4.CalculateExpression(inputString4);
+  std::string actualOutput5 = model5.CalculateExpression(inputString5);
+  std::string actualOutput6 = model6.CalculateExpression(inputString6);
+  std::string actualOutput7 = model7.CalculateExpression(inputString7);
+  std::string actualOutput8 = model8.CalculateExpression(inputString8);
+  std::string actualOutput9 = model9.CalculateExpression(inputString9);
 
   EXPECT_EQ(actualOutput1, expectedOutput);
   EXPECT_EQ(actualOutput2, expectedOutput);
   EXPECT_EQ(actualOutput3, expectedOutput);
   EXPECT_EQ(actualOutput4, expectedOutput);
   EXPECT_EQ(actualOutput5, expectedOutput2);
-  EXPECT_EQ(actualOutput6, expectedOutput2);
+  EXPECT_EQ(actualOutput6, expectedOutput);
   EXPECT_EQ(actualOutput7, expectedOutput);
   EXPECT_EQ(actualOutput8, expectedOutput);
+  EXPECT_EQ(actualOutput9, expectedOutput);
   EXPECT_TRUE(model1.GetError());
   EXPECT_TRUE(model2.GetError());
   EXPECT_TRUE(model3.GetError());
@@ -469,11 +453,11 @@ TEST(CalculationModelTest, CalculateExpression_PositiveTest_17)
   EXPECT_TRUE(model6.GetError());
   EXPECT_TRUE(model7.GetError());
   EXPECT_TRUE(model8.GetError());
+  EXPECT_TRUE(model9.GetError());
 }
 
 // Positive test case for CalculateExpression
-TEST(CalculationModelTest, CalculateExpression_NegativeTest_11)
-{
+TEST(CalculationModelTest, CalculateExpression_NegativeTest_11) {
   Model model;
   std::string inputString = "(4/0)";
   std::string expectedOutput = "Invalid expression";
@@ -484,28 +468,29 @@ TEST(CalculationModelTest, CalculateExpression_NegativeTest_11)
   EXPECT_TRUE(model.GetError());
 }
 
-TEST(ModelTest, PositiveTest) { 
-  Model model; 
-  std::string inputString = "x"; 
-  double xMin = -5.0; 
-  double xMax = 5.0; 
-  std::pair<std::vector<double>, std::vector<double>> result = model.GetGraph(inputString, xMin, xMax); 
- 
-  EXPECT_EQ(result.first.size(), 1000); 
-  EXPECT_EQ(result.second.size(), 1000); 
- 
-  EXPECT_NEAR(result.first[0], -5.0, 0.001); 
-  EXPECT_NEAR(result.first[999], 4.99, 0.001); 
-  EXPECT_NEAR(result.first[500], 0.0, 0.001); 
- 
-  EXPECT_NEAR(result.second[0], -5.0, 0.001); 
-  EXPECT_NEAR(result.second[999], 4.99, 0.001); 
-  EXPECT_NEAR(result.second[500], 0.0, 0.001); 
-} 
- 
-TEST(ModelTest, NegativeTest) { 
-  Model model; 
-  std::string inputString = "-x-"; 
-  EXPECT_ANY_THROW(model.GetGraph("-x-", 5.0, 0.0)); 
-  EXPECT_ANY_THROW(model.GetGraph("-x-", -5.0, -5.0)); 
-}  
+TEST(ModelTest, PositiveTest) {
+  Model model;
+  std::string inputString = "x";
+  double xMin = -5.0;
+  double xMax = 5.0;
+  std::pair<std::vector<double>, std::vector<double>> result =
+      model.GetGraph(inputString, xMin, xMax);
+
+  EXPECT_EQ(result.first.size(), 1000);
+  EXPECT_EQ(result.second.size(), 1000);
+
+  EXPECT_NEAR(result.first[0], -5.0, 0.001);
+  EXPECT_NEAR(result.first[999], 4.99, 0.001);
+  EXPECT_NEAR(result.first[500], 0.0, 0.001);
+
+  EXPECT_NEAR(result.second[0], -5.0, 0.001);
+  EXPECT_NEAR(result.second[999], 4.99, 0.001);
+  EXPECT_NEAR(result.second[500], 0.0, 0.001);
+}
+
+TEST(ModelTest, NegativeTest) {
+  Model model;
+  std::string inputString = "-x-";
+  EXPECT_ANY_THROW(model.GetGraph("-x-", 5.0, 0.0));
+  EXPECT_ANY_THROW(model.GetGraph("-x-", -5.0, -5.0));
+}

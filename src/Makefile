@@ -8,15 +8,18 @@ HEADERS = \
     $(PROJECTDIR)/Model/Arithmetic.h \
     $(PROJECTDIR)/Model/Model.h \
     $(PROJECTDIR)/Model/CreditModel.h \
+    $(PROJECTDIR)/Model/DepositModel.h \
     $(PROJECTDIR)/Model/Validator.h
 
 SOURCES = \
     $(PROJECTDIR)/Model/Model.cc \
     $(PROJECTDIR)/Model/CreditModel.cc \
+    $(PROJECTDIR)/Model/DepositModel.cc \
     $(PROJECTDIR)/Model/Validator.cc \
     $(PROJECTDIR)/Tests/TestModel.cc \
     $(PROJECTDIR)/Tests/TestValidator.cc \
     $(PROJECTDIR)/Tests/TestCredit.cc \
+    $(PROJECTDIR)/Tests/TestDeposit.cc \
     $(PROJECTDIR)/Tests/RunAllTests.cc
 
 OBJECTS = $(SOURCES:.cc=.o)
@@ -26,6 +29,10 @@ GCNO = $(SOURCES:.cc=.gcno)
 
 all: $(SOURCES) $(EXECUTABLE)
 
+test: all
+
+check:
+	clang-format -n --style="Google" $(SOURCES) $(HEADERS)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(HEADERS) -o $@ $(LDFLAGS)

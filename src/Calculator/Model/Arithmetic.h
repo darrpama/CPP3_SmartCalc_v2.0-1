@@ -44,8 +44,7 @@ struct token {
   std::string strValue;
 
   bool operator==(const token& other) const {
-    return (priority == other.priority &&
-            type == other.type &&
+    return (priority == other.priority && type == other.type &&
             value == other.value);
   }
 };
@@ -57,7 +56,7 @@ static token divToken = {0.0, mulDivMod, division, "/"};
 static token modToken = {0.0, mulDivMod, modulo, "mod"};
 static token powToken = {0.0, degree, power, "^"};
 static token clbrToken = {0.0, bracket, closeBracket, ")"};
-static token opbrToken = {0.0, bracket, openBracket, "(",};
+static token opbrToken = {0.0, bracket, openBracket, "("};
 static token sinToken = {0.0, function, sinus, "sin"};
 static token cosToken = {0.0, function, cosinus, "cos"};
 static token tanToken = {0.0, function, tangens, "tan"};

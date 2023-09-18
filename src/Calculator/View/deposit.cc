@@ -24,7 +24,7 @@ void Deposit::OnBDepositCalculateClicked()
   double time = ui->tEtime->toPlainText().toUInt();
   double percent = ui->tEpercent->toPlainText().toDouble();
   double sum = ui->tEsum->toPlainText().toDouble();
-  capitalization capitalization = ui->rBmonth->isChecked() ? with_capitalization : without_capitalization;
+  capitalization capitalization = ui->cBcap->isChecked() ? with_capitalization : without_capitalization;
   deposit_time_type timeType = ui->cBtime_type->currentIndex() ? deposit_time_type::deposit_month : deposit_time_type::deposit_year;
 
   deposit_time_type capitalizationPeriod = deposit_time_type::deposit_month;

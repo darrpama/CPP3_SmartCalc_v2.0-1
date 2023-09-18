@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "../Model/Validator.h"
 
 using namespace s21;
@@ -184,6 +185,20 @@ TEST(ValidatorTest, IsNotCorrect_Negative) {
   EXPECT_ANY_THROW(validator.IsNotCorrect(inputString));
 }
 
+// Negative test case for IsNotCorrect()
+TEST(ValidatorTest, IsNotCorrect_Negative_02) {
+  Validator validator;
+  std::string inputString = "-10.000000-";
+  EXPECT_ANY_THROW(validator.IsNotCorrect(inputString));
+}
+
+// Negative test case for IsNotCorrect()
+TEST(ValidatorTest, IsNotCorrect_Negative_03) {
+  Validator validator;
+  std::string inputString = "mod9";
+  EXPECT_ANY_THROW(validator.IsNotCorrect(inputString));
+}
+
 // Positive test case for IsNotCorrect()
 TEST(ValidatorTest, IsNotCorrect_Positive_2) {
   Validator validator;
@@ -203,6 +218,13 @@ TEST(ValidatorTest, IsNotCorrect_Negative_3) {
   Validator validator;
   std::string inputString = "1+2*1e+3";
   EXPECT_NO_THROW(validator.IsNotCorrect(inputString));
+}
+
+// Positive test case for IsNotCorrect()
+TEST(ValidatorTest, IsNotCorrect_Negative_4) {
+  Validator validator;
+  std::string inputString = "cos-10.000000";
+  EXPECT_ANY_THROW(validator.IsNotCorrect(inputString));
 }
 
 // Positive test case for IsExponentNotCorrect()
