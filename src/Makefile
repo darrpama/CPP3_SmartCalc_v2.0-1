@@ -4,6 +4,8 @@ LDFLAGS = -lstdc++ -lgtest -fprofile-arcs -ftest-coverage
 PROJECTDIR = ./Calculator
 BUILDDIR = ./SmartCalc2
 EXECUTABLE = test.out
+STATICLIB = SmartCalc2.a
+DISTDIR = ./DISTRIBUTIVE
 
 HEADERS = \
     $(PROJECTDIR)/Model/Arithmetic.h \
@@ -33,6 +35,10 @@ all: install
 test: $(SOURCES) $(EXECUTABLE)
 
 dvi:
+	open ./dvi.md
+
+build:
+	cd $(PROJECTDIR) && ls -la && mkdir $(BUILDDIR) && cd $(BUILDDIR) && cmake .. && make
 
 install:
 	cd $(PROJECTDIR) && ls -la && mkdir $(BUILDDIR) && cd $(BUILDDIR) && cmake .. && make
@@ -40,6 +46,14 @@ install:
 
 uninstall:
 	cd $(PROJECTDIR) && rm -rf $(BUILDDIR)
+
+dist:
+	rm -rf $(DISTDIR)
+	mkdir $(DISTDIR)
+	mkdir $(DISTDIR)/src
+	cp -r $(PROJECTDIR) dvi.md Makefile $(DISTDIR)/src/
+	tar cvzf $(DISTDIR).tgz $(DISTDIR)
+	rm -rf $(DISTDIR)
 
 check:
 	clang-format -n --style="Google" $(SOURCES) $(HEADERS)
@@ -52,6 +66,9 @@ $(EXECUTABLE): $(OBJECTS)
 %.o: %.cc
 	$(CC) $(CCFLAGS) -o $@ -c $< $(LDFLAGS)
 
+$(STATICLIB): $(OBJECTS)
+	ar rcs $(STATICLIB) $^
+
 gcov_report: $(EXECUTABLE)
 	./$(EXECUTABLE)
 	lcov -t "./test.out" -o test.info --no-external -c -d .
@@ -60,7 +77,8 @@ gcov_report: $(EXECUTABLE)
 
 .PHONY: clean
 clean:
-	rm -f $(OBJECTS)
-	rm *.gcno $(GCDA) $(GCNO) *.info
-	rm $(EXECUTABLE)
-	rm -rf report
+	@rm -rf $(OBJECTS)
+	@rm -rf $(EXECUTABLE)
+	@rm -rf $(STATICLIB)
+	@rm -rf *.gcno $(GCDA) $(GCNO) *.info
+	@rm -rf report

@@ -1,4 +1,6 @@
 #ifndef SRC_S21_ARITHMETIC_H_
+#define SRC_S21_ARITHMETIC_H_
+
 #include <string>
 
 namespace s21 {

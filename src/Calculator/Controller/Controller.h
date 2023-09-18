@@ -10,7 +10,7 @@ namespace s21 {
 class Controller 
 { 
   public:
-    Controller(Model *m, CreditModel *cm, DepositModel *dm) : model(m), creditModel(cm), depositModel(dm) {};
+    Controller(Model *m, CreditModel *cm, DepositModel *dm) : model_(m), creditModel_(cm), depositModel_(dm) {};
 
     std::string Calculate(const std::string&);
     std::pair<std::vector<double>, std::vector<double>> GetGraph(std::string, double, double);
@@ -22,9 +22,9 @@ class Controller
     bool GetError();
 
   private:
-    Model *model;
-    CreditModel *creditModel;
-    DepositModel *depositModel;
+    Model *model_;
+    CreditModel *creditModel_;
+    DepositModel *depositModel_;
 };
 
 }  // namespace s21

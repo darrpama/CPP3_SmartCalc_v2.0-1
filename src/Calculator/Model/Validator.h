@@ -27,9 +27,6 @@ class Validator {
  private:
   bool NotContains(const std::string&, const char);
   bool Contains(const std::string&, const char);
-  std::set<std::string> unary{"sin",  "cos", "tan", "asin", "acos",
-                              "atan", "log", "ln",  "sqrt"};
-  std::set<std::string> binary{"*", "/", "mod", "^", "+", "-"};
 
   const std::string not_allowed_for_digits_ = ")xe";
   const std::string not_allowed_for_x_ = ")x.0123456789e";

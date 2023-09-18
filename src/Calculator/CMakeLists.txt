@@ -22,7 +22,6 @@ set(PROJECT_SOURCES
     Model/CreditModel.h
     Model/DepositModel.h
     View/View.h
-    View/ConsoleView.h
     View/Credit.h
     View/Deposit.h
     qcustomplot/qcustomplot.h
@@ -33,7 +32,6 @@ set(PROJECT_SOURCES
     Model/CreditModel.cc
     Model/DepositModel.cc
     View/View.cc
-    View/ConsoleView.cc
     View/Credit.cc
     View/Deposit.cc
     main.cc
