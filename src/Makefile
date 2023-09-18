@@ -2,6 +2,7 @@ CC = g++
 CCFLAGS = -g -std=c++17 -pedantic -Wall -Werror -Wextra
 LDFLAGS = -lstdc++ -lgtest -fprofile-arcs -ftest-coverage
 PROJECTDIR = ./Calculator
+BUILDDIR = ./SmartCalc2
 EXECUTABLE = test.out
 
 HEADERS = \
@@ -27,12 +28,22 @@ GCDA = $(SOURCES:.cc=.gcda)
 GCNO = $(SOURCES:.cc=.gcno)
 
 
-all: $(SOURCES) $(EXECUTABLE)
+all: install
 
-test: all
+test: $(SOURCES) $(EXECUTABLE)
+
+dvi:
+
+install:
+	cd $(PROJECTDIR) && ls -la && mkdir $(BUILDDIR) && cd $(BUILDDIR) && cmake .. && make
+	cd $(PROJECTDIR) && $(BUILDDIR)/Calculator.app/Contents/MacOS/Calculator
+
+uninstall:
+	cd $(PROJECTDIR) && rm -rf $(BUILDDIR)
 
 check:
 	clang-format -n --style="Google" $(SOURCES) $(HEADERS)
+	cppcheck --std=c++17 --language=c++ --enable=all --suppress=missingIncludeSystem --suppress=unusedFunction --suppress=unusedStructMember --suppress=missingInclude --suppress=unmatchedSuppression $(SOURCES) $(HEADERS)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(HEADERS) -o $@ $(LDFLAGS)

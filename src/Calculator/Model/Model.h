@@ -18,7 +18,7 @@ class Model {
   using stack_type = std::stack<token>;
   using list_type = std::list<token>;
 
-  Model() : answer(0){};
+  Model() : answer_(0){};
 
   void Parser(const std::string&);
   void ProcessOperator(const char);
@@ -49,12 +49,12 @@ class Model {
   void Reset();
 
  private:
-  Validator validator;
-  list_type parsedExpression;
-  list_type polishStack;
-  double answer{};
-  std::string stringAnswer = "";
-  bool error;
+  Validator validator_;
+  list_type parsedExpression_;
+  list_type polishStack_;
+  double answer_{};
+  std::string stringAnswer_ = "";
+  bool error_{};
 };
 
 }  // namespace s21

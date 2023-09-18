@@ -9,9 +9,9 @@
 namespace s21 {
 
 struct credit_data {
-  double total_sum;
-  std::vector<double> monthly_pay;
-  double overpay;
+  double total_sum{};
+  std::vector<double> monthly_pay{};
+  double overpay{};
 };
 
 enum class credit_time_type { credit_month, credit_quartal, credit_year };

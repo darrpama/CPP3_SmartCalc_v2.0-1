@@ -491,6 +491,6 @@ TEST(ModelTest, PositiveTest) {
 TEST(ModelTest, NegativeTest) {
   Model model;
   std::string inputString = "-x-";
-  EXPECT_ANY_THROW(model.GetGraph("-x-", 5.0, 0.0));
-  EXPECT_ANY_THROW(model.GetGraph("-x-", -5.0, -5.0));
+  EXPECT_ANY_THROW(model.GetGraph(inputString, 5.0, 0.0));
+  EXPECT_ANY_THROW(model.GetGraph(inputString, -5.0, -5.0));
 }
