@@ -75,6 +75,14 @@ TEST(ValidatorTest, NumCheck_Positive) {
   EXPECT_FALSE(result);
 }
 
+// Positive test case for IsNumNotCorrect()
+TEST(ValidatorTest, NumCheck_Positive_2) {
+  Validator validator;
+  std::string inputString = "cos((-10.000000))-sin((-10.000000))";
+  bool result = validator.IsNumNotCorrect(inputString);
+  EXPECT_FALSE(result);
+}
+
 // Negative test case for IsNumNotCorrect()
 TEST(ValidatorTest, NumCheck_Negative) {
   Validator validator;

@@ -96,8 +96,12 @@ bool Validator::IsNumNotCorrect(const std::string &inputString) {
   bool expFound = false;
 
   for (size_t i = 0; i < inputString.size(); i++) {
-    if ((std::isdigit(inputString[i]) || inputString[i] == 'e') && !inFloat) {
+    if ((std::isdigit(inputString[i]) || inputString[i] == 'e' || inputString[i] == '.')) {
       inFloat = true;
+    }
+    else
+    {
+      inFloat = false;
       dotFound = false;
     }
 
