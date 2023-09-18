@@ -57,7 +57,7 @@ dist:
 
 check:
 	clang-format -n --style="Google" $(SOURCES) $(HEADERS)
-	cppcheck --std=c++17 --language=c++ --enable=all --suppress=missingIncludeSystem --suppress=unusedFunction --suppress=unusedStructMember --suppress=missingInclude --suppress=unmatchedSuppression $(SOURCES) $(HEADERS)
+	cppcheck --std=c++17 --language=c++ --enable=all --suppress=unusedStructMember --suppress=missingInclude $(SOURCES) $(HEADERS)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(HEADERS) -o $@ $(LDFLAGS)
