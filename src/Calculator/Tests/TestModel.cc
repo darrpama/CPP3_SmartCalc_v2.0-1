@@ -153,18 +153,6 @@ TEST(CalculationModelTest, Parser_Positive_Other_Operators) {
   list.push_back(token{4, numberOrX, s21::numberType, "4"});
   list.push_back(clbrToken);
 
-  std::cout << "list" << std::endl;
-  for (const auto& element : list) {
-    std::cout << element.strValue << " ";
-  }
-  std::cout << std::endl;
-
-  std::cout << "parsed list" << std::endl;
-  for (const auto& element : parsedList) {
-    std::cout << element.strValue << " ";
-  }
-  std::cout << std::endl;
-
   EXPECT_TRUE(parsedList == list);
 }
 

@@ -17,7 +17,7 @@ std::string Model::CalculateExpression(const std::string &inputString) {
     Calculator();
     SetStrAnswer(answer_);
   } catch (const std::exception &e) {
-    std::cerr << e.what() << '\n';
+    // std::cerr << e.what() << '\n';
     SetStrAnswer(e);
     SetError(true);
   }

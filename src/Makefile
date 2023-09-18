@@ -85,3 +85,4 @@ clean:
 	@rm -rf $(STATICLIB)
 	@rm -rf *.gcno $(GCDA) $(GCNO) *.info
 	@rm -rf report
+	@rm -rf *.tgz
